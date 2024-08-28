@@ -74,19 +74,13 @@
                 <properties/>
                 <border type="empty" title=" "/>
                 <children>
-                  <component id="8dd9e" class="javax.swing.JButton" binding="save">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Guardar"/>
-                    </properties>
-                  </component>
                   <component id="2c19" class="javax.swing.JButton" binding="delete">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
+                      <horizontalTextPosition value="2"/>
+                      <icon value="pos/presentation/icons/delete.png"/>
                       <text value="Borrar"/>
                     </properties>
                   </component>
@@ -95,7 +89,19 @@
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
+                      <horizontalTextPosition value="2"/>
+                      <icon value="pos/presentation/icons/clear.png"/>
                       <text value="Limpiar"/>
+                    </properties>
+                  </component>
+                  <component id="8dd9e" class="javax.swing.JButton" binding="save">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <horizontalTextPosition value="2"/>
+                      <icon value="pos/presentation/icons/save.png"/>
+                      <text value="Guardar"/>
                     </properties>
                   </component>
                 </children>
@@ -157,6 +163,8 @@
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <horizontalTextPosition value="2"/>
+                  <icon value="pos/presentation/icons/search.png"/>
                   <text value="Search"/>
                 </properties>
               </component>
@@ -165,6 +173,8 @@
                   <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <horizontalTextPosition value="2"/>
+                  <icon value="pos/presentation/icons/pdf.png"/>
                   <text value="Report"/>
                 </properties>
               </component>
