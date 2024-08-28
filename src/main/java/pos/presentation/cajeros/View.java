@@ -26,6 +26,8 @@ public class View implements PropertyChangeListener {
     private JButton report;
     private JLabel searchNombreLbl;
     private JTable list;
+    private JTextField searchId;
+    private JLabel searchIdLbl;
 
     public JPanel getPanel() { return panel; }
 
@@ -36,6 +38,7 @@ public class View implements PropertyChangeListener {
                 try{
                     Cajero filter = new Cajero();
                     filter.setNombre(searchNombre.getText());
+                    filter.setId(searchId.getText());
                     controller.search(filter);
                 } catch (Exception ex){
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -161,5 +164,4 @@ public class View implements PropertyChangeListener {
         }
         this.panel.revalidate();
     }
-
 }

@@ -99,10 +99,9 @@ public class Service {
     }
 
     public List<Cajero> search(Cajero e){
-        return data.getCajeros().stream()
-                .filter(i->i.getNombre().contains(e.getNombre()))
-                .sorted(Comparator.comparing(Cajero::getNombre))
+        return  data.getCajeros().stream()
+                .filter(i -> i.getNombre().contains(e.getNombre()) && i.getId().contains(e.getId()))
+                .sorted(Comparator.comparing(Cajero::getNombre).thenComparing(Cajero::getId))
                 .collect(Collectors.toList());
     }
-
  }
