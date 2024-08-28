@@ -38,6 +38,7 @@ public class View implements PropertyChangeListener {
     private JTextField descuento;
     private JLabel searchNombreLbl;
     private JButton report;
+    private JPanel cajero;
 
     public JPanel getPanel() {
         return panel;
