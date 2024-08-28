@@ -42,7 +42,7 @@ public class Application {
         Model cajerosModel = new Model();
         View cajerosView = new View();
         cajerosController = new Controller(cajerosView, cajerosModel);
-        Icon cajerosIconc = new ImageIcon(Application.class.getResource("/pos/presentation/icons/client.png"));
+        Icon cajerosIconc = new ImageIcon(Application.class.getResource("/pos/presentation/icons/cashier.png"));
 
         tabbedPane.addTab("Cajeros  ",cajerosIconc, cajerosView.getPanel());
 
