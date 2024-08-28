@@ -162,8 +162,8 @@ public class View implements PropertyChangeListener {
     }
 
     // MVC
-    pos.presentation.cajeros.Model model;
-    pos.presentation.cajeros.Controller controller;
+    private pos.presentation.cajeros.Model model;
+    private pos.presentation.cajeros.Controller controller;
 
     public void setModel(pos.presentation.cajeros.Model model) {
         this.model = model;
