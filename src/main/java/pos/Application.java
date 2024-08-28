@@ -1,6 +1,9 @@
 package pos;
 
 import pos.logic.Service;
+import pos.presentation.cajeros.Controller;
+import pos.presentation.cajeros.Model;
+import pos.presentation.cajeros.View;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -27,6 +30,7 @@ public class Application {
             }
         });
 
+        // Clientes
         pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
         pos.presentation.clientes.View clientesView = new pos.presentation.clientes.View();
         clientesController = new pos.presentation.clientes.Controller(clientesView,clientesModel);
@@ -34,14 +38,14 @@ public class Application {
 
         tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
 
-
         // Cajeros
-        pos.presentation.cajeros.Model cajerosModel = new pos.presentation.cajeros.Model();
-        pos.presentation.cajeros.View cajerosView = new pos.presentation.cajeros.View();
-        cajerosController = new pos.presentation.cajeros.Controller(cajerosView,cajerosModel);
-        Icon cajerosIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/client.png"));
+        Model cajerosModel = new Model();
+        View cajerosView = new View();
+        cajerosController = new Controller(cajerosView, cajerosModel);
+        Icon cajerosIconc = new ImageIcon(Application.class.getResource("/pos/presentation/icons/client.png"));
 
-        tabbedPane.addTab("Cajeros  ",cajerosIcon,cajerosView.getPanel());
+        tabbedPane.addTab("Cajeros  ",cajerosIconc, cajerosView.getPanel());
+
 
         window.setSize(900,450);
         window.setResizable(false);
@@ -52,7 +56,7 @@ public class Application {
     }
 
     public static pos.presentation.clientes.Controller clientesController;
-    public static pos.presentation.cajeros.Controller cajerosController;
+    public static Controller cajerosController;
 
     public static JFrame window;
 

@@ -4,7 +4,6 @@ import pos.Application;
 import pos.logic.Cajero;
 import pos.presentation.AbstractModel;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Model extends AbstractModel {
@@ -21,14 +20,14 @@ public class Model extends AbstractModel {
         firePropertyChange(FILTER);
     }
 
-    public Model() {
+    public Model(){
     }
 
     public void init(List<Cajero> list){
         this.list = list;
         this.current = new Cajero();
         this.filter = new Cajero();
-        this.mode= Application.MODE_CREATE;
+        this.mode = Application.MODE_CREATE;
     }
 
     public List<Cajero> getList() {
@@ -40,34 +39,31 @@ public class Model extends AbstractModel {
         firePropertyChange(LIST);
     }
 
-    public Cajero getCurrent() {
+    public Cajero getCurrent(){
         return current;
     }
 
-    public void setCurrent(Cajero current) {
+    public void setCurrent(Cajero current){
         this.current = current;
         firePropertyChange(CURRENT);
     }
 
-    public Cajero getFilter() {
+    public Cajero getFilter(){
         return filter;
     }
 
-    public void setFilter(Cajero filter) {
+    public void setFilter(Cajero filter){
         this.filter = filter;
         firePropertyChange(FILTER);
     }
 
-    public int getMode() {
-        return mode;
-    }
+    public int getMode(){ return mode; }
 
-    public void setMode(int mode) {
-        this.mode = mode;
-    }
+    public void setMode(int mode){ this.mode = mode; }
 
-    public static final String LIST="list";
-    public static final String CURRENT="current";
-    public static final String FILTER="filter";
+    public static final String LIST = "list";
+    public static final String CURRENT = "current";
+    public static final String FILTER = "filter";
+
 
 }

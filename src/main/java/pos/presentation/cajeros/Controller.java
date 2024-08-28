@@ -3,16 +3,13 @@ package pos.presentation.cajeros;
 import pos.Application;
 import pos.logic.Cajero;
 import pos.logic.Service;
-import pos.presentation.cajeros.Model;
-import pos.presentation.cajeros.View;
-
-import java.util.List;
 
 public class Controller {
-    pos.presentation.cajeros.View view;
-    pos.presentation.cajeros.Model model;
 
-    public Controller(View view, Model model) {
+    private View view;
+    private Model model;
+
+    public Controller(View view, Model model){
         model.init(Service.instance().search(new Cajero()));
         this.view = view;
         this.model = model;
@@ -20,15 +17,15 @@ public class Controller {
         view.setModel(model);
     }
 
-    public void search(Cajero filter) throws  Exception{
+    public void search(Cajero filter) throws Exception{
         model.setFilter(filter);
         model.setMode(Application.MODE_CREATE);
         model.setCurrent(new Cajero());
         model.setList(Service.instance().search(model.getFilter()));
     }
 
-    public void save(Cajero e) throws  Exception{
-        switch (model.getMode()) {
+    public void save(Cajero e) throws Exception{
+        switch (model.getMode()){
             case Application.MODE_CREATE:
                 Service.instance().create(e);
                 break;
@@ -40,22 +37,23 @@ public class Controller {
         search(model.getFilter());
     }
 
-    public void edit(int row){
+    public void edit(int row) {
         Cajero e = model.getList().get(row);
-        try {
+        try{
             model.setMode(Application.MODE_EDIT);
             model.setCurrent(Service.instance().read(e));
         } catch (Exception ex) {}
     }
 
-    public void delete() throws Exception {
+    public void delete() throws Exception{
         Service.instance().delete(model.getCurrent());
         search(model.getFilter());
     }
 
-    public void clear() {
+    public void clear(){
         model.setMode(Application.MODE_CREATE);
         model.setCurrent(new Cajero());
     }
 
 }
+

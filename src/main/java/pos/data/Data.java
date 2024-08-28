@@ -14,19 +14,19 @@ public class Data {
     @XmlElement(name = "cliente")
     private List<Cliente> clientes;
 
-    @XmlElementWrapper(name = "cajeros")
+    @XmlElementWrapper(name = "cajero")
     @XmlElement(name = "cajero")
-    private List<Cajero> cajeros;
+    private List<Cajero> cajero;
 
     public Data() {
         clientes = new ArrayList<>();
-        cajeros = new ArrayList<>();
+        cajero = new ArrayList<>();
     }
 
     public List<Cliente> getClientes() {
         return clientes;
     }
 
-    public List<Cajero> getCajeros() { return cajeros; }
+    public List<Cajero> getCajeros() { return cajero; }
 
 }
