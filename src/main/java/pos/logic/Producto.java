@@ -9,9 +9,21 @@ import java.util.Objects;
 public class Producto {
     @XmlID
     private String descripcion;
-    private String codigo;
+    private int codigo;
+    private double precio;
+    //Categoria y unidad, pero esta un toque raro eso (son clases?)
 
-    public Producto(String descripcion, String codigo) {
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+
+
+    public Producto(String descripcion, int codigo) {
         this.descripcion = descripcion;
         this.codigo = codigo;
     }
@@ -24,11 +36,11 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
