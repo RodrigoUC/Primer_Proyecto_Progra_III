@@ -46,6 +46,14 @@ public class Application {
 
         tabbedPane.addTab("Cajeros  ",cajerosIconc, cajerosView.getPanel());
 
+        //Productos
+        pos.presentation.productos.Model productosModel = new pos.presentation.productos.Model();
+        pos.presentation.productos.View productosView = new pos.presentation.productos.View();
+        productosController = new pos.presentation.productos.Controller(productosView, productosModel);
+        Icon productosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/client.png"));
+
+        tabbedPane.addTab("Productos  ", productosIcon, productosView.getPanel());
+
 
         window.setSize(900,450);
         window.setResizable(false);
@@ -57,6 +65,7 @@ public class Application {
 
     public static pos.presentation.clientes.Controller clientesController;
     public static Controller cajerosController;
+    public static pos.presentation.productos.Controller productosController;
 
     public static JFrame window;
 

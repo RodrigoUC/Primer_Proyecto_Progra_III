@@ -129,7 +129,7 @@ public class Service {
     }
 
     public void delete(Producto e) throws Exception{
-        data.getCajeros().remove(e);
+        data.getProductos().remove(e);
     }
 
     public List<Producto> search(Producto e){

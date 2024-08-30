@@ -54,12 +54,8 @@ public class Producto {
         return categoria;
     }
 
-    public String getNombreCategoria() {
-        return categoria.getNombre();
-    }
-
-    public String getIDCategoria() {
-        return categoria.getId();
+    public String getStringCategoria(){
+        return categoria.getId()+" - "+categoria.getNombre();
     }
 
 
@@ -67,6 +63,9 @@ public class Producto {
         this.categoria = categoria;
     }
 
+    public void setCategoria(String nombre, String id) {
+        this.categoria = new Categoria(nombre, id);
+    }
 
     @Override
     public boolean equals(Object o) {
