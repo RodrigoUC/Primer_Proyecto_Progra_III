@@ -50,7 +50,7 @@ public class Application {
         pos.presentation.productos.Model productosModel = new pos.presentation.productos.Model();
         pos.presentation.productos.View productosView = new pos.presentation.productos.View();
         productosController = new pos.presentation.productos.Controller(productosView, productosModel);
-        Icon productosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/client.png"));
+        Icon productosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/products.png"));
 
         tabbedPane.addTab("Productos  ", productosIcon, productosView.getPanel());
 
