@@ -3,6 +3,7 @@ package pos.presentation.clientes;
 import pos.Application;
 import pos.logic.Cliente;
 import pos.presentation.AbstractModel;
+
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,18 +25,18 @@ public class Model extends AbstractModel {
     public Model() {
     }
 
-    public void init(List<Cliente> list){
+    public void init(List<Cliente> list) {
         this.list = list;
         this.current = new Cliente();
         this.filter = new Cliente();
-        this.mode= Application.MODE_CREATE;
+        this.mode = Application.MODE_CREATE;
     }
 
     public List<Cliente> getList() {
         return list;
     }
 
-    public void setList(List<Cliente> list){
+    public void setList(List<Cliente> list) {
         this.list = list;
         firePropertyChange(LIST);
     }
@@ -66,8 +67,8 @@ public class Model extends AbstractModel {
         this.mode = mode;
     }
 
-    public static final String LIST="list";
-    public static final String CURRENT="current";
-    public static final String FILTER="filter";
+    public static final String LIST = "list";
+    public static final String CURRENT = "current";
+    public static final String FILTER = "filter";
 
 }

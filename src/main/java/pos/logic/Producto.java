@@ -1,4 +1,5 @@
 package pos.logic;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlID;
@@ -9,8 +10,9 @@ import java.util.Objects;
 public class Producto {
     @XmlID
     private String descripcion;
-    private int codigo;
+    private String codigo;
     private double precio;
+    private Categoria categoria;
     //Categoria y unidad, pero esta un toque raro eso (son clases?)
 
     public double getPrecio() {
@@ -21,11 +23,15 @@ public class Producto {
         this.precio = precio;
     }
 
+    public Producto()  {
+        this("","",0.0, new Categoria());
+    }
 
-
-    public Producto(String descripcion, int codigo) {
+    public Producto(String descripcion, String codigo, double precio, Categoria categoria) {
         this.descripcion = descripcion;
         this.codigo = codigo;
+        this.precio = precio;
+        this.categoria = categoria;
     }
 
     public String getDescripcion() {
@@ -36,24 +42,44 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public String getNombreCategoria() {
+        return categoria.getNombre();
+    }
+
+    public String getIDCategoria() {
+        return categoria.getId();
+    }
+
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Producto producto = (Producto) o;
-        return Objects.equals(codigo,producto.getCodigo());
+        return Objects.equals(codigo, producto.getCodigo());
     }
 
     @Override
-    public int hashCode() { return Objects.hash(codigo); }
+    public int hashCode() {
+        return Objects.hash(codigo);
+    }
 
     @Override
     public String toString() {

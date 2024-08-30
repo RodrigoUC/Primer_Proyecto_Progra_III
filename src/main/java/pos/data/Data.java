@@ -18,9 +18,14 @@ public class Data {
     @XmlElement(name = "cajero")
     private List<Cajero> cajero;
 
+    @XmlElementWrapper(name = "productos")
+    @XmlElement(name = "producto")
+    private List<Producto> productos;
+
     public Data() {
         clientes = new ArrayList<>();
         cajero = new ArrayList<>();
+        productos = new ArrayList<>();
     }
 
     public List<Cliente> getClientes() {
@@ -29,4 +34,5 @@ public class Data {
 
     public List<Cajero> getCajeros() { return cajero; }
 
+    public List<Producto> getProductos() { return productos; }
 }
