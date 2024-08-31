@@ -55,7 +55,7 @@ public class Producto {
     }
 
     public String getStringCategoria(){
-        return categoria.getId()+" - "+categoria.getNombre();
+        return categoria.getNombre();
     }
 
 
