@@ -13,7 +13,7 @@ public class Producto {
     private String codigo;
     private double precio;
     private Categoria categoria;
-    //Categoria y unidad, pero esta un toque raro eso (son clases?)
+    private String unidad;
 
     public double getPrecio() {
         return precio;
@@ -66,6 +66,10 @@ public class Producto {
     public void setCategoria(String nombre, String id) {
         this.categoria = new Categoria(nombre, id);
     }
+
+    public void setUnidad(String unidad) {this.unidad = unidad;}
+
+    public String getUnidad() {return unidad;}
 
     @Override
     public boolean equals(Object o) {

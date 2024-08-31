@@ -15,6 +15,7 @@ public class TableModel extends AbstractTableModel<Producto> implements javax.sw
     public static final int CODIGO = 1;
     public static final int PRECIO = 2;
     public static final int CATEGORIA = 3;
+    public static final int UNIDAD = 4;
 
 
     @Override
@@ -28,6 +29,8 @@ public class TableModel extends AbstractTableModel<Producto> implements javax.sw
                 return e.getPrecio();
             case CATEGORIA:
                 return e.getStringCategoria();
+            case UNIDAD:
+                return e.getUnidad();
 
             default:
                 return "";
@@ -38,10 +41,12 @@ public class TableModel extends AbstractTableModel<Producto> implements javax.sw
     @Override
     protected void initColNames(){
         colNames = new String[5];
-        colNames[DESCRIPCION]= "Descrpicion";
         colNames[CODIGO]= "Codigo";
+        colNames[DESCRIPCION]= "Descrpicion";
+        colNames[UNIDAD]= "Unidad";
         colNames[PRECIO]= "Precio";
         colNames[CATEGORIA]= "Categoria";
+
     }
 
 }
