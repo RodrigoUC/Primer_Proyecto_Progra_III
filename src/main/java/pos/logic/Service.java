@@ -107,7 +107,8 @@ public class Service {
 
     // ----------------------PRODUCTOS-------------------------
     public void create(Producto e) throws Exception{
-        Producto result = data.getProductos().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);        if (result==null) data.getProductos().add(e);
+        Producto result = data.getProductos().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
+        if (result==null) data.getProductos().add(e);
         else throw new Exception("Producto ya existe");
     }
 

@@ -14,6 +14,7 @@ public class Producto {
     private double precio;
     private Categoria categoria;
     private String unidad;
+    private int existencia;
 
     public double getPrecio() {
         return precio;
@@ -26,6 +27,12 @@ public class Producto {
     public Producto()  {
         this("","",0.0, new Categoria());
     }
+
+    public boolean disminuirExistenciaEn(int n){
+        return existencia - n >= 0;
+    }
+
+    public void setExistencia(int existencia) {this.existencia = existencia;}
 
     public Producto(String descripcion, String codigo, double precio, Categoria categoria) {
         this.descripcion = descripcion;

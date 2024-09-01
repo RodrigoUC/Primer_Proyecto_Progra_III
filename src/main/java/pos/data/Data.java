@@ -14,9 +14,9 @@ public class Data {
     @XmlElement(name = "cliente")
     private List<Cliente> clientes;
 
-    @XmlElementWrapper(name = "cajero")
+    @XmlElementWrapper(name = "cajeros")
     @XmlElement(name = "cajero")
-    private List<Cajero> cajero;
+    private List<Cajero> cajeros;
 
     @XmlElementWrapper(name = "productos")
     @XmlElement(name = "producto")
@@ -24,7 +24,7 @@ public class Data {
 
     public Data() {
         clientes = new ArrayList<>();
-        cajero = new ArrayList<>();
+        cajeros = new ArrayList<>();
         productos = new ArrayList<>();
     }
 
@@ -32,7 +32,11 @@ public class Data {
         return clientes;
     }
 
-    public List<Cajero> getCajeros() { return cajero; }
+    public List<Cajero> getCajeros() {
+        return cajeros;
+    }
 
-    public List<Producto> getProductos() { return productos; }
+    public List<Producto> getProductos() {
+        return productos;
+    }
 }
