@@ -138,8 +138,8 @@ public class View implements PropertyChangeListener {
                 list.setModel(new TableModel(cols, model.getList()));
                 list.setRowHeight(30);
                 TableColumnModel columnModel = list.getColumnModel();
+                columnModel.getColumn(0).setPreferredWidth(150);
                 columnModel.getColumn(1).setPreferredWidth(150);
-//                columnModel.getColumn(2).setPreferredWidth(150); No se usa
                 break;
             case Model.CURRENT:
                 id.setText(model.getCurrent().getId());
