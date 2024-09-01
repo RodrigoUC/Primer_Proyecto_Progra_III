@@ -114,10 +114,10 @@
                 </constraints>
                 <properties>
                   <model>
-                    <item value="ACEITE"/>
-                    <item value="AGUA"/>
-                    <item value="DULCE"/>
-                    <item value="VINO"/>
+                    <item value="ACEITE - 001"/>
+                    <item value="AGUA - 002"/>
+                    <item value="DULCE - 003"/>
+                    <item value="VINO - 004"/>
                   </model>
                 </properties>
               </component>

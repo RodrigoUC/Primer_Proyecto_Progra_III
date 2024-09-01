@@ -13,7 +13,8 @@ public class Producto {
     private String codigo;
     private double precio;
     private Categoria categoria;
-    //Categoria y unidad, pero esta un toque raro eso (son clases?)
+    private String unidad;
+    private int existencia;
 
     public double getPrecio() {
         return precio;
@@ -26,6 +27,12 @@ public class Producto {
     public Producto()  {
         this("","",0.0, new Categoria());
     }
+
+    public boolean disminuirExistenciaEn(int n){
+        return existencia - n >= 0;
+    }
+
+    public void setExistencia(int existencia) {this.existencia = existencia;}
 
     public Producto(String descripcion, String codigo, double precio, Categoria categoria) {
         this.descripcion = descripcion;
@@ -55,7 +62,7 @@ public class Producto {
     }
 
     public String getStringCategoria(){
-        return categoria.getId()+" - "+categoria.getNombre();
+        return categoria.getNombre();
     }
 
 
@@ -66,6 +73,10 @@ public class Producto {
     public void setCategoria(String nombre, String id) {
         this.categoria = new Categoria(nombre, id);
     }
+
+    public void setUnidad(String unidad) {this.unidad = unidad;}
+
+    public String getUnidad() {return unidad;}
 
     @Override
     public boolean equals(Object o) {

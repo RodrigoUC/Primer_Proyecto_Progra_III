@@ -113,14 +113,13 @@ public class View implements PropertyChangeListener {
             descripcionLbl.setToolTipText(null);
         }
 
-        try {
-            Float.parseFloat(unidad.getText());
-            unidadLbl.setBorder(null);
-            unidadLbl.setToolTipText(null);
-        } catch (Exception e) {
+        if (unidad.getText().isEmpty()) {
             valid = false;
             unidadLbl.setBorder(Application.BORDER_ERROR);
-            unidadLbl.setToolTipText("Unidad invalida");
+            unidadLbl.setToolTipText("Unidad requerida");
+        } else {
+            descripcionLbl.setBorder(null);
+            descripcionLbl.setToolTipText(null);
         }
 
         try {
@@ -144,9 +143,31 @@ public class View implements PropertyChangeListener {
         e.setDescripcion(descripcion.getText());
         e.setCodigo(codigo.getText());
         e.setPrecio(Float.parseFloat(precio.getText()));
-        e.setCategoria("CAT", (String) categorias.getSelectedItem());
+        e.setCategoria(nombreCategoria((String) categorias.getSelectedItem()), codigoCategoria((String) categorias.getSelectedItem()));
+        e.setUnidad(unidad.getText());
 
         return e;
+    }
+
+    public String nombreCategoria(String cat){
+
+        return switch (cat) {
+            case "ACEITE - 001" -> "aceite";
+            case "AGUA - 002" -> "agua";
+            case "DULCE - 003" -> "dulce";
+            case "VINO - 004" -> "vino";
+            default -> "Indefinida";
+        };
+    }
+    public String codigoCategoria(String cat){
+
+        return switch (cat) {
+            case "ACEITE - 001" -> "001";
+            case "AGUA - 002" -> "002";
+            case "DULCE - 003" -> "003";
+            case "VINO - 004" -> "004";
+            default -> "404";
+        };
     }
 
     // MVC
@@ -165,8 +186,8 @@ public class View implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
-            case pos.presentation.productos.Model.LIST:                        //FALTA UNIDAD, pongo 2 categorias por ahora
-                int[] cols = {TableModel.CODIGO,TableModel.DESCRIPCION, TableModel.PRECIO, TableModel.CATEGORIA, TableModel.CATEGORIA};
+            case pos.presentation.productos.Model.LIST:
+            int[] cols = {TableModel.CODIGO,TableModel.DESCRIPCION, TableModel.UNIDAD, TableModel.PRECIO, TableModel.CATEGORIA};
                 list.setModel(new TableModel(cols, model.getList()));
                 list.setRowHeight(30);
                 TableColumnModel columnModel = list.getColumnModel();
@@ -177,7 +198,7 @@ public class View implements PropertyChangeListener {
                 codigo.setText(model.getCurrent().getCodigo());
                 descripcion.setText(model.getCurrent().getDescripcion());
                 precio.setText("" + model.getCurrent().getPrecio());
-                //Unidad
+                unidad.setText(model.getCurrent().getUnidad());
                 categorias.setSelectedItem(model.getCurrent().getCategoria());
 
 
@@ -195,8 +216,8 @@ public class View implements PropertyChangeListener {
                 descripcionLbl.setToolTipText(null);
                 precioLbl.setBorder(null);
                 precioLbl.setToolTipText(null);
-                //unidadLbl
-                //unidadLbl
+                unidadLbl.setBorder(null);
+                unidadLbl.setToolTipText(null);
                 categoriaLbl.setBorder(null);
                 categoriaLbl.setToolTipText(null);
 
