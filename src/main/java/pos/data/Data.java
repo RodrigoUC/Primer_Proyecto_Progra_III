@@ -22,10 +22,15 @@ public class Data {
     @XmlElement(name = "producto")
     private List<Producto> productos;
 
+    @XmlElementWrapper(name = "lineas")
+    @XmlElement(name = "linea")
+    private List<Linea> lineas;
+
     public Data() {
         clientes = new ArrayList<>();
         cajero = new ArrayList<>();
         productos = new ArrayList<>();
+        lineas= new ArrayList<>();
     }
 
     public List<Cliente> getClientes() {
@@ -35,4 +40,6 @@ public class Data {
     public List<Cajero> getCajeros() { return cajero; }
 
     public List<Producto> getProductos() { return productos; }
+
+    public List<Linea> getLineas() { return lineas; }
 }

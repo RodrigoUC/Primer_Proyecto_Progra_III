@@ -4,6 +4,7 @@ import pos.data.Data;
 import pos.data.XmlPersister;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -107,7 +108,8 @@ public class Service {
 
     // ----------------------PRODUCTOS-------------------------
     public void create(Producto e) throws Exception{
-        Producto result = data.getProductos().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);        if (result==null) data.getProductos().add(e);
+        Producto result = data.getProductos().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
+        if (result==null) data.getProductos().add(e);
         else throw new Exception("Producto ya existe");
     }
 
@@ -137,5 +139,35 @@ public class Service {
                 .filter(i -> i.getDescripcion().contains(e.getDescripcion()) && i.getCodigo().contains(e.getCodigo()))
                 .sorted(Comparator.comparing(Producto::getDescripcion).thenComparing(Producto::getCodigo))
                 .collect(Collectors.toList());
+    }
+
+    //-------------------Lineas----------------------------------------------
+    public void create(Linea e) throws Exception{
+        data.getLineas().add(e);
+   }
+
+    public Linea read(Linea e) throws Exception{
+        Linea result = data.getLineas().stream().filter(i -> i.equals(e)).findFirst().orElse(null);
+        if (result!=null) return result;
+        else throw new Exception("Linea no existe");
+    }
+
+    public void update(Linea e) throws Exception{
+        Linea result;
+        try{
+            result = this.read(e);
+            data.getLineas().remove(result);
+            data.getLineas().add(e);
+        }catch (Exception ex) {
+            throw new Exception("Linea no existe");
+        }
+    }
+
+    public void delete(Linea e) throws Exception{
+        data.getLineas().remove(e);
+    }
+
+    public List<Linea> search(Linea e){     //No es necesario porque no se van a mostrar las lineas que concuerden en cosas
+        return new ArrayList<Linea>();
     }
  }
