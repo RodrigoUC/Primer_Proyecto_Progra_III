@@ -170,4 +170,29 @@ public class Service {
     public List<Linea> search(Linea e){     //No es necesario porque no se van a mostrar las lineas que concuerden en cosas
         return new ArrayList<Linea>();
     }
+
+    // ----------------------LINEA ESTADISTICAS-------------------------
+    public void create(LineaEstadistica e) throws Exception{
+        LineaEstadistica result = data.getLineasEstadisticas().stream().filter(i -> i.equals(e)).findFirst().orElse(null);
+        if (result==null) data.getLineasEstadisticas().add(e);
+        else throw new Exception("Linea estadistica ya existe");
+    }
+
+    public LineaEstadistica read(LineaEstadistica e) throws Exception{
+        LineaEstadistica result = data.getLineasEstadisticas().stream().filter(i->i.getDate().equals(e.getDate())).findFirst().orElse(null);
+        if (result!=null) return result;
+        else throw new Exception("Linea estadistica no existe");
+    }
+
+    public void update(LineaEstadistica e) throws Exception{
+        LineaEstadistica result;
+        try{
+            result = this.read(e);
+            data.getLineasEstadisticas().remove(result);
+            data.getLineasEstadisticas().add(e);
+        }catch (Exception ex) {
+            throw new Exception("Linea estadistica no existe");
+        }
+    }
+
  }

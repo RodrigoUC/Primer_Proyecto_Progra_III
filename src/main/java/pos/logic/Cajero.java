@@ -9,8 +9,8 @@ import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Cajero {
     @XmlID
-    String id;
-    String nombre;
+    private String id;
+    private String nombre;
 
     public Cajero() {this("", "");}
 
