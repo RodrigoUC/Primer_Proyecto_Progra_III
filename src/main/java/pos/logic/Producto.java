@@ -9,8 +9,8 @@ import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Producto {
     @XmlID
-    private String descripcion;
     private String codigo;
+    private String descripcion;
     private double precio;
     private Categoria categoria;
     private String unidad;

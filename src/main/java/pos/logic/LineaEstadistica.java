@@ -1,39 +1,46 @@
 package pos.logic;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlID;
+import jakarta.xml.bind.annotation.*;
 
-import javax.sound.sampled.Line;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class LineaEstadistica {
     @XmlID
-    private Fecha date;
+    private String codigo;
+    @XmlElementWrapper(name = "dates")
+    @XmlElement(name = "date")
+    private List<LocalDate> dates;
+    @XmlIDREF
     private Categoria categoria;
-    private Double totalVentas;
 
     public LineaEstadistica() {
-        this.date = new Fecha();
+        this.codigo = "";
         this.categoria = new Categoria();
-        this.totalVentas = 0.0;
+        this.dates = new ArrayList<>();
     }
 
-    public LineaEstadistica(Fecha fecha, Categoria categoria, Double totalVentas) {
-        this.date = fecha;
+    public LineaEstadistica(List<LocalDate> fechas, Categoria categoria,String codigo) {
+        this.codigo = codigo;
         this.categoria = categoria;
-        this.totalVentas = totalVentas;
+        this.dates = fechas;
     }
 
-    public Fecha getDate() { return date; }
+    public String getCodigo() { return codigo;}
+    public List<LocalDate> getDate() { return dates; }
     public Categoria getCategoria() { return categoria; }
-    public Double getTotalVentas() { return totalVentas; }
 
-    public void setDate(Fecha fecha) { date = fecha; }
+    public void setCodigo(String codigo) { this.codigo = codigo; }
+    public void setDate(List<LocalDate> fechas) { dates = fechas; }
     public void setCategoria(Categoria categoria) { this.categoria = categoria; }
-    public void setTotalVentas(Double totalVentas) { this.totalVentas = totalVentas; }
+
+//    public Double totalDeVentas(List<Factura> facturas) {
+//        if (facturas.contains()) ;
+//        return Double.valueOf(0);
+//    }
 
     public String toString(){
-        return date.toString() + " " + categoria.toString() + " " + totalVentas;
+        return dates.toString() + " " + categoria.toString();
     }
 }

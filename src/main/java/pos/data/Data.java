@@ -2,6 +2,7 @@ package pos.data;
 
 import pos.logic.*;
 import jakarta.xml.bind.annotation.*;
+import pos.logic.LineaEstadistica;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -46,46 +46,44 @@ public class View implements PropertyChangeListener {
 
     public View(){
 
-//        // Grafica
-//        estadisticasDataset = new DefaultCategoryDataset();
-//
-//        // Leer los datos y ingresarlos al estadistica dataset
-//        // while()
-//
-//        graficoChart = ChartFactory.createLineChart("Ventas por mes", "Mes", "Ventas"
-//                , estadisticasDataset, PlotOrientation.VERTICAL, true, true, false);
-//
-//
-//        // Crear un ChartPanel con el gráfico
-//        ChartPanel chartPanel = new ChartPanel(graficoChart);
-//        chartPanel.setPreferredSize(new Dimension(800, 600));
-//
-//        // Añadir el ChartPanel al JPanel existente
-//        graficoPanel.setLayout(new BorderLayout());
-//        graficoPanel.add(chartPanel, BorderLayout.CENTER);
-//        graficoPanel.validate();
-//
+        // Grafica
+        estadisticasDataset = new DefaultCategoryDataset();
+
+        // Leer los datos y ingresarlos al estadistica dataset
+        // while()
+
+        graficoChart = ChartFactory.createLineChart("Ventas por mes", "Mes", "Ventas"
+                , estadisticasDataset, PlotOrientation.VERTICAL, true, true, false);
+
+
+        // Crear un ChartPanel con el gráfico
+        ChartPanel chartPanel = new ChartPanel(graficoChart);
+        chartPanel.setPreferredSize(new Dimension(800, 600));
+
+        // Añadir el ChartPanel al JPanel existente
+        graficoPanel.setLayout(new BorderLayout());
+        graficoPanel.add(chartPanel, BorderLayout.CENTER);
+        graficoPanel.validate();
+
 
         // Eventos
         seleccionarTodoButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
             }
         });
 
         seleccionUnicaButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
             }
         });
 
         list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int row = list.getSelectedRow();
-                controller.edit(row);
+//                int row = list.getSelectedRow();
+//                controller.edit(row);
             }
         });
     }
@@ -113,7 +111,7 @@ public class View implements PropertyChangeListener {
                 list.setRowHeight(30);
                 TableColumnModel columnModel = list.getColumnModel();
                 columnModel.getColumn(0).setPreferredWidth(150);
-//                columnModel.getColumn(1).setPreferredWidth(150);
+                columnModel.getColumn(1).setPreferredWidth(150);
                 break;
             case pos.presentation.estadisticas.Model.CURRENT:
 

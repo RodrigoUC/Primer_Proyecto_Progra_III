@@ -2,6 +2,7 @@ package pos.logic;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlID;
+import jakarta.xml.bind.annotation.XmlIDREF;
 
 import java.util.Objects;
 
@@ -10,7 +11,9 @@ import java.util.Objects;
 public class Factura {
    @XmlID
    private Linea[] vec;
+   @XmlIDREF
    private Cajero cajero;
+   @XmlIDREF
    private Cliente cliente;
 
    public Factura(Cajero cajero, Cliente cliente) {

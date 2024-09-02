@@ -9,8 +9,9 @@ import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Categoria {
 
-    String nombre;
+    @XmlID
     String id;
+    String nombre;
 
     public Categoria() {this("", "");}
 

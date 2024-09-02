@@ -3,7 +3,6 @@ package pos.logic;
 import pos.data.Data;
 import pos.data.XmlPersister;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -194,5 +193,13 @@ public class Service {
             throw new Exception("Linea estadistica no existe");
         }
     }
+
+    public List<LineaEstadistica> search(LineaEstadistica e){
+        return data.getLineasEstadisticas().stream()
+                .filter(i->i.getCodigo().contains(e.getCodigo()))
+                .sorted(Comparator.comparing(LineaEstadistica::getCodigo))
+                .collect(Collectors.toList());
+    }
+
 
  }

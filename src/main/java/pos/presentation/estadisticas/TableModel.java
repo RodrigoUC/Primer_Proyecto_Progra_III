@@ -27,6 +27,6 @@ public class TableModel extends AbstractTableModel<LineaEstadistica> implements 
     protected void initColNames(){
         colNames = new String[2];
         colNames[CATEGORIA] = "Categoria";
-        colNames[FECHA] = "";
+        colNames[FECHA] = "02/09/2024";
     }
 }
