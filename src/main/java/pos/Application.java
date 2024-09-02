@@ -54,6 +54,13 @@ public class Application {
 
         tabbedPane.addTab("Productos  ", productosIcon, productosView.getPanel());
 
+//        // Estadisticas
+//        pos.presentation.estadisticas.Model estadisticasModel = new pos.presentation.estadisticas.Model();
+//        pos.presentation.estadisticas.View estadisticasView = new pos.presentation.estadisticas.View();
+//        estadisticasController = new pos.presentation.estadisticas.Controller(estadisticasView, estadisticasModel);
+//        Icon estadisticasIcon = new ImageIcon(Application.class.getResource("presentation/icons/statisctics.png"));
+//
+//        tabbedPane.addTab("Estadisticas ", estadisticasIcon, estadisticasView.getPanel());
 
         window.setSize(900,450);
         window.setResizable(false);
@@ -66,6 +73,7 @@ public class Application {
     public static pos.presentation.clientes.Controller clientesController;
     public static Controller cajerosController;
     public static pos.presentation.productos.Controller productosController;
+    public static pos.presentation.estadisticas.Controller estadisticasController;
 
     public static JFrame window;
 

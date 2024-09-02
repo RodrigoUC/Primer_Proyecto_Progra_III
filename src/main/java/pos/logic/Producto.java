@@ -34,6 +34,8 @@ public class Producto {
 
     public void setExistencia(int existencia) {this.existencia = existencia;}
 
+    public int getExistencia(){ return existencia; }
+
     public Producto(String descripcion, String codigo, double precio, Categoria categoria) {
         this.descripcion = descripcion;
         this.codigo = codigo;
