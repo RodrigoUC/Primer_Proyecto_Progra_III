@@ -10,6 +10,7 @@ import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Factura {
    @XmlID
+   private String codigo;
    private Linea[] vec;
    @XmlIDREF
    private Cajero cajero;
@@ -20,9 +21,9 @@ public class Factura {
       this.cajero = cajero;
       this.cliente = cliente;
    }
-   public void setCajero(Cajero cajero) {
-      this.cajero = cajero;
-   }
+   public String getCodigo() { return codigo; }
+   public void setCodigo(String codigo) { this.codigo = codigo; }
+   public void setCajero(Cajero cajero) { this.cajero = cajero; }
    public void setCliente(Cliente cliente) {
       this.cliente = cliente;
    }

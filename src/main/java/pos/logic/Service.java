@@ -176,7 +176,7 @@ public class Service {
         return new ArrayList<Linea>();      //Creo que esta parte no es necesaria porqur al final nunca se va a necesitar buscar lineas
     }
 
-    // ----------------------LINEA ESTADISTICAS-------------------------
+    // ----------------------Linea estadística-------------------------
     public void create(LineaEstadistica e) throws Exception{
         LineaEstadistica result = data.getLineasEstadisticas().stream().filter(i -> i.equals(e)).findFirst().orElse(null);
         if (result==null) data.getLineasEstadisticas().add(e);
@@ -184,7 +184,7 @@ public class Service {
     }
 
     public LineaEstadistica read(LineaEstadistica e) throws Exception{
-        LineaEstadistica result = data.getLineasEstadisticas().stream().filter(i->i.getDate().equals(e.getDate())).findFirst().orElse(null);
+        LineaEstadistica result = data.getLineasEstadisticas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
         if (result!=null) return result;
         else throw new Exception("Linea estadistica no existe");
     }
@@ -206,6 +206,4 @@ public class Service {
                 .sorted(Comparator.comparing(LineaEstadistica::getCodigo))
                 .collect(Collectors.toList());
     }
-
-
  }

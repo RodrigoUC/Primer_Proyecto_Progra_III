@@ -67,6 +67,14 @@ public class Application {
 
         tabbedPane.addTab("Estadisticas ", estadisticasIcon, estadisticasView.getPanel());
 
+        // Historico
+        pos.presentation.historico.Model historicoModel = new pos.presentation.historico.Model();
+        pos.presentation.historico.View historicoView = new pos.presentation.historico.View();
+        historicoController = new pos.presentation.historico.Controller(historicoView, historicoModel);
+        Icon historicoIcon = new ImageIcon(Application.class.getResource("presentation/icons/history.png"));
+
+        tabbedPane.addTab("Historico ", historicoIcon, historicoView.getPanel());
+
         window.setSize(900,450);
         window.setResizable(false);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -79,6 +87,7 @@ public class Application {
     public static Controller cajerosController;
     public static pos.presentation.productos.Controller productosController;
     public static pos.presentation.estadisticas.Controller estadisticasController;
+    public static pos.presentation.historico.Controller historicoController;
 
     public static JFrame window;
 
