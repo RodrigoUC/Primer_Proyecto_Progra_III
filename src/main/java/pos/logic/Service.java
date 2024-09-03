@@ -142,11 +142,13 @@ public class Service {
 
     //-------------------Lineas----------------------------------------------
     public void create(Linea e) throws Exception{
-        data.getLineas().add(e);
-   }
+        Linea result = data.getLineas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
+        if (result==null) data.getLineas().add(e);
+        else throw new Exception("Linea ya existe");
+    }
 
     public Linea read(Linea e) throws Exception{
-        Linea result = data.getLineas().stream().filter(i -> i.equals(e)).findFirst().orElse(null);
+        Linea result = data.getLineas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
         if (result!=null) return result;
         else throw new Exception("Linea no existe");
     }
@@ -166,8 +168,12 @@ public class Service {
         data.getLineas().remove(e);
     }
 
-    public List<Linea> search(Linea e){     //No es necesario porque no se van a mostrar las lineas que concuerden en cosas
-        return new ArrayList<Linea>();
+    public List<Linea> search(Linea e){
+//        return  data.getLineas().stream()
+//                .filter(i -> i.getDescripcion().contains(e.getDescripcion()) && i.getCodigo().contains(e.getCodigo()))
+//                .sorted(Comparator.comparing(Producto::getDescripcion).thenComparing(Producto::getCodigo))
+//                .collect(Collectors.toList());
+        return new ArrayList<Linea>();      //Creo que esta parte no es necesaria porqur al final nunca se va a necesitar buscar lineas
     }
 
     // ----------------------LINEA ESTADISTICAS-------------------------

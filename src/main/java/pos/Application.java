@@ -54,6 +54,11 @@ public class Application {
 
         tabbedPane.addTab("Productos  ", productosIcon, productosView.getPanel());
 
+        //Facturar
+//        pos.presentation.facturacion.Model facturacionModel = new pos.presentation.facturacion.Model();
+//        pos.presentation.facturacion.View facturacionView = new pos.presentation.facturacion.View();
+//        facturar
+
         // Estadisticas
         pos.presentation.estadisticas.Model estadisticasModel = new pos.presentation.estadisticas.Model();
         pos.presentation.estadisticas.View estadisticasView = new pos.presentation.estadisticas.View();

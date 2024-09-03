@@ -7,7 +7,7 @@ public class View {
 
 
 
-//Iba a ponerme a hacer la "pantalla" de view, pero de DefaultComboBox habia que heredar o se utilizaba directamente?
+
 
 
     //MVC
