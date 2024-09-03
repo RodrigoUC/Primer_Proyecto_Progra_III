@@ -21,7 +21,7 @@ public class TableModel extends AbstractTableModel<Linea> implements javax.swing
     }
 
     @Override
-    protected Object getPropetyAt(Linea e, int col) {
+    protected Object getPropertyAt(Linea e, int col) {
         switch (cols[col]) {
             case CODIGO:
                 return e.getProducto().getCodigo();

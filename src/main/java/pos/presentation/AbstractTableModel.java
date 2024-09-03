@@ -35,10 +35,10 @@ public abstract class AbstractTableModel<E> extends javax.swing.table.AbstractTa
 
     public Object getValueAt(int row, int col) {
         E e = rows.get(row);
-        return getPropetyAt(e, col);
+        return getPropertyAt(e, col);
     }
 
-    protected abstract Object getPropetyAt(E e, int col);
+    protected abstract Object getPropertyAt(E e, int col);
 
     public E getRowAt(int row) {
         return rows.get(row);

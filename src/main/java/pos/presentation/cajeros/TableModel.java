@@ -15,7 +15,7 @@ public class TableModel extends AbstractTableModel<Cajero> implements javax.swin
     public static final int NOMBRE = 1;
 
     @Override
-    protected Object getPropetyAt(Cajero e, int col){
+    protected Object getPropertyAt(Cajero e, int col){
         switch (cols[col]){
             case ID: return e.getId();
             case NOMBRE: return e.getNombre();

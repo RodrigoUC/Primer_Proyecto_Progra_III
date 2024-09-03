@@ -26,4 +26,11 @@ public class Controller {
         } catch (Exception ex) {}
     }
 
+    public void search(LineaEstadistica filter) throws Exception {
+        model.setFilter(filter);
+        model.setMode(Application.MODE_CREATE);
+        model.setCurrent(new LineaEstadistica());
+        model.setList(Service.instance().search(model.getFilter()));
+    }
+
 }

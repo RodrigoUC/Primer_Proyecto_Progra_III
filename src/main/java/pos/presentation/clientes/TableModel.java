@@ -18,7 +18,7 @@ public class TableModel extends AbstractTableModel<Cliente> implements javax.swi
     public static final int DESCUENTO=4;
 
     @Override
-    protected Object getPropetyAt(Cliente e, int col) {
+    protected Object getPropertyAt(Cliente e, int col) {
         switch (cols[col]){
             case ID: return e.getId();
             case NOMBRE: return e.getNombre();

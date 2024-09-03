@@ -1,18 +1,13 @@
 package pos.presentation.estadisticas;
 
-import pos.Application;
-import pos.logic.Cajero;
-import pos.presentation.estadisticas.Controller;
-import pos.presentation.estadisticas.Model;
-import pos.presentation.estadisticas.TableModel;
+import pos.logic.Categoria;
+import pos.logic.LineaEstadistica;
 
-import java.io.*;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.ChartUtilities;
 
 import java.awt.*;
 
@@ -39,6 +34,8 @@ public class View implements PropertyChangeListener {
     private JLabel finLbl;
     private JLabel categLbl;
     private JPanel graficoPanel;
+    private JButton deleteOne;
+    private JButton deleteAll;
     private DefaultCategoryDataset estadisticasDataset;
     private JFreeChart graficoChart;
 
@@ -50,7 +47,13 @@ public class View implements PropertyChangeListener {
         estadisticasDataset = new DefaultCategoryDataset();
 
         // Leer los datos y ingresarlos al estadistica dataset
-        // while()
+        // Leer los datos y agregarlos al dataset (ejemplo básico)
+//        estadisticasDataset.addValue(500, "Aceite", "Enero");
+//        estadisticasDataset.addValue(200, "Aceite", "Febrero");
+//        estadisticasDataset.addValue(0, "Chocolate", "Enero");
+//        estadisticasDataset.addValue(700, "Chocolate", "Febrero");
+//        estadisticasDataset.addValue(800, "Frijoles", "Marzo");
+//        estadisticasDataset.addValue(600, "Frijoles", "Abril");
 
         graficoChart = ChartFactory.createLineChart("Ventas por mes", "Mes", "Ventas"
                 , estadisticasDataset, PlotOrientation.VERTICAL, true, true, false);
@@ -67,29 +70,63 @@ public class View implements PropertyChangeListener {
 
 
         // Eventos
-        seleccionarTodoButton.addMouseListener(new MouseAdapter() {
+
+        deleteOne.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
+                try{
+
+                } catch (Exception ex){
+                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Information", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
 
-        seleccionUnicaButton.addMouseListener(new MouseAdapter() {
+        deleteAll.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
+                try{
+
+                } catch (Exception ex){
+                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Information", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+
+        seleccionarTodoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+
+                } catch (Exception ex){
+                    JOptionPane.showMessageDialog(panel, ex.getMessage(),"Information", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+
+        seleccionUnicaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    LineaEstadistica filter = new LineaEstadistica();
+                    filter.setCategoria((Categoria) categoriaCBX.getSelectedItem());
+                    controller.search(filter);
+                } catch(Exception ex){
+                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
 
         list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-//                int row = list.getSelectedRow();
-//                controller.edit(row);
+                    int row = list.getSelectedRow();
+                    controller.edit(row);
             }
         });
     }
 
     // MVC
-
     private pos.presentation.estadisticas.Controller controller;
     private pos.presentation.estadisticas.Model model;
 
@@ -105,19 +142,18 @@ public class View implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
-            case pos.presentation.estadisticas.Model.LIST:
+            case Model.LIST:
                 int[] cols = {TableModel.CATEGORIA, TableModel.FECHA};
                 list.setModel(new TableModel(cols, model.getList()));
                 list.setRowHeight(30);
                 TableColumnModel columnModel = list.getColumnModel();
-                columnModel.getColumn(0).setPreferredWidth(150);
-                columnModel.getColumn(1).setPreferredWidth(150);
+                columnModel.getColumn(0).setPreferredWidth(100);
+                columnModel.getColumn(1).setPreferredWidth(100);
                 break;
-            case pos.presentation.estadisticas.Model.CURRENT:
-
+            case Model.CURRENT:
                 break;
             case Model.FILTER:
-
+                categoriaCBX.setSelectedItem(model.getFilter().getCategoria());
                 break;
         }
         this.panel.revalidate();

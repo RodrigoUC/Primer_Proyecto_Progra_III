@@ -15,10 +15,10 @@ public class TableModel extends AbstractTableModel<LineaEstadistica> implements 
     public static final int FECHA = 1;
 
     @Override
-    protected Object getPropetyAt(LineaEstadistica e, int col){
+    protected Object getPropertyAt(LineaEstadistica e, int col){
         switch (cols[col]){
             case CATEGORIA: return e.getCategoria();
-            case FECHA: return e.getDate();
+            case FECHA: return "02/09/2024";
             default: return "";
         }
     }
