@@ -206,4 +206,36 @@ public class Service {
                 .sorted(Comparator.comparing(LineaEstadistica::getCodigo))
                 .collect(Collectors.toList());
     }
+
+    // ----------------------Linea historico (Listado)-------------------------
+    public void create(LineaHistorico e) throws Exception{
+        LineaHistorico result = data.getLineasHistoricas().stream().filter(i -> i.equals(e)).findFirst().orElse(null);
+        if (result==null) data.getLineasHistoricas().add(e);
+        else throw new Exception("Linea historica ya existe");
+    }
+
+    public LineaHistorico read(LineaHistorico e) throws Exception{
+        LineaHistorico result = data.getLineasHistoricas().stream().filter(i->i.getNumero().equals(e.getNumero())).findFirst().orElse(null);
+        if (result!=null) return result;
+        else throw new Exception("Linea historica no existe");
+    }
+
+    public void update(LineaHistorico e) throws Exception{
+        LineaHistorico result;
+        try{
+            result = this.read(e);
+            data.getLineasHistoricas().remove(result);
+            data.getLineasHistoricas().add(e);
+        }catch (Exception ex) {
+            throw new Exception("Linea historica no existe");
+        }
+    }
+
+    public List<LineaHistorico> search(LineaHistorico e){
+        return data.getLineasHistoricas().stream()
+                .filter(i->i.getNumero().contains(e.getNumero()))
+                .sorted(Comparator.comparing(LineaHistorico::getNumero))
+                .collect(Collectors.toList());
+    }
+
  }

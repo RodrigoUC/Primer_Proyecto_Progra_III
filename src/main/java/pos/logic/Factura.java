@@ -16,10 +16,17 @@ public class Factura {
    private Cajero cajero;
    @XmlIDREF
    private Cliente cliente;
+   private Fecha fecha;
 
+   public Factura() {
+      this.cajero = null;
+      this.cliente = null;
+      fecha = new Fecha();
+   }
    public Factura(Cajero cajero, Cliente cliente) {
       this.cajero = cajero;
       this.cliente = cliente;
+      fecha = new Fecha();
    }
    public String getCodigo() { return codigo; }
    public void setCodigo(String codigo) { this.codigo = codigo; }
@@ -34,7 +41,7 @@ public class Factura {
    public Linea[] getVec() {
       return vec;
    }
-
+   public Fecha getFecha() {return fecha;}
 
    public double getTotal() {
       double total = 0.0;

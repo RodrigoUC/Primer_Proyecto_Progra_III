@@ -11,8 +11,8 @@ public class LineaHistorico {
     @XmlElementWrapper(name = "facturas")
     @XmlElement(name = "factura")
     private List<Factura> facturas;
-    private String cliente; //puse el string para no tener que jalar un obj
-    private String cajero;  //igual se filtra por el nombre del cliente en Busqueda
+    private String clienteStr; //puse el string para no tener que jalar un obj
+    private String cajeroStr;  //igual se filtra por el nombre del cliente en Busqueda
     private Fecha fecha;
     private double importe;
 
@@ -22,27 +22,34 @@ public class LineaHistorico {
         this.facturas = new ArrayList<>();
     }
 
-    public LineaHistorico(List<Factura> facturas,String codigo) {
-        this.numero = codigo;
+    public LineaHistorico(List<Factura> facturas,String numero) {
+        this.numero = numero;
         this.facturas = facturas;
     }
 
-    public String getCodigo() { return numero;}
+    public LineaHistorico(List<Factura> facturas) {
+        this.facturas = facturas;
+    }
+
+    public String getNumero() { return numero;}
     public List<Factura> getFacturas() { return facturas; }
 
     public void setNumero(String numero) {
         this.numero = numero;
         for(Factura factura : facturas) {
             if(factura.getCodigo().equals(numero)) {
-                cliente=factura.getCliente().getNombre();
-                cajero=factura.getCajero().getNombre();
+                clienteStr =factura.getCliente().getNombre();
+                cajeroStr=factura.getCajero().getNombre();
+                fecha = factura.getFecha();
             }
         }
     }
 
     public void setFacturas(List<Factura> facturas) { facturas = facturas; }
 
-
+    public String getNombreCliente() {return clienteStr;}
+    public String getNombreCajero() {return cajeroStr;}
+    public Fecha getFecha() {return fecha;}
 
     public String toString(){
         return "";

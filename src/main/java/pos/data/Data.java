@@ -3,6 +3,7 @@ package pos.data;
 import pos.logic.*;
 import jakarta.xml.bind.annotation.*;
 import pos.logic.LineaEstadistica;
+import pos.logic.LineaHistorico;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +32,17 @@ public class Data {
     @XmlElement(name = "lineaEstadistica")
     private List<LineaEstadistica> lineasEstadisticas;
 
+    @XmlElementWrapper(name = "lineasHistoricas")
+    @XmlElement(name = "lineasHistoricas")
+    private List<LineaHistorico> lineasHistoricas;
+
     public Data() {
         clientes = new ArrayList<>();
         cajero = new ArrayList<>();
         productos = new ArrayList<>();
         lineas = new ArrayList<>();
         lineasEstadisticas = new ArrayList<>();
+        lineasHistoricas = new ArrayList<>();
     }
 
     public List<Cliente> getClientes() {
@@ -50,4 +56,6 @@ public class Data {
     public List<Linea> getLineas() { return lineas; }
 
     public List<LineaEstadistica> getLineasEstadisticas() { return lineasEstadisticas; }
+
+    public List<LineaHistorico> getLineasHistoricas() { return lineasHistoricas; }
 }
