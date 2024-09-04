@@ -1,5 +1,6 @@
 package pos.presentation.facturacion;
 
+import pos.Application;
 import pos.logic.Cajero;
 import pos.logic.Linea;
 import pos.logic.Cliente;
@@ -15,10 +16,15 @@ public class Model extends AbstractModel {
     private List<Cliente> listClientes;
     DefaultComboBoxModel<Cajero> cajeros  ;
     DefaultComboBoxModel<Cliente> clientes;
+    Linea current;
+    int mode;
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         super.addPropertyChangeListener(listener);
         firePropertyChange(LISTLINEA);
+        firePropertyChange(LISTCLIENTE);
+        firePropertyChange(LISTCAJERO);
+        firePropertyChange(CURRENT);
     }
 
     public Model() {
@@ -30,6 +36,8 @@ public class Model extends AbstractModel {
         this.listClientes = listCliente;
         cajeros=new DefaultComboBoxModel<Cajero>();
         clientes=new DefaultComboBoxModel<Cliente>();
+        current=new Linea();
+        this.mode = Application.MODE_CREATE;
 
         if(listCliente != null) {
             for (Cliente cliente : listCliente) {
@@ -54,13 +62,32 @@ public class Model extends AbstractModel {
 
     public void setListCajeros(List<Cajero> list) {
         this.listCajeros = list;
+        firePropertyChange(LISTCAJERO);
     }
     public List<Cajero> getListCajeros() {
         return listCajeros;
     }
     public void setListClientes(List<Cliente> list) {
         this.listClientes = list;
+        firePropertyChange(LISTCLIENTE);
     }
+
+    public Linea getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Linea current) {
+        this.current = current;
+    }
+
+    public int getMode() {
+        return mode;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+
     public List<Cliente> getListClientes() {
         return listClientes;
     }
@@ -72,12 +99,15 @@ public class Model extends AbstractModel {
         return clientes;
     }
 
-    public void actualizarComboBox(){
-        clientes.removeAllElements();
+    public void actualizarComboBoxCajeros(){
         cajeros.removeAllElements();
         for(Cajero cajero: listCajeros){
             cajeros.addElement(cajero);
         }
+    }
+
+    public void actualizarComboBoxClientes() {
+        clientes.removeAllElements();
         for(Cliente cliente: listClientes){
             clientes.addElement(cliente);
         }
@@ -86,5 +116,6 @@ public class Model extends AbstractModel {
     public static final String LISTLINEA = "listLinea";
     public static final String LISTCAJERO = "listCajero";
     public static final String LISTCLIENTE = "listCliente";
+    public static final String CURRENT = "current";
 }
 

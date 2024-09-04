@@ -17,7 +17,6 @@ public class Linea {
         codigo="LIN"+id++;      //Creo que seria asi para que todas las lineas sean diferentes,aunque el problema es cuando se creen los objetos automaticos
     }
     public Linea() {
-
     }
     public Linea (String codigo){
         this.codigo = codigo;   //Por ejemplo si se ocupa crear una linea a partir de otra para que no modifique "id"

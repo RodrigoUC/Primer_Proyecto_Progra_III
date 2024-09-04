@@ -1,10 +1,15 @@
 package pos.presentation.facturacion;
 
-import pos.Application;
-import pos.presentation.facturacion.TableModel;
+import pos.logic.Cliente;
+import pos.logic.Linea;
+import pos.logic.Producto;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -13,22 +18,99 @@ public class View implements PropertyChangeListener {
     public JPanel getPanel() {
         return panel;
     }
+    public View(){
+        cobrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            //Aqui tiene que verificar que exista al menos una linea
+            }
+        });
+        buscarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Boton de buscar
+            }
+        });
+        cantidadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Boton de cantidad
+            }
+        });
+        quitarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Boton de quitar linea
+            }
+        });
+        descuentoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Boton de descuento
+            }
+        });
+        cancelarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Boton de borrar todas las lineas
+            }
+        });
 
+
+        agregarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Boton para verificar si existe un producto con ese codigo
+                try {
+                    Producto prod = controller.buscarProducto(codProducto.getText());
+                controller.save(prod);
+                    JOptionPane.showMessageDialog(panel, "LINEA AGREGADA", "", JOptionPane.INFORMATION_MESSAGE);
+                }
+             catch (Exception ex) {
+                JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
+            }
+            }
+        });
+        lista.addMouseListener(new MouseAdapter() {
+
+        });
+        lista.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = lista.getSelectedRow();
+//                controller.edit(row);
+            }
+        });
+    }
 
     //MVC
     pos.presentation.facturacion.Model model;
     pos.presentation.facturacion.Controller controller;
     private JComboBox cajeros;
     private JComboBox clientes;
-    private JPanel panel;
+    private JPanel pan;
+    private JTextField codProducto;
+    private JButton agregarButton;
+    private JButton cobrar;
+    private JButton buscarButton;
+    private JButton cantidadButton;
+    private JButton quitarButton;
+    private JButton descuentoButton;
+    private JButton cancelarButton;
     private JTable lista;
+    private JPanel panel;
 
     public void setModel(Model model) {
         this.model = model;
+        model.addPropertyChangeListener(this);
     }
 
     public void setController(Controller controller) {
         this.controller = controller;
+    }
+
+    public void agregarLinea(Producto p){
+        model.getListLinea().add(new Linea(p,1,0)); //No estoy seguro si se manda 0% de descuento
     }
 
     @Override
@@ -42,6 +124,7 @@ public class View implements PropertyChangeListener {
                 columnModel.getColumn(1).setPreferredWidth(150);
                 columnModel.getColumn(3).setPreferredWidth(150);
                 break;
+
 //            case pos.presentation.clientes.Model.CURRENT:
 //                codigo.setText(model.getCurrent().getCodigo());
 //                descripcion.setText(model.getCurrent().getDescripcion());

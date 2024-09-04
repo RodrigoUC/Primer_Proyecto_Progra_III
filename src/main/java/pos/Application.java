@@ -55,8 +55,12 @@ public class Application {
         tabbedPane.addTab("Productos  ", productosIcon, productosView.getPanel());
 
         //Facturar
-//   pos.presentation.facturacion.Model facturacionModel = new pos.presentation.facturacion.Model();
-//       pos.presentation.facturacion.View facturacionView = new pos.presentation.facturacion.View();
+   pos.presentation.facturacion.Model facturacionModel = new pos.presentation.facturacion.Model();
+       pos.presentation.facturacion.View facturacionView = new pos.presentation.facturacion.View();
+       facturacionController = new pos.presentation.facturacion.Controller(facturacionView, facturacionModel);
+        Icon facturarIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/facturar.png"));
+
+        tabbedPane.addTab("Facturar  ", facturarIcon, facturacionView.getPanel());
 //        facturar
 
         // Estadisticas
@@ -86,6 +90,7 @@ public class Application {
     public static pos.presentation.clientes.Controller clientesController;
     public static Controller cajerosController;
     public static pos.presentation.productos.Controller productosController;
+    public static pos.presentation.facturacion.Controller facturacionController;
     public static pos.presentation.estadisticas.Controller estadisticasController;
     public static pos.presentation.historico.Controller historicoController;
 
