@@ -176,6 +176,28 @@ public class Service {
         return new ArrayList<Linea>();      //Creo que esta parte no es necesaria porqur al final nunca se va a necesitar buscar lineas
     }
 
+    //------------------------Factura---------------------------------
+
+    public void create(Factura e) throws Exception{
+        Factura result = data.getFacturas().stream().filter(i -> i.equals(e)).findFirst().orElse(null);
+        if (result==null) data.getFacturas().add(e);
+        else throw new Exception("Factura ya existe (codigo)");
+    }
+
+    public Factura read(Factura e) throws Exception{
+        //compara codigo de factura
+        Factura result = data.getFacturas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
+        if (result!=null) return result;
+        else throw new Exception("Factura no existe");
+    }
+
+    public List<Factura> search(Factura e){
+        return  data.getFacturas().stream()
+                .filter(i -> i.getNombreCliente().contains(e.getNombreCliente()))
+                .sorted(Comparator.comparing(Factura::getNombreCliente).thenComparing(Factura::getNombreCliente))
+                .collect(Collectors.toList());
+    }
+
     // ----------------------Linea estadística-------------------------
     public void create(LineaEstadistica e) throws Exception{
         LineaEstadistica result = data.getLineasEstadisticas().stream().filter(i -> i.equals(e)).findFirst().orElse(null);

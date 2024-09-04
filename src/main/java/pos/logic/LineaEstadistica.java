@@ -8,8 +8,7 @@ import java.util.List;
 public class LineaEstadistica {
     @XmlID
     private String codigo;
-    @XmlElementWrapper(name = "facturas")
-    @XmlElement(name = "factura")
+
     private List<Factura> facturas;
     @XmlIDREF
     private Categoria categoria;

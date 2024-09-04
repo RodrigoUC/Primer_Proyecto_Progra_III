@@ -43,6 +43,10 @@ public class Factura {
    }
    public Fecha getFecha() {return fecha;}
 
+   public String getNombreCliente(){
+      return cliente.getNombre();
+   }
+
    public double getTotal() {
       double total = 0.0;
       for (Linea l : vec) {

@@ -44,7 +44,7 @@ public class Model extends AbstractModel {
                 clientes.addElement(cliente);
             }
         }
-        if(listLinea != null) {
+        if(listCajero != null) {
             for (Cajero cajero : listCajero) {
                 cajeros.addElement(cajero);
             }

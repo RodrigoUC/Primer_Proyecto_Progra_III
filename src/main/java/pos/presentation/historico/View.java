@@ -29,7 +29,7 @@ public class View implements PropertyChangeListener {
                 try{
                     Cliente filter = new Cliente();
                     filter.setNombre(Cliente.getText());
-//                    controller.search(filter);
+                    controller.search(filter);
                 } catch (Exception ex){
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
                 }

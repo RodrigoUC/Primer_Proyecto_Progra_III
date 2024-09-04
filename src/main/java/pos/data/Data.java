@@ -28,6 +28,11 @@ public class Data {
     @XmlElement(name = "linea")
     private List<Linea> lineas;
 
+    @XmlElementWrapper(name = "facturas")
+    @XmlElement(name = "factura")
+    private List<Factura> facturas;
+
+
     @XmlElementWrapper(name = "lineasEstadisticas")
     @XmlElement(name = "lineaEstadistica")
     private List<LineaEstadistica> lineasEstadisticas;
@@ -41,6 +46,7 @@ public class Data {
         cajero = new ArrayList<>();
         productos = new ArrayList<>();
         lineas = new ArrayList<>();
+        facturas = new ArrayList<>();
         lineasEstadisticas = new ArrayList<>();
         lineasHistoricas = new ArrayList<>();
     }
@@ -54,6 +60,8 @@ public class Data {
     public List<Producto> getProductos() { return productos; }
 
     public List<Linea> getLineas() { return lineas; }
+
+    public List<Factura> getFacturas() { return facturas; }
 
     public List<LineaEstadistica> getLineasEstadisticas() { return lineasEstadisticas; }
 
