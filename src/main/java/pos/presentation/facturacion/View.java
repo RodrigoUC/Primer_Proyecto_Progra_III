@@ -1,6 +1,5 @@
 package pos.presentation.facturacion;
 
-import pos.logic.Cliente;
 import pos.logic.Linea;
 import pos.logic.Producto;
 

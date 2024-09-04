@@ -6,7 +6,7 @@ public class Linea {
 
     private Producto producto;
     private int cantidad;
-    private double descuento;
+    private double descuento; //2%, no 0.02. Si lo van a modificar es en getTotalLinea()
     private String codigo;
     private static int id=0;
 
@@ -32,4 +32,9 @@ public class Linea {
     public Double getDescuento(){ return descuento; }
     public int getCantidad(){return cantidad; }
     public String getCodigo(){return codigo;}
+
+    public double getTotalLinea(){
+        return (producto.getPrecio()*cantidad)*(descuento/100);
+    }
+
 }

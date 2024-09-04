@@ -30,12 +30,40 @@ public class Factura {
    public Cajero getCajero() {
       return cajero;
    }
-   public Cliente getCliente() {
-      return cliente;
-
-   }
+   public Cliente getCliente() {return cliente;}
    public Linea[] getVec() {
       return vec;
+   }
+
+
+   public double getTotal() {
+      double total = 0.0;
+      for (Linea l : vec) {
+         total += l.getTotalLinea();
+      }
+      return total*(cliente.getDescuento()/100);
+   }
+   public double getSubTotal() {
+      double total = 0.0;
+      for (Linea l : vec) {
+         total += l.getTotalLinea();
+      }
+      return total;
+   }
+   public double getDescuentos() {
+      double desc = 0.0;
+      for (Linea l : vec) {
+         desc += l.getDescuento();
+      }
+      return (desc+cliente.getDescuento())/100;
+   }
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+      Factura factura = (Factura) o;
+      return Objects.equals(codigo, factura.codigo);
    }
 
 }

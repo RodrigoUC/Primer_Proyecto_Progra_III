@@ -34,13 +34,14 @@ public class LineaEstadistica {
     public void setFacturas(List<Factura> facturas) { facturas = facturas; }
     public void setCategoria(Categoria categoria) { this.categoria = categoria; }
 
-//    public Double totalDeVentas() {
-//       Double total = 0.0;
-//        for(Factura factura : facturas) {
-//           total += factura.getTotal();
-//       }
-//        return total;
-//    }
+    public Double totalDeVentas() {
+        double total = 0.0;
+        for (Factura factura : facturas) {
+            total += factura.getTotal();
+        }
+        return total;
+    }
+
 
     public String toString(){
         return categoria.toString();
