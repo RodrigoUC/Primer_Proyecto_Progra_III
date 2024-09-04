@@ -1,6 +1,6 @@
 package pos.presentation.historico;
 
-import org.jfree.util.PublicCloneable;
+//import org.jfree.util.PublicCloneable;
 import pos.logic.Cliente;
 import pos.presentation.AbstractTableModel;
 
