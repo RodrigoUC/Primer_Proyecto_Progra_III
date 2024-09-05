@@ -4,6 +4,7 @@ import pos.Application;
 import pos.logic.Cajero;
 import pos.logic.Linea;
 import pos.logic.Cliente;
+import pos.logic.Producto;
 import pos.presentation.AbstractModel;
 
 import javax.swing.*;
@@ -17,7 +18,12 @@ public class Model extends AbstractModel {
     DefaultComboBoxModel<Cajero> cajeros  ;
     DefaultComboBoxModel<Cliente> clientes;
     Linea current;
-    int mode;
+//    int mode;
+
+    //View Buscar
+    Producto filter;
+    List<Producto> list;
+
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         super.addPropertyChangeListener(listener);
@@ -36,8 +42,8 @@ public class Model extends AbstractModel {
         this.listClientes = listCliente;
         cajeros=new DefaultComboBoxModel<Cajero>();
         clientes=new DefaultComboBoxModel<Cliente>();
-        current=new Linea();
-        this.mode = Application.MODE_CREATE;
+        current=null;
+//        this.mode = Application.MODE_CREATE;
 
         if(listCliente != null) {
             for (Cliente cliente : listCliente) {
@@ -81,13 +87,13 @@ public class Model extends AbstractModel {
         firePropertyChange(CURRENT);
     }
 
-    public int getMode() {
-        return mode;
-    }
-
-    public void setMode(int mode) {
-        this.mode = mode;
-    }
+//    public int getMode() {
+//        return mode;
+//    }
+//
+//    public void setMode(int mode) {
+//        this.mode = mode;
+//    }
 
     public List<Cliente> getListClientes() {
         return listClientes;
@@ -100,15 +106,17 @@ public class Model extends AbstractModel {
         return clientes;
     }
 
-    public void actualizarComboBoxCajeros(){
+    public void actualizarComboBoxCajeros(List<Cajero> lis){
         cajeros.removeAllElements();
+        listCajeros=lis;
         for(Cajero cajero: listCajeros){
             cajeros.addElement(cajero);
         }
     }
 
-    public void actualizarComboBoxClientes() {
+    public void actualizarComboBoxClientes(List<Cliente> lis) {
         clientes.removeAllElements();
+        listClientes=lis;
         for(Cliente cliente: listClientes){
             clientes.addElement(cliente);
         }

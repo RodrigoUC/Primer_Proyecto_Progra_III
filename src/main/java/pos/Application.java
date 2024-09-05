@@ -7,6 +7,8 @@ import pos.presentation.cajeros.View;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -85,6 +87,19 @@ public class Application {
         window.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
         window.setTitle("POS: Point Of Sale");
         window.setVisible(true);
+
+        tabbedPane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {   //ChangeEvent es cuando se activa cuando se cambia la pestana en la que estaba
+                // Obtener el índice de la pestaña seleccionada
+                int selectedIndex = tabbedPane.getSelectedIndex();
+                // Llamar al método que deseas actualizar
+                if(selectedIndex == 0){
+                    facturacionModel.actualizarComboBoxCajeros(cajerosModel.getList());
+                    facturacionModel.actualizarComboBoxClientes(clientesModel.getList());   //No se si esto sea legal jaja, pero pienso que se debe actualizar desde afuera
+                }
+            }
+        });
     }
 
     public static pos.presentation.clientes.Controller clientesController;
