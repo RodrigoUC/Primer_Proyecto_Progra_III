@@ -35,6 +35,7 @@ public class Factura {
    public void setCliente(Cliente cliente) {
       this.cliente = cliente;
    }
+   public void setFecha(Fecha fecha) { this.fecha = fecha; }
    public Cajero getCajero() {
       return cajero;
    }
@@ -55,6 +56,7 @@ public class Factura {
       }
       return total*(cliente.getDescuento()/100);
    }
+
    public double getSubTotal() {
       double total = 0.0;
       for (Linea l : vec) {

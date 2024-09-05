@@ -3,11 +3,11 @@ package pos.presentation.estadisticas;
 import pos.logic.Categoria;
 import pos.logic.LineaEstadistica;
 
-//import org.jfree.data.category.DefaultCategoryDataset;
-//import org.jfree.chart.ChartFactory;
-//import org.jfree.chart.ChartPanel;
-//import org.jfree.chart.plot.PlotOrientation;
-//import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.JFreeChart;
 
 import java.awt.*;
 
@@ -36,41 +36,37 @@ public class View implements PropertyChangeListener {
     private JPanel graficoPanel;
     private JButton deleteOne;
     private JButton deleteAll;
-//    private DefaultCategoryDataset estadisticasDataset;
-//    private JFreeChart graficoChart;
+    private DefaultCategoryDataset estadisticasDataset;
+    private JFreeChart graficoChart;
 
     public JPanel getPanel() { return panel; }
 
     public View(){
 
         // Grafica
-//        estadisticasDataset = new DefaultCategoryDataset();
+        estadisticasDataset = new DefaultCategoryDataset();
 
-        // Leer los datos y ingresarlos al estadistica dataset
-        // Leer los datos y agregarlos al dataset (ejemplo básico)
-//        estadisticasDataset.addValue(500, "Aceite", "Enero");
-//        estadisticasDataset.addValue(200, "Aceite", "Febrero");
-//        estadisticasDataset.addValue(0, "Chocolate", "Enero");
-//        estadisticasDataset.addValue(700, "Chocolate", "Febrero");
-//        estadisticasDataset.addValue(800, "Frijoles", "Marzo");
-//        estadisticasDataset.addValue(600, "Frijoles", "Abril");
+    // Leer los datos y ingresarlos al estadistica dataset
+        estadisticasDataset.addValue(0, "Aceite", "2024-7");
+        estadisticasDataset.addValue(1000, "Aceite", "2024-8");
+        estadisticasDataset.addValue(1000, "Aguas", "2024-7");
+        estadisticasDataset.addValue(2000, "Aguas", "2024-8");
 
-//        graficoChart = ChartFactory.createLineChart("Ventas por mes", "Mes", "Ventas"
-//                , estadisticasDataset, PlotOrientation.VERTICAL, true, true, false);
+        graficoChart = ChartFactory.createLineChart("Ventas por mes", "Mes", "Ventas"
+                , estadisticasDataset, PlotOrientation.VERTICAL, true, true, false);
 
 
-        // Crear un ChartPanel con el gráfico
-//        ChartPanel chartPanel = new ChartPanel(graficoChart);
-//        chartPanel.setPreferredSize(new Dimension(800, 600));
+//         Crear un ChartPanel con el gráfico
+        ChartPanel chartPanel = new ChartPanel(graficoChart);
+        chartPanel.setPreferredSize(new Dimension(800, 600));
 
-        // Añadir el ChartPanel al JPanel existente
-//        graficoPanel.setLayout(new BorderLayout());
-//        graficoPanel.add(chartPanel, BorderLayout.CENTER);
-//        graficoPanel.validate();
+//         Añadir el ChartPanel al JPanel existente
+        graficoPanel.setLayout(new BorderLayout());
+        graficoPanel.add(chartPanel, BorderLayout.CENTER);
+        graficoPanel.validate();
 
 
         // Eventos
-
         deleteOne.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

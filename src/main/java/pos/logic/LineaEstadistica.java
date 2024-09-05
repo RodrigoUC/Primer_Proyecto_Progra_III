@@ -8,39 +8,41 @@ import java.util.List;
 public class LineaEstadistica {
     @XmlID
     private String codigo;
-
-    private List<Factura> facturas;
+    @XmlIDREF
+    private Factura factura;
+    private Fecha date;
     @XmlIDREF
     private Categoria categoria;
+    private static int id = 0;
 
     public LineaEstadistica() {
         this.codigo = "";
         this.categoria = new Categoria();
-        this.facturas = new ArrayList<>();
+        this.factura = new Factura();
+        this.codigo = "FAC-"+id++;
     }
 
-    public LineaEstadistica(List<Factura> facturas, Categoria categoria,String codigo) {
+    public LineaEstadistica(Factura factura, Categoria categoria,String codigo) {
         this.codigo = codigo;
         this.categoria = categoria;
-        this.facturas = facturas;
+        this.factura = factura;
     }
 
     public String getCodigo() { return codigo;}
-    public List<Factura> getFacturas() { return facturas; }
+    public Factura getFactura() { return factura; }
     public Categoria getCategoria() { return categoria; }
 
     public void setCodigo(String codigo) { this.codigo = codigo; }
-    public void setFacturas(List<Factura> facturas) { facturas = facturas; }
+    public void setFactura(Factura factura) { factura = factura; }
     public void setCategoria(Categoria categoria) { this.categoria = categoria; }
 
-    public Double totalDeVentas() {
-        double total = 0.0;
-        for (Factura factura : facturas) {
-            total += factura.getTotal();
-        }
-        return total;
-    }
-
+//    public Double totalDeVentas() {
+//        double total = 0.0;
+//        for (Factura factura : factura) {
+//            total += factura.getTotal();
+//        }
+//        return total;
+//    }
 
     public String toString(){
         return categoria.toString();
