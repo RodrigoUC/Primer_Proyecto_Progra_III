@@ -21,7 +21,7 @@ public class View implements PropertyChangeListener {
         cobrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            //Aqui tiene que verificar que exista al menos una linea
+            //Aqui se tiene que verificar que exista al menos una linea (Notitas para mi esquizofrenia)
             }
         });
         buscarButton.addActionListener(new ActionListener() {
@@ -52,6 +52,11 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Boton de borrar todas las lineas
+                int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea eliminar todas las lineas de la factura?", "Cancelar", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    // Código para eliminar todo
+                    controller.deleteAll();
+                }
             }
         });
 
@@ -77,7 +82,7 @@ public class View implements PropertyChangeListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int row = lista.getSelectedRow();
-//                controller.edit(row);
+             controller.edit(row);
             }
         });
     }

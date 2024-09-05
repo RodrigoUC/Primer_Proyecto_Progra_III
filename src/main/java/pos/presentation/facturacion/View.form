@@ -85,7 +85,9 @@
             <children>
               <component id="9a494" class="javax.swing.JTable" binding="lista">
                 <constraints/>
-                <properties/>
+                <properties>
+                  <fillsViewportHeight value="false"/>
+                </properties>
               </component>
             </children>
           </scrollpane>

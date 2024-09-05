@@ -78,6 +78,7 @@ public class Model extends AbstractModel {
 
     public void setCurrent(Linea current) {
         this.current = current;
+        firePropertyChange(CURRENT);
     }
 
     public int getMode() {

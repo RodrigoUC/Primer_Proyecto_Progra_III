@@ -173,7 +173,7 @@ public class Service {
 //                .filter(i -> i.getDescripcion().contains(e.getDescripcion()) && i.getCodigo().contains(e.getCodigo()))
 //                .sorted(Comparator.comparing(Producto::getDescripcion).thenComparing(Producto::getCodigo))
 //                .collect(Collectors.toList());
-        return new ArrayList<Linea>();      //Creo que esta parte no es necesaria porqur al final nunca se va a necesitar buscar lineas
+        return new ArrayList<Linea>();
     }
 
     //------------------------Factura---------------------------------
