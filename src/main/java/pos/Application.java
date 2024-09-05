@@ -30,6 +30,15 @@ public class Application {
             }
         });
 
+        //Facturar
+        pos.presentation.facturacion.Model facturacionModel = new pos.presentation.facturacion.Model();
+        pos.presentation.facturacion.View facturacionView = new pos.presentation.facturacion.View();
+        facturacionController = new pos.presentation.facturacion.Controller(facturacionView, facturacionModel);
+        Icon facturarIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/facturar.png"));
+
+        tabbedPane.addTab("Facturar  ", facturarIcon, facturacionView.getPanel());
+//        facturar
+
         // Clientes
         pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
         pos.presentation.clientes.View clientesView = new pos.presentation.clientes.View();
@@ -54,15 +63,6 @@ public class Application {
 
         tabbedPane.addTab("Productos  ", productosIcon, productosView.getPanel());
 
-        //Facturar
-   pos.presentation.facturacion.Model facturacionModel = new pos.presentation.facturacion.Model();
-       pos.presentation.facturacion.View facturacionView = new pos.presentation.facturacion.View();
-       facturacionController = new pos.presentation.facturacion.Controller(facturacionView, facturacionModel);
-        Icon facturarIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/facturar.png"));
-
-        tabbedPane.addTab("Facturar  ", facturarIcon, facturacionView.getPanel());
-//        facturar
-
         // Estadisticas
         pos.presentation.estadisticas.Model estadisticasModel = new pos.presentation.estadisticas.Model();
         pos.presentation.estadisticas.View estadisticasView = new pos.presentation.estadisticas.View();
@@ -79,7 +79,7 @@ public class Application {
 
         tabbedPane.addTab("Historico ", historicoIcon, historicoView.getPanel());
 
-        window.setSize(900,450);
+        window.setSize(1000,550);
         window.setResizable(false);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
