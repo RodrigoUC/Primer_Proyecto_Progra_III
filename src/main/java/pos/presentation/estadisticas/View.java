@@ -56,11 +56,11 @@ public class View implements PropertyChangeListener {
                 , estadisticasDataset, PlotOrientation.VERTICAL, true, true, false);
 
 
-//         Crear un ChartPanel con el gráfico
+//      Crear un ChartPanel con el gráfico
         ChartPanel chartPanel = new ChartPanel(graficoChart);
         chartPanel.setPreferredSize(new Dimension(800, 600));
 
-//         Añadir el ChartPanel al JPanel existente
+//      Añadir el ChartPanel al JPanel existente
         graficoPanel.setLayout(new BorderLayout());
         graficoPanel.add(chartPanel, BorderLayout.CENTER);
         graficoPanel.validate();

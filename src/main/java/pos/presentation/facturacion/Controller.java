@@ -36,7 +36,7 @@ public class Controller {
     }
     public void search(){
 //        model.setMode(Application.MODE_CREATE);
-        model.setListLinea(model.getListLinea());
+        model.setListLinea(model.getListLinea());   // No hacer metodo
     }
     public void deleteAll(){
         model.getListLinea().clear();

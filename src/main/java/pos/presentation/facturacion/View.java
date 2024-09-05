@@ -41,7 +41,7 @@ public class View implements PropertyChangeListener {
                     String texto = (String) JOptionPane.showInputDialog(null, "Cantidad?", model.getCurrent().getProducto().getDescripcion(), JOptionPane.PLAIN_MESSAGE, icono, null, "");       //No estoy seguro si eso se puede hacer (acceder al model desde view)
                     if (texto != null && validarInts(texto)) {
                         int cantidad = Integer.parseInt(texto);
-                        JOptionPane.showMessageDialog(null, "Se ingreo exitosamente la cantidad");
+                        JOptionPane.showMessageDialog(null, "Se ingreso exitosamente la cantidad");
                         controller.actualizarCantidad(cantidad);
                     }
                     else{
@@ -68,7 +68,7 @@ public class View implements PropertyChangeListener {
                     String texto = (String) JOptionPane.showInputDialog(null, "Descuento?", model.getCurrent().getProducto().getDescripcion(), JOptionPane.PLAIN_MESSAGE, icono, null, "");       //No estoy seguro si eso se puede hacer (acceder al model desde view)
                     if (texto != null && verificarDescuento(texto)) {
                         int descuento = Integer.parseInt(texto);
-                        JOptionPane.showMessageDialog(null, "Se ingreo exitosamente el descuento");
+                        JOptionPane.showMessageDialog(null, "Se ingreso exitosamente el descuento");
                 controller.actualizarDescuento(descuento);
                     }
                     else{
@@ -148,7 +148,7 @@ public class View implements PropertyChangeListener {
     public boolean validarInts(String texto){
         try {
             Integer.parseInt(texto);
-            return true;
+            return (0 < Integer.parseInt(texto));
         } catch (NumberFormatException e) {
             return false;
         }

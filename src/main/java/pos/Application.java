@@ -97,7 +97,7 @@ public class Application {
                 if(selectedIndex == 0){
                     facturacionModel.actualizarComboBoxCajeros(cajerosModel.getList());
                     facturacionModel.actualizarComboBoxClientes(clientesModel.getList());   //No se si esto sea legal jaja, pero pienso que se debe actualizar desde afuera
-                }
+                }// componenet shown
             }
         });
     }
