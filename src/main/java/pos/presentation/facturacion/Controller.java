@@ -6,13 +6,17 @@ import pos.logic.*;
 public class Controller {
     View view;
     Model model;
+    ViewBuscar viewBuscar;
 
     public Controller(View view, Model model) {
-        model.init(Service.instance().search(new Linea()), Service.instance().search(new Cajero()),Service.instance().search(new Cliente()));   //No se si para que se maneje mejor la actualizacion de las listas sea directamente la listas de Data
+        model.init(Service.instance().search(new Linea()), Service.instance().search(new Cajero()),Service.instance().search(new Cliente()));
         this.view = view;
         this.model = model;
+        this.viewBuscar=new ViewBuscar();
         view.setController(this);
         view.setModel(model);
+        viewBuscar.setController(this);
+        viewBuscar.setModel(model);
     }
 
     public Producto buscarProducto (String cod)throws Exception{
@@ -29,14 +33,10 @@ public class Controller {
     public void save (Linea lin)throws Exception{
         Service.instance().create(lin);
         model.getListLinea().add(lin);
-        search();
+        model.setListLinea(model.getListLinea());
     }
     public void update(Linea linea)throws Exception{        //Talvez estos 2 metodos se pueden unir pero no entiendo bien como se actualiza el mode
 
-    }
-    public void search(){
-//        model.setMode(Application.MODE_CREATE);
-        model.setListLinea(model.getListLinea());   // No hacer metodo
     }
     public void deleteAll(){
         model.getListLinea().clear();
@@ -51,9 +51,15 @@ public class Controller {
     public void edit(int row){
         Linea linea=model.getListLinea().get(row);
         try{
-//            model.setMode(Application.MODE_EDIT);
             model.setCurrent(linea);
         } catch (Exception ex) {}
+    }
+    public void editProd(int row){
+        Producto producto=model.getListProducto().get(row);
+        try{
+            model.setActual(producto);
+        }
+        catch(Exception e){}
     }
     public void delete(){
         try {
@@ -82,4 +88,29 @@ public class Controller {
         catch (Exception e) {}
     }
 
+    public void actualizarComboBox() {
+        model.actualizarComboBoxClientes(Service.instance().search(new Cliente()));
+        model.actualizarComboBoxCajeros(Service.instance().search(new Cajero()));
+    }
+
+    public void searchProducto(Producto filter) {
+    model.setFilter(filter);
+        model.setActual(null);
+        model.setListProducto(Service.instance().search(model.getFilter()));
+    }
+
+    public ViewBuscar getViewBuscar() {
+        model.setListProducto(Service.instance().search(new Producto()));
+        return viewBuscar;
+    }
+
+    public boolean productoActualEsNulo(){
+        return model.getActual()==null;
+    }
+    public void agregarProdctoActual(){
+        Linea linea=new Linea(model.getActual(),1,0);
+        model.getListLinea().add(linea);
+        model.setListLinea(model.getListLinea());
+        model.setActual(null);
+    }
 }

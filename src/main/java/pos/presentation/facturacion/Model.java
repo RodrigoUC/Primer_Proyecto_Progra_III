@@ -9,6 +9,7 @@ import pos.presentation.AbstractModel;
 
 import javax.swing.*;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Model extends AbstractModel {
@@ -18,11 +19,40 @@ public class Model extends AbstractModel {
     DefaultComboBoxModel<Cajero> cajeros  ;
     DefaultComboBoxModel<Cliente> clientes;
     Linea current;
-//    int mode;
+
+    public Producto getFilter() {
+        return filter;
+    }
+
+    public void setFilter(Producto filter) {
+        this.filter = filter;
+    }
 
     //View Buscar
     Producto filter;
-    List<Producto> list;
+    Producto actual;
+    List<Producto> listProducto;
+
+    public Producto getActual() {
+        return actual;
+    }
+
+    public void setActual(Producto actual) {
+        this.actual = actual;
+    }
+
+
+
+    public List<Producto> getListProducto() {
+        return listProducto;
+    }
+
+    public void setListProducto(List<Producto> listProducto) {
+        this.listProducto = listProducto;
+        firePropertyChange(LISTPRODUCTO);
+    }
+
+
 
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -31,6 +61,8 @@ public class Model extends AbstractModel {
         firePropertyChange(LISTCLIENTE);
         firePropertyChange(LISTCAJERO);
         firePropertyChange(CURRENT);
+        firePropertyChange(LISTPRODUCTO);
+        firePropertyChange(FILTER);
     }
 
     public Model() {
@@ -43,7 +75,9 @@ public class Model extends AbstractModel {
         cajeros=new DefaultComboBoxModel<Cajero>();
         clientes=new DefaultComboBoxModel<Cliente>();
         current=null;
-//        this.mode = Application.MODE_CREATE;
+        listProducto=new ArrayList<Producto>();
+        filter=new Producto();
+
 
         if(listCliente != null) {
             for (Cliente cliente : listCliente) {
@@ -87,14 +121,6 @@ public class Model extends AbstractModel {
         firePropertyChange(CURRENT);
     }
 
-//    public int getMode() {
-//        return mode;
-//    }
-//
-//    public void setMode(int mode) {
-//        this.mode = mode;
-//    }
-
     public List<Cliente> getListClientes() {
         return listClientes;
     }
@@ -126,5 +152,8 @@ public class Model extends AbstractModel {
     public static final String LISTCAJERO = "listCajero";
     public static final String LISTCLIENTE = "listCliente";
     public static final String CURRENT = "current";
+    public static final String LISTPRODUCTO = "listProducto";
+    public static final String FILTER = "filter";
+
 }
 

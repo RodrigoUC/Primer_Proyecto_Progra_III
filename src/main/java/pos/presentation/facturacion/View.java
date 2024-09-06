@@ -7,10 +7,8 @@ import pos.logic.Producto;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -26,10 +24,24 @@ public class View implements PropertyChangeListener {
             //Aqui se tiene que verificar que exista al menos una linea (Notitas para mi esquizofrenia)
             }
         });
+        panel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                controller.actualizarComboBox();
+            }
+        });
+
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Boton de buscar
+
+                int option = JOptionPane.showOptionDialog(null, controller.getViewBuscar().getPanel(), "Título del Diálogo",
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+            if(option == JOptionPane.OK_OPTION && !controller.productoActualEsNulo()){
+                controller.agregarProdctoActual();
+            }
+
             }
         });
         cantidadButton.addActionListener(new ActionListener() {
@@ -166,14 +178,13 @@ public class View implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case Model.LISTLINEA:
-                int[] cols = {pos.presentation.facturacion.TableModel.CODIGO, pos.presentation.facturacion.TableModel.ARTICULO, pos.presentation.facturacion.TableModel.CATEGORIA, pos.presentation.facturacion.TableModel.CANTIDAD, pos.presentation.facturacion.TableModel.PRECIO, pos.presentation.facturacion.TableModel.DESCUENTO, pos.presentation.facturacion.TableModel.NETO, pos.presentation.facturacion.TableModel.IMPORTE};
+                int[] cols = {TableModel.CODIGO, TableModel.ARTICULO, TableModel.CATEGORIA, TableModel.CANTIDAD, TableModel.PRECIO, TableModel.DESCUENTO, TableModel.NETO, TableModel.IMPORTE};
                 lista.setModel(new TableModel(cols, model.getListLinea()));
                 lista.setRowHeight(30);
                 TableColumnModel columnModel = lista.getColumnModel();
                 columnModel.getColumn(1).setPreferredWidth(150);
                 columnModel.getColumn(3).setPreferredWidth(150);
                 break;
-
             case Model.LISTCAJERO:
                 cajeros.setModel(model.getCajeros());
                 break;
