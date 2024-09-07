@@ -25,13 +25,10 @@ public class ViewCobrar implements PropertyChangeListener {
     private JLabel sinp;
     private JLabel precio;
 
+    //No se que tan legal es esto
+    private JDialog dialog;
+
     ViewCobrar(){
-        panel.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentShown(ComponentEvent e) {
-                precio.setText(String.valueOf(controller.total()));
-            }
-        });
     OKButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             try {
@@ -39,15 +36,21 @@ public class ViewCobrar implements PropertyChangeListener {
                     double total = Double.parseDouble(efectivo.getText()) + Double.parseDouble(tarjeta.getText()) + Double.parseDouble(cheque.getText() ) + Double.parseDouble(sinpe.getText());
                     if(Double.parseDouble(precio.getText()) <= total){
                     controller.guardarFactura();
+                    cerrar();
                         JOptionPane.showMessageDialog(null, "Se ha efectuado la compra", "Información", JOptionPane.INFORMATION_MESSAGE);
-                       panel.setVisible(false);
+
                     }
                 }
-                 JOptionPane.showMessageDialog(null, "Se ha introducido algun digito invalido", "Información", JOptionPane.INFORMATION_MESSAGE);
+
+                    JOptionPane.showMessageDialog(null, "Se ha introducido algun digito invalido", "Información", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
             }
         }
     });
+    }
+
+    public JPanel getPanel() {
+        return panel;
     }
 
     @Override
@@ -63,6 +66,23 @@ public class ViewCobrar implements PropertyChangeListener {
             return false;
         }
     }
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+    public void Cobrar(){
+        precio.setText(String.valueOf(controller.total()));
+        dialog = new JDialog((JFrame)null, "Cobrar",true);
+        dialog.setContentPane(panel);
+        dialog.pack();      //Ajusta el tamano automaticamente
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }
+    public void cerrar(){
+        if(dialog != null) {
+            dialog.dispose();
+        }
+    }
+
     Controller controller;
     Model model;
 }

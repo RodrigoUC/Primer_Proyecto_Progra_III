@@ -19,7 +19,7 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
             //Aqui se tiene que verificar que exista al menos una linea (Notitas para mi esquizofrenia)
-
+                controller.getViewCobrar().Cobrar();
             }
         });
         panel.addComponentListener(new ComponentAdapter() {
@@ -195,7 +195,7 @@ public class View implements PropertyChangeListener {
         Cajero cajero= (Cajero)cajeros.getSelectedItem();
         Cliente cliente= (Cliente)clientes.getSelectedItem();
         Factura factura = new Factura(cajero,cliente);
-        factura.setVec(controller.getListLinea());
+        factura.setVec(controller.getListLinea());  //Pasar a controller
         return factura;
     }
 
