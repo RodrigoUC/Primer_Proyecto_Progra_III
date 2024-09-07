@@ -9,16 +9,20 @@ public class Controller {
     View view;
     Model model;
     ViewBuscar viewBuscar;
+    ViewCobrar viewCobrar;
 
     public Controller(View view, Model model) {
         model.init(Service.instance().search(new Linea()), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
         this.view = view;
         this.model = model;
         this.viewBuscar = new ViewBuscar();
+        this.viewCobrar = new ViewCobrar();
         view.setController(this);
         view.setModel(model);
         viewBuscar.setController(this);
         viewBuscar.setModel(model);
+        viewCobrar.setController(this);
+
     }
 
     public Producto buscarProducto(String cod) throws Exception {
@@ -114,6 +118,9 @@ public class Controller {
         model.setListProducto(Service.instance().search(new Producto()));
         return viewBuscar;
     }
+    public ViewCobrar getViewCobrar() {
+        return viewCobrar;
+    }
 
     public boolean productoActualEsNulo() {
         return model.getActual() == null;
@@ -129,7 +136,7 @@ public class Controller {
     public double total() {
         double aux = 0;
         for (Linea linea : model.getListLinea()) {
-            aux += linea.getProducto().getPrecio() * linea.getCantidad();
+            aux += (linea.getProducto().getPrecio() * linea.getCantidad());
         }
         return aux;
     }
@@ -138,7 +145,7 @@ public class Controller {
     }
     public void guardarFactura(){
         try {
-            Factura factura =view.take();
+            Factura factura = view.take();
             Service.instance().create(factura);
         }
         catch(Exception e) {

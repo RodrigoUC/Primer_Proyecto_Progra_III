@@ -112,6 +112,5 @@ public class Application {
 
     public final static int MODE_CREATE=1;
     public final static int MODE_EDIT=2;
-
     public static Border BORDER_ERROR = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.RED);
 }
