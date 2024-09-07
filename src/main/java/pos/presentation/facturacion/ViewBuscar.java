@@ -59,7 +59,7 @@ public class ViewBuscar implements PropertyChangeListener {
                 descripcion.setText(model.getFilter().getDescripcion());
                 break;
         }
-     this.panel.revalidate();
+//     this.panel.revalidate();
     }
 
     JPanel getPanel() {

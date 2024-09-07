@@ -3,15 +3,22 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlID;
 import jakarta.xml.bind.annotation.XmlIDREF;
-
+import java.util.List;
 import java.util.Objects;
+import java.util.Vector;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Factura {
    @XmlID
    private String codigo;
-   private Linea[] vec;
+
+   public void setVec(List<Linea> vec) {
+      this.vec = vec;
+   }
+
+
+   private List<Linea> vec;
    @XmlIDREF
    private Cajero cajero;
    @XmlIDREF
@@ -40,7 +47,7 @@ public class Factura {
       return cajero;
    }
    public Cliente getCliente() {return cliente;}
-   public Linea[] getVec() {
+   public List<Linea> getVec() {
       return vec;
    }
    public Fecha getFecha() {return fecha;}
