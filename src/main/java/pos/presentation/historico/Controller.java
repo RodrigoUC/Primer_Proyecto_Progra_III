@@ -72,10 +72,10 @@ public class Controller {
     }
 
     //-----------------LISTA DE LINEAS DE UNA (1) FACTURA DEL CLIENTE----------
-    void lineasFacturaCliente(Factura factura)throws Exception{
-        List<Linea> listLineas = new ArrayList<Linea>(Arrays.asList(factura.getVec()));
-        model.setListLineasNormales(listLineas);
-    }
+//    void lineasFacturaCliente(Factura factura)throws Exception{
+//        List<Linea> listLineas = new ArrayList<Linea>(Arrays.asList(factura.getVec()));
+//        model.setListLineasNormales(listLineas);
+//    }
 
 
 //    public void save ()throws Exception{

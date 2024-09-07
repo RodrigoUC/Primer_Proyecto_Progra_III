@@ -4,9 +4,7 @@ import jakarta.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@XmlAccessorType(XmlAccessType.FIELD)
 public class LineaEstadistica {
-    @XmlID
     private String codigo;
 //    @XmlIDREF
     private List<Factura> factura;

@@ -14,7 +14,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class Application {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         }
@@ -65,13 +65,13 @@ public class Application {
 
         tabbedPane.addTab("Productos  ", productosIcon, productosView.getPanel());
 
-        // Estadisticas
-        pos.presentation.estadisticas.Model estadisticasModel = new pos.presentation.estadisticas.Model();
-        pos.presentation.estadisticas.View estadisticasView = new pos.presentation.estadisticas.View();
-        estadisticasController = new pos.presentation.estadisticas.Controller(estadisticasView, estadisticasModel);
-        Icon estadisticasIcon = new ImageIcon(Application.class.getResource("presentation/icons/statisctics.png"));
-
-        tabbedPane.addTab("Estadisticas ", estadisticasIcon, estadisticasView.getPanel());
+//        // Estadisticas
+//        pos.presentation.estadisticas.Model estadisticasModel = new pos.presentation.estadisticas.Model();
+//        pos.presentation.estadisticas.View estadisticasView = new pos.presentation.estadisticas.View();
+//        estadisticasController = new pos.presentation.estadisticas.Controller(estadisticasView, estadisticasModel);
+//        Icon estadisticasIcon = new ImageIcon(Application.class.getResource("presentation/icons/statisctics.png"));
+//
+//        tabbedPane.addTab("Estadisticas ", estadisticasIcon, estadisticasView.getPanel());
 
         // Historico
         pos.presentation.historico.Model historicoModel = new pos.presentation.historico.Model();
@@ -105,7 +105,7 @@ public class Application {
     public static Controller cajerosController;
     public static pos.presentation.productos.Controller productosController;
     public static pos.presentation.facturacion.Controller facturacionController;
-    public static pos.presentation.estadisticas.Controller estadisticasController;
+//    public static pos.presentation.estadisticas.Controller estadisticasController;
     public static pos.presentation.historico.Controller historicoController;
 
     public static JFrame window;

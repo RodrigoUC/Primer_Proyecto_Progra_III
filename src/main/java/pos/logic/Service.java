@@ -234,35 +234,35 @@ public class Service {
     }
 
     // ----------------------Linea estadística-------------------------
-    public void create(LineaEstadistica e) throws Exception{
-        LineaEstadistica result = data.getLineasEstadisticas().stream().filter(i -> i.equals(e)).findFirst().orElse(null);
-        if (result==null) data.getLineasEstadisticas().add(e);
-        else throw new Exception("Linea estadistica ya existe");
-    }
-
-    public LineaEstadistica read(LineaEstadistica e) throws Exception{
-        LineaEstadistica result = data.getLineasEstadisticas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
-        if (result!=null) return result;
-        else throw new Exception("Linea estadistica no existe");
-    }
-
-    public void update(LineaEstadistica e) throws Exception{
-        LineaEstadistica result;
-        try{
-            result = this.read(e);
-            data.getLineasEstadisticas().remove(result);
-            data.getLineasEstadisticas().add(e);
-        }catch (Exception ex) {
-            throw new Exception("Linea estadistica no existe");
-        }
-    }
-
-    public List<LineaEstadistica> search(LineaEstadistica e){
-        return data.getLineasEstadisticas().stream()
-                .filter(i->i.getCodigo().contains(e.getCodigo()))
-                .sorted(Comparator.comparing(LineaEstadistica::getCodigo))
-                .collect(Collectors.toList());
-    }
+//    public void create(LineaEstadistica e) throws Exception{
+//        LineaEstadistica result = data.getLineasEstadisticas().stream().filter(i -> i.equals(e)).findFirst().orElse(null);
+//        if (result==null) data.getLineasEstadisticas().add(e);
+//        else throw new Exception("Linea estadistica ya existe");
+//    }
+//
+//    public LineaEstadistica read(LineaEstadistica e) throws Exception{
+//        LineaEstadistica result = data.getLineasEstadisticas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
+//        if (result!=null) return result;
+//        else throw new Exception("Linea estadistica no existe");
+//    }
+//
+//    public void update(LineaEstadistica e) throws Exception{
+//        LineaEstadistica result;
+//        try{
+//            result = this.read(e);
+//            data.getLineasEstadisticas().remove(result);
+//            data.getLineasEstadisticas().add(e);
+//        }catch (Exception ex) {
+//            throw new Exception("Linea estadistica no existe");
+//        }
+//    }
+//
+//    public List<LineaEstadistica> search(LineaEstadistica e){
+//        return data.getLineasEstadisticas().stream()
+//                .filter(i->i.getCodigo().contains(e.getCodigo()))
+//                .sorted(Comparator.comparing(LineaEstadistica::getCodigo))
+//                .collect(Collectors.toList());
+//    }
 
     // ----------------------Linea historico (Listado)-------------------------
     public void create(LineaHistorico e) throws Exception{
