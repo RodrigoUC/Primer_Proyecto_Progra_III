@@ -16,7 +16,7 @@ public class Factura {
    private Cajero cajero;
    @XmlIDREF
    private Cliente cliente;
-   @XmlIDREF
+//   @XmlIDREF
    private Fecha fecha;
 
    public Factura() {

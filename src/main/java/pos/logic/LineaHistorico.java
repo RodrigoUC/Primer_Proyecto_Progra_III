@@ -8,10 +8,11 @@ import java.util.List;
 public class LineaHistorico { //Listado
     @XmlID
     private String numero;
-
+//    @XmlIDREF
     private Factura factura;
     private String clienteStr; //puse el string para no tener que jalar un obj
     private String cajeroStr;  //igual se filtra por el nombre del cliente en Busqueda
+//    @XmlIDREF
     private Fecha fecha;
     private double importe;
 
