@@ -11,10 +11,12 @@ import jakarta.xml.bind.annotation.XmlID;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Fecha {
     @XmlID
+    private String codigo;
     private LocalDate fecha;
 
     public Fecha() {
         this.fecha = LocalDate.now(); // establece la fecha actual
+        this.codigo = fecha.getYear() + "-" + fecha.getMonthValue() + "-" + fecha.getDayOfMonth();
     }
 
     public Fecha(int dia, int mes, int anio) {

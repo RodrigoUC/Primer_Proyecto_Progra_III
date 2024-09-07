@@ -8,7 +8,6 @@ import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Categoria {
-
     @XmlID
     String id;
     String nombre;
