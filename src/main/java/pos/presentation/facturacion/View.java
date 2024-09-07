@@ -1,9 +1,6 @@
 package pos.presentation.facturacion;
 
-import pos.logic.Cajero;
-import pos.logic.Cliente;
-import pos.logic.Linea;
-import pos.logic.Producto;
+import pos.logic.*;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
@@ -22,6 +19,7 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
             //Aqui se tiene que verificar que exista al menos una linea (Notitas para mi esquizofrenia)
+
             }
         });
         panel.addComponentListener(new ComponentAdapter() {
@@ -193,4 +191,12 @@ public class View implements PropertyChangeListener {
                 break;
         }
     }
+    public Factura take(){
+        Cajero cajero= (Cajero)cajeros.getSelectedItem();
+        Cliente cliente= (Cliente)clientes.getSelectedItem();
+        Factura factura = new Factura(cajero,cliente);
+        factura.setVec(controller.getListLinea());
+        return factura;
+    }
+
 }
