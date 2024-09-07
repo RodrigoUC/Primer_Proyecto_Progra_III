@@ -191,10 +191,39 @@ public class Service {
         else throw new Exception("Factura no existe");
     }
 
-    public List<Factura> readList(Factura e) throws Exception{
-        List<Factura> result = data.getFacturas().stream().filter(i->i.getFecha().equals(e.getFecha())).collect(Collectors.toList());
-        if(result!=null) return result;
-        else throw new Exception("Factura no existe");
+    public List<Factura> readList(Factura e, Categoria c) throws Exception {
+        // Filtra las facturas por fecha
+        List<Factura> facturasFiltradas = data.getFacturas().stream()
+                .filter(f -> f.getFecha().getAnio() == e.getFecha().getAnio() && f.getFecha().getMes() == e.getFecha().getMes())  // Filtra por mes y anio
+                .collect(Collectors.toList());
+
+        // Si no se encuentran facturas, lanza excepción
+        if (facturasFiltradas == null || facturasFiltradas.isEmpty()) {
+            throw new Exception("Factura no existe");
+        }
+
+        // Para cada factura filtrada, filtra las líneas por categoría
+        List<Factura> facturasConLineasFiltradas = facturasFiltradas.stream()
+                .map(factura -> {
+                    // Filtrar las líneas de la factura por la categoría c
+                    List<Linea> lineasFiltradas = factura.getVec().stream()
+                            .filter(linea -> linea.getCategoria().equals(c))
+                            .collect(Collectors.toList());
+
+                    // Crear una nueva factura con las líneas filtradas (o modificar las líneas de la existente)
+                    Factura nuevaFactura = new Factura(factura.getFecha(), lineasFiltradas);
+                    return nuevaFactura;
+                })
+                // Mantener solo las facturas que tienen líneas en la categoría
+                .filter(factura -> !factura.getVec().isEmpty())
+                .collect(Collectors.toList());
+
+        // Si la lista de facturas filtradas por líneas está vacía, lanza excepción
+        if (facturasConLineasFiltradas.isEmpty()) {
+            throw new Exception("No hay facturas con líneas en la categoría especificada");
+        }
+
+        return facturasConLineasFiltradas;
     }
 
     public List<Factura> search(Factura e){

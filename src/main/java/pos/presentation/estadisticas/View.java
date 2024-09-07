@@ -1,5 +1,6 @@
 package pos.presentation.estadisticas;
 
+import org.glassfish.jaxb.runtime.v2.util.FatalAdapter;
 import pos.logic.Categoria;
 import pos.logic.Factura;
 import pos.logic.Fecha;
@@ -13,6 +14,7 @@ import org.jfree.chart.JFreeChart;
 
 import java.awt.*;
 
+import javax.sound.sampled.Line;
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 import java.awt.event.ActionEvent;
@@ -44,6 +46,7 @@ public class View implements PropertyChangeListener {
     public JPanel getPanel() { return panel; }
 
     public View() throws Exception {
+
         // Grafica
         estadisticasDataset = new DefaultCategoryDataset();
 
@@ -94,7 +97,8 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-
+                    LineaEstadistica filter = new LineaEstadistica();
+                    controller.search(filter);
                 } catch (Exception ex){
                     JOptionPane.showMessageDialog(panel, ex.getMessage(),"Information", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -121,6 +125,8 @@ public class View implements PropertyChangeListener {
                     controller.edit(row);
             }
         });
+
+        controller.guardarLineaEstadistica();
     }
 
     // MVC
@@ -156,16 +162,32 @@ public class View implements PropertyChangeListener {
         this.panel.revalidate();
     }
 
-    public Factura takeFactura(){
+    public LineaEstadistica take() throws Exception {
+        Categoria cat = takeCategoria();
+        Fecha fecha = takeFecha();
+        LineaEstadistica estadistica = new LineaEstadistica(cat, fecha);
+        estadistica.setTotalVendido(controller.getTotalVendido());
+        return estadistica;
+    }
+
+    public Fecha takeFecha(){
         String str = mesInicioCBX.getSelectedItem().toString();
         String dia = str.substring(0,0);
         String mes = str.substring(2);
-        Fecha fech = new Fecha(Integer.parseInt(dia), Integer.parseInt(mes), Integer.parseInt(anioInicioCBX.getSelectedItem().toString()));
+        return new Fecha(Integer.parseInt(dia), Integer.parseInt(mes), Integer.parseInt(anioInicioCBX.getSelectedItem().toString()));
+    }
 
+    public Factura takeFactura(){
         Factura factura = new Factura();
-        factura.setFecha(fech);
-
+        factura.setFecha(takeFecha());
         return factura;
+    }
+
+    public Categoria takeCategoria(){
+        String str = categoriaCBX.getSelectedItem().toString();
+        Categoria categoria = new Categoria();
+        categoria.setNombre(str);
+        return categoria;
     }
 
 }

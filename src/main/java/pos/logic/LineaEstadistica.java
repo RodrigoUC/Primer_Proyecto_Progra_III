@@ -9,33 +9,39 @@ public class LineaEstadistica {
     @XmlID
     private String codigo;
 //    @XmlIDREF
-    private Factura factura;
+    private List<Factura> factura;
 //    @XmlIDREF
+    private Double totalVendido;
     private Fecha date;
 //    @XmlIDREF
     private Categoria categoria;
     private static int id = 0;
 
     public LineaEstadistica() {
-        this.codigo = "";
         this.categoria = new Categoria();
-        this.factura = new Factura();
+        this.date = new Fecha();
+        this.totalVendido = 0.0;
+        this.factura = new ArrayList<>();
         this.codigo = "FAC-"+id++;
     }
 
-    public LineaEstadistica(Factura factura, Categoria categoria,String codigo) {
-        this.codigo = codigo;
+    public LineaEstadistica(Categoria categoria, Fecha date) {
         this.categoria = categoria;
-        this.factura = factura;
+        this.date = date;
+        this.codigo = "FAC-"+id++;
     }
 
     public String getCodigo() { return codigo;}
-    public Factura getFactura() { return factura; }
+    public List<Factura> getFactura() { return factura; }
     public Categoria getCategoria() { return categoria; }
+    public Fecha getDate() { return date; }
+    public Double getTotalVendido() { return totalVendido; }
 
     public void setCodigo(String codigo) { this.codigo = codigo; }
-    public void setFactura(Factura factura) { factura = factura; }
+    public void setFactura(List<Factura> factura) { factura = factura; }
     public void setCategoria(Categoria categoria) { this.categoria = categoria; }
+    public void setDate(Fecha date) { this.date = date; }
+    public void setTotalVendido(Double totalVendido) { this.totalVendido = totalVendido; }
 
 //    public Double totalDeVentas() {
 //        double total = 0.0;

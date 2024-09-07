@@ -3,6 +3,8 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlID;
 import jakarta.xml.bind.annotation.XmlIDREF;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Vector;
@@ -17,7 +19,6 @@ public class Factura {
       this.vec = vec;
    }
 
-
    private List<Linea> vec;
    @XmlIDREF
    private Cajero cajero;
@@ -31,6 +32,14 @@ public class Factura {
       this.cliente = null;
       fecha = new Fecha();
    }
+
+   public Factura(Fecha fecha, List<Linea> vec) {
+      this.fecha = fecha;
+      this.vec = vec;
+      this.cajero = null;
+      this.cliente = null;
+   }
+
    public Factura(Cajero cajero, Cliente cliente) {
       this.cajero = cajero;
       this.cliente = cliente;
@@ -77,6 +86,16 @@ public class Factura {
          desc += l.getDescuento();
       }
       return (desc+cliente.getDescuento())/100;
+   }
+
+   public List<Linea> getLineaCategoria(Categoria cat){
+      List<Linea> lista = new ArrayList<Linea>();
+      for (Linea l : vec) {
+         if(l.getCategoria().equals(cat)){
+            lista.add(l);
+         }
+      }
+      return lista;
    }
 
    @Override

@@ -38,15 +38,36 @@ public class Controller {
         model.setList(Service.instance().search(model.getFilter()));
     }
 
-    public List<Factura> buscarFacturas(Fecha fecha, Categoria categoria) throws Exception {
-        Factura fact = new Factura();
-        fact.setFecha(view.takeDate());
-        fact
+    public List<Factura> buscarFacturas() throws Exception {
+        Factura fact = view.takeFactura();
+        Categoria categ = view.takeCategoria();
         try {
-            List<Factura> facturas = Service.instance().readList(fact);
+            List<Factura> facturas = Service.instance().readList(fact, categ);
             return facturas;
         } catch (Exception ex) {
             throw new Exception("No existe la factura");
+        }
+    }
+
+    public Double getTotalVendido() throws Exception {
+        try {
+            List<Factura> facturas = buscarFacturas();
+            Double total = 0.0;
+            for (Factura factura : facturas) {
+                total += factura.getTotal();
+            }
+            return total;
+        } catch (Exception ex){
+            throw new Exception("No existe");
+        }
+    }
+
+    public void guardarLineaEstadistica(){
+        try {
+            LineaEstadistica estadistica =view.take();
+            Service.instance().create(estadistica);
+        }
+        catch(Exception e) {
         }
     }
 
