@@ -2,6 +2,7 @@ package pos.presentation.estadisticas;
 
 import pos.Application;
 import pos.logic.Fecha;
+import pos.logic.Categoria;
 import pos.logic.LineaEstadistica;
 import pos.logic.Factura;
 import pos.logic.Service;
@@ -22,7 +23,6 @@ public class Controller {
         view.setModel(model);
     }
 
-
     public void edit(int row) {
         LineaEstadistica e = model.getList().get(row);
         try{
@@ -38,12 +38,13 @@ public class Controller {
         model.setList(Service.instance().search(model.getFilter()));
     }
 
-    public Factura buscarFactura(Fecha fecha) throws Exception {
-        Factura factura = new Factura();
-        factura.setFecha(fecha);
+    public List<Factura> buscarFacturas(Fecha fecha, Categoria categoria) throws Exception {
+        Factura fact = new Factura();
+        fact.setFecha(view.takeDate());
+        fact
         try {
-            factura = Service.instance().read(factura);
-            return factura;
+            List<Factura> facturas = Service.instance().readList(fact);
+            return facturas;
         } catch (Exception ex) {
             throw new Exception("No existe la factura");
         }

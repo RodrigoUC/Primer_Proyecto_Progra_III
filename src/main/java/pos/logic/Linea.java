@@ -34,7 +34,7 @@ public class Linea {
     public void setCantidad(int cantidad) {this.cantidad = cantidad;}
     public void setDescuento(double descuento) {this.descuento = descuento;}
 
-
+    public Categoria getCategoria() {return producto.getCategoria();}
 
     public Producto getProducto (){return producto;}
     public Double getDescuento(){ return descuento; }

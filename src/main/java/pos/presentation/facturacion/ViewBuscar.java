@@ -75,4 +75,5 @@ public class ViewBuscar implements PropertyChangeListener {
 
    private Model model;
     private Controller controller;
+
 }

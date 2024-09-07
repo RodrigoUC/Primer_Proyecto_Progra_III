@@ -191,6 +191,12 @@ public class Service {
         else throw new Exception("Factura no existe");
     }
 
+    public List<Factura> readList(Factura e) throws Exception{
+        List<Factura> result = data.getFacturas().stream().filter(i->i.getFecha().equals(e.getFecha())).collect(Collectors.toList());
+        if(result!=null) return result;
+        else throw new Exception("Factura no existe");
+    }
+
     public List<Factura> search(Factura e){
         return  data.getFacturas().stream()
                 .filter(i -> i.getNombreCliente().contains(e.getNombreCliente()))

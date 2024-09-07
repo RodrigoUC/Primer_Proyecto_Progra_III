@@ -1,8 +1,5 @@
 package pos.logic;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlID;
-import jakarta.xml.bind.annotation.XmlIDREF;
+import jakarta.xml.bind.annotation.*;
 
 import java.util.Objects;
 
@@ -11,6 +8,7 @@ import java.util.Objects;
 public class Factura {
    @XmlID
    private String codigo;
+//   @XmlElementWrapper
    private Linea[] vec;
    @XmlIDREF
    private Cajero cajero;
@@ -47,6 +45,17 @@ public class Factura {
 
    public String getNombreCliente(){
       return cliente.getNombre();
+   }
+
+   public List<Linea> getLineas(Categoria categoria){
+      List<Linea> lineas;
+
+      for(int i=0; i<vec.length; i++){
+         if(Objects.equals(vec[i].getCategoria(), categoria)){
+            lineas.push(vec[i]);
+         }
+      }
+      return lineas;
    }
 
    public double getTotal() {

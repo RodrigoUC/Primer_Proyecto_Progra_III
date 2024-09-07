@@ -1,6 +1,8 @@
 package pos.presentation.estadisticas;
 
 import pos.logic.Categoria;
+import pos.logic.Factura;
+import pos.logic.Fecha;
 import pos.logic.LineaEstadistica;
 
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -41,12 +43,11 @@ public class View implements PropertyChangeListener {
 
     public JPanel getPanel() { return panel; }
 
-    public View(){
-
+    public View() throws Exception {
         // Grafica
         estadisticasDataset = new DefaultCategoryDataset();
 
-    // Leer los datos y ingresarlos al estadistica dataset
+        // Leer los datos y ingresarlos al estadistica dataset
         estadisticasDataset.addValue(0, "Aceite", "2024-7");
         estadisticasDataset.addValue(1000, "Aceite", "2024-8");
         estadisticasDataset.addValue(1000, "Aguas", "2024-7");
@@ -56,11 +57,11 @@ public class View implements PropertyChangeListener {
                 , estadisticasDataset, PlotOrientation.VERTICAL, true, true, false);
 
 
-//      Crear un ChartPanel con el gráfico
+        //      Crear un ChartPanel con el gráfico
         ChartPanel chartPanel = new ChartPanel(graficoChart);
         chartPanel.setPreferredSize(new Dimension(800, 600));
 
-//      Añadir el ChartPanel al JPanel existente
+        //      Añadir el ChartPanel al JPanel existente
         graficoPanel.setLayout(new BorderLayout());
         graficoPanel.add(chartPanel, BorderLayout.CENTER);
         graficoPanel.validate();
@@ -153,6 +154,18 @@ public class View implements PropertyChangeListener {
                 break;
         }
         this.panel.revalidate();
+    }
+
+    public Factura takeFactura(){
+        String str = mesInicioCBX.getSelectedItem().toString();
+        String dia = str.substring(0,0);
+        String mes = str.substring(2);
+        Fecha fech = new Fecha(Integer.parseInt(dia), Integer.parseInt(mes), Integer.parseInt(anioInicioCBX.getSelectedItem().toString()));
+
+        Factura factura = new Factura();
+        factura.setFecha(fech);
+
+        return factura;
     }
 
 }
