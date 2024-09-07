@@ -8,10 +8,11 @@ import java.util.List;
 public class LineaEstadistica {
     @XmlID
     private String codigo;
-    @XmlIDREF
+//    @XmlIDREF
     private Factura factura;
+//    @XmlIDREF
     private Fecha date;
-    @XmlIDREF
+//    @XmlIDREF
     private Categoria categoria;
     private static int id = 0;
 

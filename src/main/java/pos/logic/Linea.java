@@ -1,13 +1,21 @@
 package pos.logic;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlID;
+import jakarta.xml.bind.annotation.XmlIDREF;
+
+import java.lang.reflect.Field;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Linea {
-
+    @XmlID
+    private String codigo;
+    @XmlIDREF
     private Producto producto;
     private int cantidad;
     private double descuento; //2%, no 0.02. Si lo van a modificar es en getTotalLinea()
-    private String codigo;
     private static int id=0;
 
     public Linea(Producto producto, int cantidad, double descuento) {

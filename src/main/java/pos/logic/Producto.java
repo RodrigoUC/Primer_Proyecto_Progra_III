@@ -3,6 +3,7 @@ package pos.logic;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlID;
+import jakarta.xml.bind.annotation.XmlIDREF;
 
 import java.util.Objects;
 
@@ -12,6 +13,7 @@ public class Producto {
     private String codigo;
     private String descripcion;
     private double precio;
+//    @XmlIDREF
     private Categoria categoria;
     private String unidad;
     private int existencia;

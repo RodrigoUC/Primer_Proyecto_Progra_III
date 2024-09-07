@@ -89,6 +89,7 @@ public class View implements PropertyChangeListener {
                 super.mouseClicked(e);
                 int row = list.getSelectedRow();
                 controller.edit(row);
+                categorias.setSelectedIndex(row);
             }
         });
     }
@@ -152,10 +153,10 @@ public class View implements PropertyChangeListener {
     public String nombreCategoria(String cat){
 
         return switch (cat) {
-            case "ACEITE - 001" -> "aceite";
-            case "AGUA - 002" -> "agua";
-            case "DULCE - 003" -> "dulce";
-            case "VINO - 004" -> "vino";
+            case "ACEITE - 001" -> "Aceite";
+            case "AGUA - 002" -> "Agua";
+            case "DULCE - 003" -> "Dulce";
+            case "VINO - 004" -> "Vino";
             default -> "Indefinida";
         };
     }

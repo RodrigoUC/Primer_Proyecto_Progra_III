@@ -7,14 +7,17 @@ import java.time.format.DateTimeParseException;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlID;
+import jakarta.xml.bind.annotation.XmlIDREF;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Fecha {
     @XmlID
+    private String codigo;
     private LocalDate fecha;
 
     public Fecha() {
         this.fecha = LocalDate.now(); // establece la fecha actual
+        this.codigo = fecha.getYear() + "-" + fecha.getMonthValue() + "-" + fecha.getDayOfMonth();
     }
 
     public Fecha(int dia, int mes, int anio) {
