@@ -196,6 +196,7 @@ public class View implements PropertyChangeListener {
         Cliente cliente= (Cliente)clientes.getSelectedItem();
         Factura factura = new Factura(cajero,cliente);
         factura.setVec(controller.getListLinea());  //Pasar a controller
+
         return factura;
     }
 

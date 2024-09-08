@@ -146,6 +146,10 @@ public class Controller {
     public void guardarFactura(){
         try {
             Factura factura = view.take();
+            model.init(Service.instance().search(new Linea()), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
+            for(Linea linea : factura.getVec()){
+                Service.instance().create(linea);
+            }
             Service.instance().create(factura);
         }
         catch(Exception e) {

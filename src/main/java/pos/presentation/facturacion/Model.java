@@ -69,9 +69,9 @@ public class Model extends AbstractModel {
     }
 
     public void init(List<Linea> listLinea,List<Cajero> listCajero, List<Cliente> listCliente) {
-        this.listLinea = listLinea;
-        this.listCajeros = listCajero;
-        this.listClientes = listCliente;
+        setListLinea(listLinea);
+        setListCajeros(listCajero);
+        setListClientes(listCliente);
         cajeros=new DefaultComboBoxModel<Cajero>();
         clientes=new DefaultComboBoxModel<Cliente>();
         current=null;

@@ -38,11 +38,14 @@ public class ViewCobrar implements PropertyChangeListener {
                     controller.guardarFactura();
                     cerrar();
                         JOptionPane.showMessageDialog(null, "Se ha efectuado la compra", "Información", JOptionPane.INFORMATION_MESSAGE);
-
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "No se ha pagado lo suficiente para cancelar la compra", "Información", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
-
+                else {
                     JOptionPane.showMessageDialog(null, "Se ha introducido algun digito invalido", "Información", JOptionPane.INFORMATION_MESSAGE);
+                }
             } catch (Exception ex) {
             }
         }
