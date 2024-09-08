@@ -10,9 +10,9 @@ import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Linea {
-    @XmlID
+//    @XmlID
     private String codigo;
-    @XmlIDREF
+//    @XmlIDREF
     private Producto producto;
     private int cantidad;
     private double descuento; //2%, no 0.02. Si lo van a modificar es en getTotalLinea()

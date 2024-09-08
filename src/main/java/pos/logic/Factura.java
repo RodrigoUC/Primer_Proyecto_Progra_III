@@ -12,7 +12,7 @@ import java.util.Vector;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Factura {
-   @XmlID
+//   @XmlID
    private String codigo;
 
    public void setVec(List<Linea> vec) {
@@ -20,9 +20,9 @@ public class Factura {
    }
 
    private List<Linea> vec;
-   @XmlIDREF
+//   @XmlIDREF
    private Cajero cajero;
-   @XmlIDREF
+//   @XmlIDREF
    private Cliente cliente;
 //   @XmlIDREF
    private Fecha fecha;

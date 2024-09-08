@@ -39,7 +39,9 @@ public class View implements PropertyChangeListener {
             if(option == JOptionPane.OK_OPTION && !controller.productoActualEsNulo()){
                 controller.agregarProdctoActual();
             }
-
+            else{
+              model.setActual(null);
+            }
             }
         });
         cantidadButton.addActionListener(new ActionListener() {
