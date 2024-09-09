@@ -48,6 +48,12 @@ public class Service {
         else throw new Exception("Cliente no existe");
     }
 
+    public Cliente readNombre(Cliente e) throws Exception{ //equals ya tiene override con id, ocupa nombre
+        Cliente result = data.getClientes().stream().filter(i->i.getNombre().equals(e.getNombre())).findFirst().orElse(null);
+        if (result!=null) return result;
+        else throw new Exception("Cliente no existe");
+    }
+
     public void update(Cliente e) throws Exception{
         Cliente result;
         try{

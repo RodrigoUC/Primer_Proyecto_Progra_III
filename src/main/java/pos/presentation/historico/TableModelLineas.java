@@ -2,13 +2,14 @@ package pos.presentation.historico;
 
 //import org.jfree.util.PublicCloneable;
 import pos.logic.Cliente;
+import pos.logic.Linea;
 import pos.presentation.AbstractTableModel;
 
 import java.util.List;
 
-public class TableModelLineas extends AbstractTableModel<Cliente> implements javax.swing.table.TableModel {
+public class TableModelLineas extends AbstractTableModel<Linea> implements javax.swing.table.TableModel {
 
-    public TableModelLineas(int[] cols, List<Cliente> rows) {
+    public TableModelLineas(int[] cols, List<Linea> rows) {
         super(cols, rows);
     }
 
@@ -22,16 +23,16 @@ public class TableModelLineas extends AbstractTableModel<Cliente> implements jav
     public static final int IMPORTE = 7;
 
     @Override
-    protected Object getPropertyAt(Cliente e, int col){
+    protected Object getPropertyAt(Linea e, int col){
         switch (cols[col]){
-            case CODIGO: return e.getId();
-            case ARTICULO: return e.getNombre();
-            case CATEGORIA: return "";
-            case CANTIDAD: return "";
-            case PRECIO: return "";
-            case DESCUENTO: return "";
-            case NETO: return "";
-            case IMPORTE: return "";
+            case CODIGO: return e.getCodigo();
+            case ARTICULO: return e.getProducto().getDescripcion();
+            case CATEGORIA: return e.getCategoria();
+            case CANTIDAD: return e.getCantidad();
+            case PRECIO: return e.getProducto().getPrecio();
+            case DESCUENTO: return e.getDescuento();
+            case NETO: return e.getTotalLinea(); //cambiar
+            case IMPORTE: return e.getTotalLinea(); //ver como funciona
             default: return "";
         }
     }

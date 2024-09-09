@@ -72,7 +72,9 @@ public class Cliente {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cliente cliente = (Cliente) o;
-        return Objects.equals(id, cliente.id);
+        if(!id.equals(cliente.id)) return Objects.equals(nombre, cliente.nombre);
+
+        return true;
     }
 
     @Override

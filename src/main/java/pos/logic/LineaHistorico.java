@@ -40,7 +40,7 @@ public class LineaHistorico { //Listado
     public String getNombreCliente() {return clienteStr;}
     public String getNombreCajero() {return cajeroStr;}
     public Fecha getFecha() {return fecha;}
-
+    public double getImporte() {return importe;}
     public String toString(){
         return "";
     }

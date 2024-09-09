@@ -23,62 +23,57 @@ public class Controller {
         view.setModel(model);
     }
 
-
-    //retorna una lista de facturas del cliente, segun su nombre
-    //y la setea en el model
+    public void editFacturas(int row){
+        Factura e = model.getListFacturasFilter().get(row); // o getListFacturas()
+        try {
+            model.setMode(Application.MODE_EDIT);
+            model.setCurrentFactura(Service.instance().read(e));
+        } catch (Exception ex) {}
+    }
 
     public void search(Cliente filter) throws Exception {
         model.setFilter(filter);
         model.setMode(Application.MODE_CREATE);
-        model.setCurrent(new Cliente());
         try{
-            listaFacturasCliente(); //AKA: model.setListFacturasFilter
+            //buscarCliente(filter.getNombre());
+            model.setCurrent(model.getFilter());
+            model.setListFacturasFilter(buscarFacturas());
         }
         catch(Exception e){
             throw new Exception("Cliente no tiene Facturas");
         }
     }
 
-    //AKA: setea el filter de Facturas con el filter de Cliente
-    public void listaFacturasCliente ()throws Exception{
+    public List<Factura> buscarFacturas() throws Exception {
+        List<Factura> facturas = new ArrayList<Factura>();
         Factura factura = new Factura();
-        factura.setCliente(model.getFilter()); //como un facturaFilter
-        List<Factura> listFacturasCliente;
-        try{
-            listFacturasCliente=Service.instance().search(factura);
-            model.setListFacturasFilter(listFacturasCliente);
-        }
-        catch(Exception e){
-            throw new Exception("Cliente no tiene Facturas");
-        }
-    }
-
-    //--------------------LISTADO DE LAS FACTURAS DEL CLIENTE---------------
-    //lista LineaHistorico a partir de listaFacturasCliente
-    //cada LineaHistorico se hace con el numero/codigo de Factura, sacado de listaFacturasCliente
-
-    void listadoFacturasCliente(String nombreCliente)throws Exception{
-        List<LineaHistorico> listadoHistorico = new ArrayList<LineaHistorico>();
         try {
-            int can = model.getListFacturas().size()-1;
-            for(int i=0;i<can;i++){
-                listadoHistorico.add(new LineaHistorico(model.getListFacturasFilter().get(i)));
-            }
+            factura.setCliente(model.getFilter()); //antes getCurrent, testear
+            facturas = Service.instance().search(factura);
+            return facturas;
 
         } catch (Exception e) {
-            throw new Exception("Cliente no tiene Facturas");
+            throw new Exception("No hay facturas del cliente");
         }
-        model.setListLineasListado(listadoHistorico);
+
+    }
+
+    Cliente buscarCliente(String nombre) throws Exception {
+        Cliente cliente = new Cliente();
+        cliente.setNombre(nombre);
+        try {
+            //cliente = Service.instance().read(cliente);
+            cliente = Service.instance().readNombre(cliente);
+            //cliente = (Cliente) Service.instance().search(cliente);
+            return cliente;
+        } catch (Exception e) {
+            throw new Exception("Cliente no existe");
+        }
     }
 
     //-----------------LISTA DE LINEAS DE UNA (1) FACTURA DEL CLIENTE----------
-//    void lineasFacturaCliente(Factura factura)throws Exception{
-//        List<Linea> listLineas = new ArrayList<Linea>(Arrays.asList(factura.getVec()));
-//        model.setListLineasNormales(listLineas);
-//    }
 
 
-//    public void save ()throws Exception{
-//
-//    }
+
+
 }

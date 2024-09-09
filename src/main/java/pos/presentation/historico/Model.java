@@ -16,6 +16,7 @@ public class Model extends AbstractModel {
     List<LineaHistorico> listLineasListado; //Pestana Listado
     List<Linea> listLineasNormales; // Lineas normales segun una(1) Factura
     Cliente current;
+    Factura currentFactura;
     int mode;
 
     @Override
@@ -24,8 +25,10 @@ public class Model extends AbstractModel {
         firePropertyChange(LISTFACTURASFILTER);
         firePropertyChange(LISTCLIENTES);
         firePropertyChange(LISTLINEASLISTADO);
+        firePropertyChange(LISTLINEASNORMALES);
         firePropertyChange(CURRENT);
         firePropertyChange(FILTER);
+        firePropertyChange(CURRENTFACTURA);
     }
 
     public Model() {
@@ -38,6 +41,7 @@ public class Model extends AbstractModel {
         this.listFacturasFilter = listFacturas;
         this.current = new Cliente();
         this.filter = new Cliente();
+        this.currentFactura = new Factura();
         this.mode = Application.MODE_CREATE;
     }
 
@@ -102,6 +106,12 @@ public class Model extends AbstractModel {
         firePropertyChange(CURRENT);
     }
 
+    public void setCurrentFactura(Factura currentFactura) {
+        this.currentFactura = currentFactura;
+        firePropertyChange(CURRENTFACTURA);
+    }
+    public Factura getCurrentFactura() {return currentFactura;}
+
     public static final String LISTFACTURASFILTER = "listFacturasFilter";
     public static final String LISTFACTURAS = "listFacturas";
     public static final String LISTCLIENTES = "listClientes";
@@ -109,4 +119,5 @@ public class Model extends AbstractModel {
     public static final String LISTLINEASNORMALES = "listLineasNormales";
     public static final String CURRENT = "current";
     public static final String FILTER = "filter";
+    public static final String CURRENTFACTURA = "currentFactura";
 }
