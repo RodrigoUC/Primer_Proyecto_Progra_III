@@ -16,7 +16,7 @@ public class Controller {
     Model model;
 
     public Controller(View view, Model model) {
-        model.init(Service.instance().search(new LineaHistorico()), model.getListFacturas(),Service.instance().search(new Cliente()));
+        model.init(Service.instance().search(new LineaHistorico()), model.getListLineasNormales(), model.getListFacturas(),Service.instance().search(new Cliente()));
         this.view = view;
         this.model = model;
         view.setController(this);
@@ -52,6 +52,8 @@ public class Controller {
         try {
             factura.setCliente(model.getFilter()); //antes getCurrent, testear
             facturas = Service.instance().search(factura);
+            System.out.println(factura.getNombreCliente()); //busca la lista de factuas del cliente pero retorna lista vacia
+            System.out.println(facturas.size());
             return facturas;
 
         } catch (Exception e) {

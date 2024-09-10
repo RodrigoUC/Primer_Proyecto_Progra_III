@@ -1,7 +1,7 @@
 package pos.presentation.historico;
 
 import pos.logic.Cliente;
-
+import pos.presentation.facturacion.TableModel;
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 import java.awt.event.ActionEvent;
@@ -73,25 +73,25 @@ public class View implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
-//            case Model.LISTLINEASLISTADO:
-//                int[] colsf = {TableModelFacturas.NUMERO, TableModelFacturas.CLIENTE, TableModelFacturas.CAJERO, TableModelFacturas.FECHA, TableModelFacturas.IMPORTE};
-//                listFacturas.setModel(new TableModelFacturas(colsf, model.getListLineasListado()));
-//                listFacturas.setRowHeight(30);
-//                TableColumnModel columnModelFacturas = listFacturas.getColumnModel();
-//                columnModelFacturas.getColumn(0).setPreferredWidth(150);
-//                columnModelFacturas.getColumn(1).setPreferredWidth(150);
-//                break;
-//            case Model.LISTLINEASNORMALES:
-//                int[] colsl = {TableModelLineas.CODIGO, TableModelLineas.ARTICULO, TableModelLineas.CATEGORIA, TableModelLineas.CANTIDAD, TableModelLineas.PRECIO, TableModelLineas.DESCUENTO, TableModelLineas.NETO, TableModelLineas.IMPORTE};
-//                listLineas.setModel(new TableModelLineas(colsl, model.getListLineasNormales()));
+            case Model.LISTLINEASLISTADO:
+                int[] colsf = {TableModelFacturas.NUMERO, TableModelFacturas.CLIENTE, TableModelFacturas.CAJERO, TableModelFacturas.FECHA, TableModelFacturas.IMPORTE};
+                listFacturas.setModel(new TableModelFacturas(colsf, model.getListLineasListado()));
+                listFacturas.setRowHeight(30);
+                TableColumnModel columnModelFacturas = listFacturas.getColumnModel();
+                columnModelFacturas.getColumn(0).setPreferredWidth(150);
+                columnModelFacturas.getColumn(1).setPreferredWidth(150);
+                break;
+            case Model.LISTLINEASNORMALES:
+                int[] colsl = {TableModel.CODIGO, TableModel.ARTICULO, TableModel.CATEGORIA, TableModel.CANTIDAD, TableModel.PRECIO, TableModel.DESCUENTO, TableModel.NETO, TableModel.IMPORTE};
+//                listLineas.setModel(new TableModel(colsl, model.getListLineasNormales()));
 //                listLineas.setRowHeight(30);
 //                TableColumnModel columnModelLineas = listLineas.getColumnModel();
 //                columnModelLineas.getColumn(0).setPreferredWidth(150);
 //                columnModelLineas.getColumn(1).setPreferredWidth(150);
-//                break;
-//            case Model.FILTER:
-//               Cliente.setText(model.getFilter().getNombre());
-//                break;
+                break;
+            case Model.FILTER:
+               Cliente.setText(model.getFilter().getNombre());
+                break;
         }
         this.panel.revalidate();
     }

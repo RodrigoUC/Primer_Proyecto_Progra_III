@@ -34,8 +34,9 @@ public class Model extends AbstractModel {
     public Model() {
     }
 
-    public void init(List<LineaHistorico> listLineasListado, List<Factura> listFacturas, List<Cliente> listClientes) {
+    public void init(List<LineaHistorico> listLineasListado, List<Linea> listLineasNormales, List<Factura> listFacturas, List<Cliente> listClientes) {
         this.listLineasListado = listLineasListado;
+        this.listLineasNormales = listLineasNormales;
         this.listFacturas = listFacturas;
         this.listClientes = listClientes;
         this.listFacturasFilter = listFacturas;
