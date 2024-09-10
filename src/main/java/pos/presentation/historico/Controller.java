@@ -38,6 +38,8 @@ public class Controller {
             //buscarCliente(filter.getNombre());
             model.setCurrent(model.getFilter());
             model.setListFacturasFilter(buscarFacturas());
+            model.setListLineasListado(listadoHistorico());
+            model.setListLineasNormales(listaLineasNormales());
         }
         catch(Exception e){
             throw new Exception("Cliente no tiene Facturas");
@@ -71,8 +73,31 @@ public class Controller {
         }
     }
 
-    //-----------------LISTA DE LINEAS DE UNA (1) FACTURA DEL CLIENTE----------
+    //-----------------LISTADO DE LINEAS DE FACTURAS DEL CLIENTE----------
 
+    List<LineaHistorico> listadoHistorico() throws Exception {
+        try{
+            List<LineaHistorico> listado = new ArrayList<LineaHistorico>();
+            for(Factura factura : model.getListFacturasFilter()){
+                listado.add(new LineaHistorico(factura));
+            }
+            return listado;
+        }catch (Exception e) {
+            throw new Exception("Error listado historico");
+        }
+
+    }
+
+    //--------------LISTA DE LINEAS NORMALES SEGUN LA CURRENT FACTURA--------
+
+    List<Linea> listaLineasNormales() throws Exception {
+        try{
+            return model.getCurrentFactura().getVec();
+        }catch (Exception e) {
+            throw new Exception("Error lista lineas");
+        }
+
+    }
 
 
 
