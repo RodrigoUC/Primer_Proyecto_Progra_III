@@ -3,6 +3,7 @@ package pos.presentation.facturacion;
 import pos.Application;
 import pos.logic.*;
 
+import javax.swing.*;
 import java.util.List;
 
 public class Controller {
@@ -37,18 +38,8 @@ public class Controller {
     }
 
     public void save(Linea lin) throws Exception {
-//        Service.instance().create(lin);
         model.getListLinea().add(lin);
         model.setListLinea(model.getListLinea());
-    }
-
-    public void update(Linea linea) throws Exception {        //Talvez estos 2 metodos se pueden unir pero no entiendo bien como se actualiza el mode
-
-    }
-
-    public void deleteAll() {
-        model.getListLinea().clear();
-        model.setListLinea(model.getListLinea());   //Asi se actualiza, aunque es como decir 1==1
     }
 
     public boolean listaLineasEstaVacia() {
@@ -77,18 +68,21 @@ public class Controller {
 
     public void delete() {
         try {
-            Service.instance().delete(model.getCurrent());          //Se borra de la lista general de lineas y de la lista de la factura
-            model.getListLinea().remove(model.getCurrent());
-            model.setCurrent(null);
-            model.setListLinea(model.getListLinea());
-        } catch (Exception e) {
+//            Service.instance().delete(model.getCurrent());
+// Se borra de la lista general de lineas y de la lista de la factura
+            if (!currentEsNulo()) {
+                model.getListLinea().remove(model.getCurrent());
+                model.setCurrent(null);
+                model.setListLinea(model.getListLinea());
+            }
         }
+            catch(Exception e){}
     }
 
     void actualizarDescuento(int descuento) {
         try {
             model.getCurrent().setDescuento((double) descuento / 100);
-//            Service.instance().update(model.getCurrent());
+            model.setCurrent(null);
             model.setListLinea(model.getListLinea());
         } catch (Exception e) {
         }
@@ -97,7 +91,7 @@ public class Controller {
     void actualizarCantidad(int cantidad) {          //Recordar preguntar aca sobre existencias
         try {
             model.getCurrent().setCantidad(cantidad);
-//            Service.instance().update(model.getCurrent());
+            model.setCurrent(null);
             model.setListLinea(model.getListLinea());
         } catch (Exception e) {
         }
@@ -133,15 +127,51 @@ public class Controller {
         model.setActual(null);
     }
 
-    public double total() {
+    public double total() {     //Calcular descuento
         double aux = 0;
         for (Linea linea : model.getListLinea()) {
-            aux += (linea.getProducto().getPrecio() * linea.getCantidad());
+            aux += (linea.getProducto().getPrecio() * linea.getCantidad())-(linea.getProducto().getPrecio() * linea.getCantidad()*linea.getDescuento());
         }
         return aux;
     }
     public List<Linea> getListLinea() {
         return model.getListLinea();
+    }
+    public void botonBuscar(){
+        int option = JOptionPane.showOptionDialog(null, getViewBuscar().getPanel(), "Título del Diálogo",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+        if(option == JOptionPane.OK_OPTION && !productoActualEsNulo()){
+            agregarProdctoActual();
+        }
+        else{
+            model.setActual(null);
+        }
+    }
+    String pedirDescuento(){
+        ImageIcon icono = new ImageIcon(getClass().getResource("/pos/presentation/icons/descuento.png"));
+        String texto = (String) JOptionPane.showInputDialog(null, "Descuento?", model.getCurrent().getProducto().getDescripcion(), JOptionPane.PLAIN_MESSAGE, icono, null, "");
+    return texto;
+    }
+    public void deleteAll(){
+        if(!listaLineasEstaVacia()) {
+            int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea eliminar todas las lineas de la factura?", "Cancelar", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                model.getListLinea().clear();
+                model.setListLinea(model.getListLinea());
+            }
+        }
+    }
+    public void cobrar(){
+        if(!listaLineasEstaVacia()) {
+            viewCobrar.Cobrar();
+        }
+    }
+
+
+    String pedirCantidad(){
+        ImageIcon icono = new ImageIcon(getClass().getResource("/pos/presentation/icons/cantidad.png"));
+        String texto = (String) JOptionPane.showInputDialog(null, "Cantidad?", model.getCurrent().getProducto().getDescripcion(), JOptionPane.PLAIN_MESSAGE, icono, null, "");
+   return texto;
     }
     public void guardarFactura(){
         try {

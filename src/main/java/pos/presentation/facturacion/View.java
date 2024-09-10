@@ -18,8 +18,7 @@ public class View implements PropertyChangeListener {
         cobrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            //Aqui se tiene que verificar que exista al menos una linea (Notitas para mi esquizofrenia)
-                controller.getViewCobrar().Cobrar();
+        controller.cobrar();
             }
         });
         panel.addComponentListener(new ComponentAdapter() {
@@ -33,15 +32,7 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Boton de buscar
-
-                int option = JOptionPane.showOptionDialog(null, controller.getViewBuscar().getPanel(), "Título del Diálogo",
-                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
-            if(option == JOptionPane.OK_OPTION && !controller.productoActualEsNulo()){
-                controller.agregarProdctoActual();
-            }
-            else{
-              model.setActual(null);
-            }
+                controller.botonBuscar();
             }
         });
         cantidadButton.addActionListener(new ActionListener() {
@@ -49,8 +40,7 @@ public class View implements PropertyChangeListener {
             public void actionPerformed(ActionEvent e) {
                 //Boton de cantidad
                 if (!controller.currentEsNulo()) {
-                    ImageIcon icono = new ImageIcon(getClass().getResource("/pos/presentation/icons/cantidad.png"));
-                    String texto = (String) JOptionPane.showInputDialog(null, "Cantidad?", model.getCurrent().getProducto().getDescripcion(), JOptionPane.PLAIN_MESSAGE, icono, null, "");       //No estoy seguro si eso se puede hacer (acceder al model desde view)
+                    String texto=controller.pedirCantidad();
                     if (texto != null && validarInts(texto)) {
                         int cantidad = Integer.parseInt(texto);
                         JOptionPane.showMessageDialog(null, "Se ingreso exitosamente la cantidad");
@@ -66,18 +56,15 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Boton de quitar linea
-                if(!controller.currentEsNulo()) {
-                    controller.delete();
-                }
+                controller.delete();
             }
         });
         descuentoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //Boton de descuento        Preguntar como hacer para que se desmarque despues de darle a esto
+                //Boton de descuento
                 if (!controller.currentEsNulo()) {
-                    ImageIcon icono = new ImageIcon(getClass().getResource("/pos/presentation/icons/descuento.png"));
-                    String texto = (String) JOptionPane.showInputDialog(null, "Descuento?", model.getCurrent().getProducto().getDescripcion(), JOptionPane.PLAIN_MESSAGE, icono, null, "");       //No estoy seguro si eso se puede hacer (acceder al model desde view)
+                   String texto= controller.pedirDescuento();
                     if (texto != null && verificarDescuento(texto)) {
                         int descuento = Integer.parseInt(texto);
                         JOptionPane.showMessageDialog(null, "Se ingreso exitosamente el descuento");
@@ -93,13 +80,7 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Boton de borrar todas las lineas
-                if(!controller.listaLineasEstaVacia()) {
-                    int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea eliminar todas las lineas de la factura?", "Cancelar", JOptionPane.YES_NO_OPTION);
-                    if (confirm == JOptionPane.YES_OPTION) {    //No se si este metodo debe llamarse aca o en controller, en todo caso seria un metodo bool
-                        // Código para eliminar todo
-                        controller.deleteAll();
-                    }
-                }
+               controller.deleteAll();
             }
         });
 
@@ -184,6 +165,7 @@ public class View implements PropertyChangeListener {
                 TableColumnModel columnModel = lista.getColumnModel();
                 columnModel.getColumn(1).setPreferredWidth(150);
                 columnModel.getColumn(3).setPreferredWidth(150);
+                //Total,cantidad
                 break;
             case Model.LISTCAJERO:
                 cajeros.setModel(model.getCajeros());
