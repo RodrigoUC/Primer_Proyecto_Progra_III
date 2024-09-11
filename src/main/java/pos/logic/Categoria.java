@@ -14,6 +14,11 @@ public class Categoria {
 
     public Categoria() {this("", "");}
 
+    public Categoria(String nombre){
+        this.nombre = nombre;
+        this.id = "";
+    }
+
     public Categoria(String nombre, String id) {
         this.nombre = nombre;
         this.id = id;
@@ -34,6 +39,4 @@ public class Categoria {
     public void setId(String id) {
         this.id = id;
     }
-
-
 }

@@ -112,10 +112,15 @@ public class Service {
     }
 
     // ----------------------PRODUCTOS-------------------------
-    public void create(Producto e) throws Exception{
-        Producto result = data.getProductos().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
-        if (result==null) data.getProductos().add(e);
+    public void create(Producto e) throws Exception {
+        Producto result = data.getProductos().stream().filter(i -> i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
+        Categoria resultado = data.getCategorias().stream().filter(i -> i.getNombre().equals(e.getCategoria().getNombre())).findFirst().orElse(null);
+
+        if (result == null) data.getProductos().add(e);
         else throw new Exception("Producto ya existe");
+
+        if (resultado == null) data.getCategorias().add(e.getCategoria());
+        // Aquí es posible que quieras evitar lanzar una excepción para categorías existentes.
     }
 
     public Producto read(Producto e) throws Exception{
@@ -244,6 +249,11 @@ public class Service {
     }
 
     // ----------------------Linea estadística-------------------------
+
+    public List<Categoria> search(Categoria e){
+        return data.getCategorias();
+    }
+
 //    public void create(LineaEstadistica e) throws Exception{
 //        LineaEstadistica result = data.getLineasEstadisticas().stream().filter(i -> i.equals(e)).findFirst().orElse(null);
 //        if (result==null) data.getLineasEstadisticas().add(e);
@@ -305,4 +315,21 @@ public class Service {
                 .collect(Collectors.toList());
     }
 
- }
+
+    // Calculos
+    public Double totalDelMes(String nombreCategoria, int anio, int mes) {
+        Double total = 0d;
+
+        // Filtrar las facturas por año y mes, luego sumar el total de las líneas de la categoría específica
+        total = data.getFacturas().stream()
+                .filter(factura -> factura.getFecha().getAnio() == anio && factura.getFecha().getMes() == mes)  // Comparación de enteros
+                .flatMap(factura -> factura.getLineas().stream())  // Obtener las líneas de cada factura
+                .filter(linea -> linea.getCategoria().getNombre().equals(nombreCategoria))  // Filtrar por categoría
+                .mapToDouble(linea -> linea.getTotal())  // Obtener el total de cada línea como DoubleStream
+                .sum();  // Sumar todos los totales
+
+        return total;
+    }
+    // Este método lo debe de llamar la cantidad de veces de diferencia.
+
+}

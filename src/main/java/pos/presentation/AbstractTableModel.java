@@ -9,6 +9,9 @@ public abstract class AbstractTableModel<E> extends javax.swing.table.AbstractTa
     protected int[] cols;
     protected String[] colNames;
 
+    public AbstractTableModel() {
+    }
+
     public AbstractTableModel(int[] cols, List<E> rows){
         this.cols=cols;
         this.rows=rows;

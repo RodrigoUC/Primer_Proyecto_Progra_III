@@ -1,69 +1,174 @@
-//package pos.presentation.estadisticas;
-//
-//import pos.Application;
-//import pos.logic.LineaEstadistica;
-//import pos.presentation.AbstractModel;
-//import java.beans.PropertyChangeListener;
-//import java.util.List;
-//
-//public class Model extends AbstractModel {
-//    LineaEstadistica filter;
-//    List<LineaEstadistica> list;
-//    LineaEstadistica current;
-//    int mode;
-//
-//    @Override
-//    public void addPropertyChangeListener(PropertyChangeListener listener) {
-//        super.addPropertyChangeListener(listener);
-//        firePropertyChange(LIST);
-//        firePropertyChange(CURRENT);
-//        firePropertyChange(FILTER);
+package pos.presentation.estadisticas;
+
+import pos.data.Data;
+import pos.logic.Categoria;
+import pos.logic.Service;
+import pos.presentation.AbstractModel;
+import pos.presentation.AbstractTableModel;
+
+import javax.swing.table.TableModel;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Model extends AbstractModel {
+    List<Categoria> categoriasAll;
+    List<Categoria> categorias;
+    Rango rango;
+    String[] rowsCat;
+    String[] colsFech;
+    Double[][] data;
+
+
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        super.addPropertyChangeListener(listener);
+        firePropertyChange(CATEGORIAS_ALL);
+        firePropertyChange(RANGE);
+        firePropertyChange(CATEGORIAS);
+        firePropertyChange(ROWS);
+        firePropertyChange(COLS);
+        firePropertyChange(DATA);
+    }
+
+    public void init (){
+        this.categoriasAll = new ArrayList<>();
+        this.categorias = new ArrayList<>();
+        this.rowsCat = new String[0];
+        this.colsFech = new String[1];
+        this.data = new Double[0][0];
+    }
+
+//    public Model() {
+//        this.categoriasAll = new ArrayList<>();
+//        this.categorias = new ArrayList<>();
+//        this.rowsCat = new String[0];
+//        this.colsFech = new String[1];
+//        this.data = new Double[0][0];
 //    }
-//
-//    public Model(){
-//    }
-//
-//    public void init(List<LineaEstadistica> list){
-//        this.list = list;
-//        this.current = new LineaEstadistica();
-//        this.filter = new LineaEstadistica();
-//        this.mode = Application.MODE_CREATE;
-//    }
-//
-//    public List<LineaEstadistica> getList() {
-//        return list;
-//    }
-//
-//    public void setList(List<LineaEstadistica> list){
-//        this.list = list;
-//        firePropertyChange(LIST);
-//    }
-//
-//    public LineaEstadistica getCurrent(){
-//        return current;
-//    }
-//
-//    public void setCurrent(LineaEstadistica current){
-//        this.current = current;
-//        firePropertyChange(CURRENT);
-//    }
-//
-//    public LineaEstadistica getFilter(){
-//        return filter;
-//    }
-//
-//    public void setFilter(LineaEstadistica filter){
-//        this.filter = filter;
-//        firePropertyChange(FILTER);
-//    }
-//
-//    public int getMode(){ return mode; }
-//
-//    public void setMode(int mode){ this.mode = mode; }
-//
-//    public static final String LIST = "list";
-//    public static final String CURRENT = "current";
-//    public static final String FILTER = "filter";
-//
-//
-//}
+
+    public List<Categoria> getCategoriasAll() {  return this.categoriasAll;  }
+    public List<Categoria> getCategorias() {  return this.categorias;  }
+    public Rango getRango() {  return rango;  }
+    public String[] getRows() {  return this.rowsCat;  }
+    public String[] getCols() {  return this.colsFech;  }
+    public Double[][] getData() {
+        return this.data;
+    }
+
+    public void setData(Double[][] data){
+        this.data = data;
+        firePropertyChange(DATA);
+    }
+    public void setCategoriasAll(List<Categoria> categoriasAll) {
+        this.categoriasAll = categoriasAll;
+        firePropertyChange(CATEGORIAS_ALL);
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+        firePropertyChange(CATEGORIAS);
+    }
+    public void setRango(Rango rango) {  this.rango = rango;  }
+    public void setRows(String[] rows) {
+        this.rowsCat = rows;
+        firePropertyChange(ROWS);
+    }
+    public void setCols(String[] cols) {
+        this.colsFech = cols;
+        firePropertyChange(COLS);
+    }
+
+    public static final String CATEGORIAS_ALL = "categoriasAll";
+    public static final String RANGE = "range";
+    public static final String CATEGORIAS = "categorias";
+    public static final String ROWS = "rows";
+    public static final String COLS = "cols";
+    public static final String DATA = "data";
+
+
+    public void init(List<Categoria> categorias, Rango rango, String[] rows, String[] cols, Double[][] data) {
+        this.categoriasAll = categorias;
+        this.rango = rango;
+        this.rowsCat = rows;
+        this.colsFech = cols;
+        this.data = data;
+    }
+
+
+    public TableModel getTableModel() {
+        return new AbstractTableModel() {
+            @Override
+            public int getRowCount() {
+                if(rowsCat != null)
+                    return rowsCat.length;
+                else
+                    return 0;
+            }
+
+            @Override
+            public int getColumnCount() {
+                if(colsFech != null)
+                    return colsFech.length;
+                else
+                    return 1;
+            }
+
+            @Override
+            public Object getValueAt(int row, int col) {
+                if (rowsCat == null || colsFech == null || data == null) {
+                    return 0.0;
+                }
+                if (col == 0) {
+                     return rowsCat[row];
+                } else if (data != null && row < data.length && col - 1 < data[row].length) {
+                     return data[row][col - 1];
+                }
+                return 0.0;
+            }
+
+            @Override
+            public Class<?> getColumnClass(int col) {
+                return Object.class; // Cambiar según el tipo de datos que necesitas
+            }
+
+
+            @Override
+            protected Object getPropertyAt(Object o, int col) {
+                // Primera columna: el nombre de la categoría
+                Categoria categoria = (Categoria)o;
+                if (col == 0) {
+                    return categoria.getNombre(); // Devuelve el nombre de la categoría
+                }
+
+                else if (col > 0 && col <= colsFech.length) {
+                    // Obtener el índice de la categoría en la lista de categorías
+                    int rowIndex = categorias.indexOf(categoria);
+                    // Devolver el valor de la matriz 'data' para esa fila y columna
+                    return data[rowIndex][col - 1]; // La columna 1 de la tabla corresponde a data[rowIndex][0], y así sucesivamente
+                }
+
+                // En caso de un índice fuera de rango, devolver un valor vacío
+                return "";
+            }
+
+            @Override
+            protected void initColNames() {
+                colNames = new String[getColumnCount()];
+                colNames[0] = "Categoria"; // Primer nombre de columna
+                for (int i = 1; i < colsFech.length; i++) {
+                    colNames[i] = colsFech[i - 1]; // Coloca los nombres de las fechas en las demás columnas
+                }
+            }
+
+            public String getColumnName(int col) {
+                if(col == 0)
+                    return "Categoria";
+                else
+                    return colsFech[col - 1];
+            }
+        };
+    }
+
+}
+

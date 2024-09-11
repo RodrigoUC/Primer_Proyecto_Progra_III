@@ -30,6 +30,8 @@ public class Linea {
         this.codigo = codigo;   //Por ejemplo si se ocupa crear una linea a partir de otra para que no modifique "id"
     }
 
+    public Double getTotal(){ return producto.getPrecio() + (producto.getPrecio() * descuento); }
+
     public void setProducto(Producto producto) {this.producto = producto;}
     public void setCantidad(int cantidad) {this.cantidad = cantidad;}
     public void setDescuento(double descuento) {this.descuento = descuento;}

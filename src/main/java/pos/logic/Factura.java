@@ -88,15 +88,7 @@ public class Factura {
       return (desc+cliente.getDescuento())/100;
    }
 
-   public List<Linea> getLineaCategoria(Categoria cat){
-      List<Linea> lista = new ArrayList<Linea>();
-      for (Linea l : vec) {
-         if(l.getCategoria().equals(cat)){
-            lista.add(l);
-         }
-      }
-      return lista;
-   }
+ public List<Linea> getLineas() { return vec; }
 
    @Override
    public boolean equals(Object o) {

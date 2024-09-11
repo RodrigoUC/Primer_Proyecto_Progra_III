@@ -13,7 +13,7 @@ public class Producto {
     private String codigo;
     private String descripcion;
     private double precio;
-//    @XmlIDREF
+    @XmlIDREF
     private Categoria categoria;
     private String unidad;
     private int existencia;
