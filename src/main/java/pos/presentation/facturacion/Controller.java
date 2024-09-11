@@ -13,17 +13,20 @@ public class Controller {
     ViewCobrar viewCobrar;
 
     public Controller(View view, Model model) {
-        model.init(Service.instance().search(new Linea()), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
-        this.view = view;
-        this.model = model;
-        this.viewBuscar = new ViewBuscar();
-        this.viewCobrar = new ViewCobrar();
-        view.setController(this);
-        view.setModel(model);
-        viewBuscar.setController(this);
-        viewBuscar.setModel(model);
-        viewCobrar.setController(this);
-
+        try {
+            model.init(Service.instance().search(new Linea()), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
+            this.view = view;
+            this.model = model;
+            this.viewBuscar = new ViewBuscar();
+            this.viewCobrar = new ViewCobrar();
+            view.setController(this);
+            view.setModel(model);
+            viewBuscar.setController(this);
+            viewBuscar.setModel(model);
+            viewCobrar.setController(this);
+        }
+        catch(Exception e) {
+        }
     }
 
     public Producto buscarProducto(String cod) throws Exception {
@@ -68,8 +71,6 @@ public class Controller {
 
     public void delete() {
         try {
-//            Service.instance().delete(model.getCurrent());
-// Se borra de la lista general de lineas y de la lista de la factura
             if (!currentEsNulo()) {
                 model.getListLinea().remove(model.getCurrent());
                 model.setCurrent(null);
@@ -180,9 +181,11 @@ public class Controller {
             for(Linea linea : factura.getVec()){
                 Service.instance().create(linea);
             }
+
             Service.instance().create(factura);
         }
         catch(Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 

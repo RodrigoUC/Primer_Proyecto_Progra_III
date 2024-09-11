@@ -74,6 +74,7 @@ public class Application {
 //        tabbedPane.addTab("Estadisticas ", estadisticasIcon, estadisticasView.getPanel());
 
         // Historico
+
         pos.presentation.historico.Model historicoModel = new pos.presentation.historico.Model();
         pos.presentation.historico.View historicoView = new pos.presentation.historico.View();
         historicoController = new pos.presentation.historico.Controller(historicoView, historicoModel);
@@ -102,4 +103,5 @@ public class Application {
     public final static int MODE_CREATE=1;
     public final static int MODE_EDIT=2;
     public static Border BORDER_ERROR = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.RED);
+
 }

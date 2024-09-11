@@ -171,7 +171,7 @@ public class Service {
     }
 
     public void delete(Linea e) throws Exception{
-        data.getLineas().remove(e);
+   data.getLineas().remove(e);
     }
 
     public List<Linea> search(Linea e){
