@@ -39,13 +39,13 @@ public class Model extends AbstractModel {
         this.data = new Double[0][0];
     }
 
-//    public Model() {
+    public Model() {
 //        this.categoriasAll = new ArrayList<>();
 //        this.categorias = new ArrayList<>();
 //        this.rowsCat = new String[0];
 //        this.colsFech = new String[1];
 //        this.data = new Double[0][0];
-//    }
+    }
 
     public List<Categoria> getCategoriasAll() {  return this.categoriasAll;  }
     public List<Categoria> getCategorias() {  return this.categorias;  }

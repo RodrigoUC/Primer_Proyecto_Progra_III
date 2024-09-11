@@ -29,7 +29,7 @@ public class Controller {
 
         for (int i = 0; i < rows.length; i++) {
             for (int j = 0; j < cols.length; j++) {
-                data[i][j] = Service.instance().totalDelMes(rows[i], Integer.parseInt(cols[j].substring(0,3)), Integer.parseInt(cols[j].substring(4)));
+                data[i][j] = (Double) Service.instance().totalDelMes(rows[i], Integer.parseInt(cols[j].substring(0,3)), Integer.parseInt(cols[j].substring(4)));
             }
         }
         model.setData(data);
@@ -42,7 +42,6 @@ public class Controller {
         model.setCategorias(categs);
         model.setRows(view.getCategoria());
         model.setCols(view.getFechas());
-        createData();
     }
 
     public void seleccionTotal() {
@@ -50,7 +49,6 @@ public class Controller {
         model.setCategorias(view.getCategoriasList());
         model.setRows(view.getCategorias());
         model.setCols(view.getFechas());
-        createData();
     }
 
     public void borrarCategoria(int posCateg){

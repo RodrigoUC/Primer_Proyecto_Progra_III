@@ -12,6 +12,13 @@ public class Rango {
         this.mesHasta = mesHasta;
     }
 
+    public Boolean esValido(){
+        if(anioDesde <= anioHasta)
+            if(mesDesde <= mesHasta)
+                return true;
+        return false;
+    }
+
     public int cantidadDeMeses(){
         return (anioHasta - anioDesde) * 12 + (mesHasta - mesDesde) + 1;
     }

@@ -1,5 +1,6 @@
 package pos.presentation.estadisticas;
 
+import pos.Application;
 import pos.logic.Categoria;
 
 import java.awt.*;
@@ -77,7 +78,10 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    controller.seleccionTotal();
+                    if(validate()) {
+                        controller.seleccionTotal();
+                        controller.createData();
+                    }
                 } catch (Exception ex){
                     JOptionPane.showMessageDialog(panel, ex.getMessage(),"Information", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -88,8 +92,11 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Categoria seleccion = new Categoria(categoriaCBX.getSelectedItem().toString());
-                    controller.seleccionUnica(seleccion);
+                    if(validate()) {
+                        Categoria seleccion = new Categoria(categoriaCBX.getSelectedItem().toString());
+                        controller.seleccionUnica(seleccion);
+                        controller.createData();
+                    }
                 } catch(Exception ex){
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Informacion", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -133,67 +140,27 @@ public class View implements PropertyChangeListener {
                 list.getTableHeader().setResizingAllowed(true);
 
                 break;
-            case Model.DATA:
-                // Inicializar el dataset
-                DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-                // Obtener los datos desde el modelo
-                Double[][] data = model.getData();
-                String[] rows = model.getRows();
-                String[] cols = model.getCols();
-
-                // Validar que los datos y las dimensiones de filas y columnas sean correctas
-                if (rows != null && cols != null && data != null && rows.length > 0 && cols.length > 0 && data.length > 0) {
-                    // Añadir los valores al dataset
-                    for (int i = 0; i < rows.length; i++) {
-                        for (int j = 0; j < cols.length; j++) {
-                            dataset.addValue(data[i][j], rows[i], cols[j]);
-
-                        }
-                    }
-
-                    // Crear el gráfico de líneas
-                    JFreeChart chart = ChartFactory.createLineChart(
-                            "Ventas por mes",    // Título del gráfico
-                            "Mes",               // Etiqueta del eje X
-                            "Ventas",            // Etiqueta del eje Y
-                            dataset,             // Dataset
-                            PlotOrientation.VERTICAL,  // Orientación del gráfico
-                            true,                // Incluir leyenda
-                            true,                // Incluir tooltips
-                            false                // No usar URLs
-                    );
-
-                    // Configurar el renderizador para mostrar los puntos en las líneas
-                    CategoryPlot plot = chart.getCategoryPlot();
-                    LineAndShapeRenderer renderer = new LineAndShapeRenderer();
-                    renderer.setBaseShapesVisible(true);  // Mostrar los puntos en las líneas
-                    plot.setRenderer(renderer);           // Asignar el renderizador
-
-                    // Crear el panel del gráfico
-                    ChartPanel chartPanel = new ChartPanel(
-                            chart,
-                            530, 320,               // Tamaño preferido
-                            512, 200,               // Tamaño mínimo
-                            1024, 768,              // Tamaño máximo
-                            true,                   // Propiedades del gráfico
-                            false,                  // Propiedades de Zoom
-                            false,                  // Propiedades de estilo de líneas
-                            true,                   // Propiedades de tooltips
-                            false,                  // Propiedades de URLs
-                            false                   // Propiedades de guardar imagen
-                    );
-
-                    // Limpiar y actualizar el panel gráfico
-                    graficoPanel.removeAll();
-                    graficoPanel.add(chartPanel);
-                    graficoPanel.revalidate();  // Revalidar para refrescar la interfaz
-                    graficoPanel.repaint();     // Repintar el panel
-                } else {
-                    // Opcional: manejar el caso en que los datos no sean válidos
-                    System.out.println("Datos insuficientes o inválidos para crear el gráfico.");
-                }
-                break;
+//            case Model.DATA:
+//                DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+//                Double[][] data = model.getData();
+//                String[] rows = model.getRows();
+//                String[] cols = model.getCols();
+//                if (rows != null && cols != null && data != null && rows.length > 0 && cols.length > 0 && data.length > 0) {
+//                    for (int i = 0; i < rows.length; i++) {
+//                        for (int j = 0; j < cols.length; j++) {
+//                            dataset.addValue(data[i][j], rows[i], cols[j]);
+//                        }
+//                    }
+//                    JFreeChart chart = ChartFactory.createLineChart("Ventas por mes", "Mes", "Ventas", dataset, PlotOrientation.VERTICAL, true, true, false);
+//                    CategoryPlot plot = (CategoryPlot) chart.getPlot();
+//                    LineAndShapeRenderer renderer = (LineAndShapeRenderer) plot.getRenderer();
+//                    renderer.setBaseShapesVisible(true);
+//                    ChartPanel chartPanel = new ChartPanel(chart);
+//                    graficoPanel.removeAll();
+//                    graficoPanel.add(chartPanel);
+//                }
+//                break;
         }
         this.panel.revalidate();
     }
@@ -231,12 +198,33 @@ public class View implements PropertyChangeListener {
 
     public String[] getFechas(){
         Rango rango = getRango();
-        String[] fechas = new String[rango.cantidadDeMeses()];
+        if(rango.esValido()) {
+            String[] fechas = new String[rango.cantidadDeMeses()];
 
-        for (int i = 0; i < rango.cantidadDeMeses(); i++) {
-            fechas[i] = rango.getAnioMes(i);
+            for (int i = 0; i < rango.cantidadDeMeses(); i++) {
+                fechas[i] = rango.getAnioMes(i);
+            }
+            return fechas;
         }
-        return fechas;
+        else
+            return null;
+    }
+
+    private boolean validate(){
+        boolean valid = true;
+        if(Integer.parseInt(anioInicioCBX.getSelectedItem().toString()) > Integer.parseInt(anioFinCBX.getSelectedItem().toString())){
+            valid = false;
+            anioInicioCBX.setBorder(Application.BORDER_ERROR);
+        }else{
+            anioInicioCBX.setBorder(null);
+        }
+        if(Integer.parseInt(anioInicioCBX.getSelectedItem().toString()) < Integer.parseInt(anioFinCBX.getSelectedItem().toString()) || getMes(mesInicioCBX.getSelectedItem().toString()) > getMes(mesFinCBX.getSelectedItem().toString())){
+            valid = false;
+            mesInicioCBX.setBorder(Application.BORDER_ERROR);
+        }else{
+            mesInicioCBX.setBorder(null);
+        }
+        return valid;
     }
 
     public Rango getRango(){
