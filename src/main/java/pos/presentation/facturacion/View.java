@@ -176,12 +176,17 @@ public class View implements PropertyChangeListener {
         }
     }
     public Factura take(){
-        Cajero cajero= (Cajero)cajeros.getSelectedItem();
-        Cliente cliente= (Cliente)clientes.getSelectedItem();
-        Factura factura = new Factura(cajero,cliente);
-        factura.setVec(controller.getListLinea());  //Pasar a controller
+        try {
+            Cajero cajero = (Cajero) cajeros.getSelectedItem();
+            Cliente cliente = (Cliente) clientes.getSelectedItem();
+            Factura factura = new Factura(cajero, cliente);
+            factura.setVec(controller.getListLinea());  //Pasar a controller
 
-        return factura;
+            return factura;
+        }
+        catch(Exception e){
+            return null;
+        }
     }
 
 }

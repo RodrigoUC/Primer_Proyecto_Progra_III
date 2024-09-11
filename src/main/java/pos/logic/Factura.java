@@ -57,7 +57,7 @@ public class Factura {
    }
    public Cliente getCliente() {return cliente;}
    public List<Linea> getVec() {
-      return vec;
+        return vec;
    }
    public Fecha getFecha() {return fecha;}
 

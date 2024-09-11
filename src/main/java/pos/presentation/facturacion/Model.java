@@ -69,26 +69,27 @@ public class Model extends AbstractModel {
     }
 
     public void init(List<Linea> listLinea,List<Cajero> listCajero, List<Cliente> listCliente) {
-        setListLinea(listLinea);
-        setListCajeros(listCajero);
-        setListClientes(listCliente);
-        cajeros=new DefaultComboBoxModel<Cajero>();
-        clientes=new DefaultComboBoxModel<Cliente>();
-        current=null;
-        listProducto=new ArrayList<Producto>();
-        filter=new Producto();
+
+           setListLinea(listLinea);
+           setListCajeros(listCajero);
+           setListClientes(listCliente);
+           cajeros = new DefaultComboBoxModel<Cajero>();
+           clientes = new DefaultComboBoxModel<Cliente>();
+           current = null;
+           listProducto = new ArrayList<Producto>();
+           filter = new Producto();
 
 
-        if(listCliente != null) {
-            for (Cliente cliente : listCliente) {
-                clientes.addElement(cliente);
-            }
-        }
-        if(listCajero != null) {
-            for (Cajero cajero : listCajero) {
-                cajeros.addElement(cajero);
-            }
-        }
+           if (listCliente != null) {
+               for (Cliente cliente : listCliente) {
+                   clientes.addElement(cliente);
+               }
+           }
+           if (listCajero != null) {
+               for (Cajero cajero : listCajero) {
+                   cajeros.addElement(cajero);
+               }
+           }
     }
 
     public List<Linea> getListLinea() {
