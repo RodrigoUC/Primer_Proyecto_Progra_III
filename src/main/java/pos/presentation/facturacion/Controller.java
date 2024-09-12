@@ -82,7 +82,7 @@ public class Controller {
 
     void actualizarDescuento(int descuento) {
         try {
-            model.getCurrent().setDescuento((double) descuento / 100);
+            model.getCurrent().setDescuento((double) descuento);
             model.setCurrent(null);
             model.setListLinea(model.getListLinea());
         } catch (Exception e) {
