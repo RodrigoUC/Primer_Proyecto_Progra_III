@@ -34,11 +34,11 @@ public class TableModel extends AbstractTableModel<Linea> implements javax.swing
             case PRECIO:
                 return e.getProducto().getPrecio();
             case DESCUENTO:
-                return e.getDescuento()*100;
+                return e.getDescuento();
             case NETO:
                 return e.getProducto().getPrecio();     //Al parecer es lo mismo que precio pero no estoy seguro
             case IMPORTE:
-                return e.getProducto().getPrecio()*e.getCantidad()-(e.getProducto().getPrecio()*e.getCantidad()*e.getDescuento());
+                return e.getProducto().getPrecio()*e.getCantidad()-(e.getProducto().getPrecio()*e.getCantidad()*(e.getDescuento()/100));
 
 
             default:

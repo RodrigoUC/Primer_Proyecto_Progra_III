@@ -102,6 +102,12 @@ public class Controller {
         model.actualizarComboBoxClientes(Service.instance().search(new Cliente()));
         model.actualizarComboBoxCajeros(Service.instance().search(new Cajero()));
     }
+    public DefaultComboBoxModel<Cliente> getClientes(){
+        return model.getClientes();
+    }
+    public DefaultComboBoxModel<Cajero> getCajeros(){
+        return model.getCajeros();
+    }
 
     public void searchProducto(Producto filter) {
         model.setFilter(filter);
@@ -121,32 +127,27 @@ public class Controller {
         return model.getActual() == null;
     }
 
-    public void agregarProdctoActual() {
-        Linea linea = new Linea(model.getActual(), 1, 0);
-        model.getListLinea().add(linea);
-        model.setListLinea(model.getListLinea());
-        model.setActual(null);
+    public void agregarProdctoActual(boolean opcion,double desc) {
+        if(opcion && !productoActualEsNulo()) {
+            Linea linea = new Linea(model.getActual(), 1, desc);
+            model.getListLinea().add(linea);
+            model.setListLinea(model.getListLinea());
+            model.setActual(null);
+        }
+        else{
+            model.setActual(null);
+        }
     }
 
-    public double total() {     //Calcular descuento
-        double aux = 0;
+    public Double total() {     //Calcular descuento
+        Double aux = 0.0;
         for (Linea linea : model.getListLinea()) {
-            aux += (linea.getProducto().getPrecio() * linea.getCantidad())-(linea.getProducto().getPrecio() * linea.getCantidad()*linea.getDescuento());
+            aux += (linea.getProducto().getPrecio() * linea.getCantidad())-(linea.getProducto().getPrecio() * linea.getCantidad()*(linea.getDescuento()/100));
         }
         return aux;
     }
     public List<Linea> getListLinea() {
         return model.getListLinea();
-    }
-    public void botonBuscar(){
-        int option = JOptionPane.showOptionDialog(null, getViewBuscar().getPanel(), "Título del Diálogo",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
-        if(option == JOptionPane.OK_OPTION && !productoActualEsNulo()){
-            agregarProdctoActual();
-        }
-        else{
-            model.setActual(null);
-        }
     }
     String pedirDescuento(){
         ImageIcon icono = new ImageIcon(getClass().getResource("/pos/presentation/icons/descuento.png"));
@@ -188,5 +189,22 @@ public class Controller {
             System.out.println(e.getMessage());
         }
     }
-
+    public Integer getCantidadProductos(){
+        int cantidad = 0;
+        if(!listaLineasEstaVacia()) {
+            for (Linea linea : model.getListLinea()) {
+            cantidad += linea.getCantidad();
+            }
+        }
+        return cantidad;
+    }
+    public Double getDescuentoTotal(){
+        Double descuento = 0.0;
+        if(!listaLineasEstaVacia()) {
+            for (Linea linea : model.getListLinea()) {
+             descuento += (linea.getDescuento()/100)*linea.getCantidad()*linea.getProducto().getPrecio();
+            }
+        }
+        return descuento;
+    }
 }

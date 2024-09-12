@@ -18,7 +18,13 @@ public class View implements PropertyChangeListener {
         cobrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-        controller.cobrar();
+                if(clientes.getSelectedItem() == null || cajeros.getSelectedItem() == null){
+                    JOptionPane.showMessageDialog(panel, "Debe Ingresar un cajero y un cliente para Cobrar","Informacion" , JOptionPane.INFORMATION_MESSAGE);
+
+                }
+                else {
+                    controller.cobrar();
+                }
             }
         });
         panel.addComponentListener(new ComponentAdapter() {
@@ -32,8 +38,21 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Boton de buscar
-                controller.botonBuscar();
+                if (clientes.getSelectedItem() == null || cajeros.getSelectedItem() == null) {
+                    JOptionPane.showMessageDialog(panel, "Debe Ingresar un cajero y un cliente para empezar a agregar Productos","Informacion" , JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                    int option = JOptionPane.showOptionDialog(null, controller.getViewBuscar().getPanel(), "Buscar",
+                            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+                    if (option == JOptionPane.OK_OPTION) {
+                        controller.agregarProdctoActual(true, ((Cliente) (clientes.getSelectedItem())).getDescuento());
+                    } else {
+                        controller.agregarProdctoActual(false, 0);
+                    }
+
+                }
             }
+
         });
         cantidadButton.addActionListener(new ActionListener() {
             @Override
@@ -89,15 +108,19 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Boton para verificar si existe un producto con ese codigo
-                try {
-                    Producto prod = controller.buscarProducto(codProducto.getText());
-                    Linea lin=new Linea(prod,1,0);
-                controller.save(lin);
-                    JOptionPane.showMessageDialog(panel, "LINEA AGREGADA", "", JOptionPane.INFORMATION_MESSAGE);
+                if (clientes.getSelectedItem() == null || cajeros.getSelectedItem() == null) {
+                    JOptionPane.showMessageDialog(panel, "Debe Ingresar un cajero y un cliente para empezar a agregar Productos","Informacion" , JOptionPane.INFORMATION_MESSAGE);
                 }
-             catch (Exception ex) {
-                JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
-            }
+                else{
+                    try {
+                        Producto prod = controller.buscarProducto(codProducto.getText());
+                        Linea lin = new Linea(prod, 1, ((Cliente) clientes.getSelectedItem()).getDescuento());
+                        controller.save(lin);
+                        JOptionPane.showMessageDialog(panel, "LINEA AGREGADA", "", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
             }
         });
         lista.addMouseListener(new MouseAdapter() {
@@ -125,6 +148,10 @@ public class View implements PropertyChangeListener {
     private JButton cancelarButton;
     private JTable lista;
     private JPanel panel;
+    private JLabel cantidadArt;
+    private JLabel subTotal;
+    private JLabel descuentos;
+    private JLabel total;
 
     public void setModel(Model model) {
         this.model = model;
@@ -165,13 +192,17 @@ public class View implements PropertyChangeListener {
                 TableColumnModel columnModel = lista.getColumnModel();
                 columnModel.getColumn(1).setPreferredWidth(150);
                 columnModel.getColumn(3).setPreferredWidth(150);
-                //Total,cantidad
+                cantidadArt.setText(Integer.toString(controller.getCantidadProductos()));
+                subTotal.setText(Double.toString(controller.total()));
+                descuentos.setText(Double.toString(controller.getDescuentoTotal()));
+                total.setText(Double.toString(controller.total()));
+
                 break;
             case Model.LISTCAJERO:
-                cajeros.setModel(model.getCajeros());
+                cajeros.setModel(controller.getCajeros());
                 break;
             case Model.LISTCLIENTE:
-                clientes.setModel(model.getClientes());
+                clientes.setModel(controller.getClientes());
                 break;
         }
     }
@@ -188,5 +219,6 @@ public class View implements PropertyChangeListener {
             return null;
         }
     }
+
 
 }

@@ -22,7 +22,7 @@ public class Linea {
         this.producto = producto;
         this.cantidad = cantidad;
         this.descuento = descuento;
-        codigo="LIN"+id++;      //Creo que seria asi para que todas las lineas sean diferentes,aunque el problema es cuando se creen los objetos automaticos
+        codigo="LIN-"+id++;      //Creo que seria asi para que todas las lineas sean diferentes,aunque el problema es cuando se creen los objetos automaticos
     }
     public Linea() {
     }
