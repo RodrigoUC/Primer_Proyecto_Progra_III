@@ -49,6 +49,14 @@ public class View implements PropertyChangeListener {
     public View() throws Exception {
         // Eventos
 
+        panel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                super.componentShown(e);
+                controller.shown();
+            }
+        });
+
         anioInicioCBX.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -97,8 +105,11 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    controller.borrarCategoria(list.getSelectedRow());
-                    list.setModel(model.getTableModel());
+                    if(list.getSelectedRow() != -1) {
+                        controller.borrarCategoria(list.getSelectedRow());
+                        controller.actualizarInfo();
+                        list.setModel(model.getTableModel());
+                    }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Information", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -110,6 +121,7 @@ public class View implements PropertyChangeListener {
             public void actionPerformed(ActionEvent e) {
                 try {
                     controller.borrarTodo();
+                    controller.actualizarInfo();
                     list.setModel(model.getTableModel());
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Information", JOptionPane.INFORMATION_MESSAGE);
@@ -163,7 +175,8 @@ public class View implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
-            case Model.CATEGORIAS:
+            case Model.DATA:
+                //Lista
                 list.setModel(model.getTableModel());
                 list.setRowHeight(30);
                 TableColumnModel columnModel = list.getColumnModel();
@@ -175,9 +188,8 @@ public class View implements PropertyChangeListener {
                 if (model.getCols().length > 3) {
                     list.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
                 }
-                break;
 
-            case Model.DATA:
+                //Gráfico
                 DefaultCategoryDataset dataset = getDefaultCategoryDataset();
                 JFreeChart chart = ChartFactory.createLineChart("Ventas por mes", "Mes", "Ventas", dataset, PlotOrientation.VERTICAL, true, true, false);
                 CategoryPlot plot = (CategoryPlot) chart.getPlot();
@@ -241,9 +253,9 @@ public class View implements PropertyChangeListener {
         return null;
     }
 
-    public String[] getCategoria() {
-        String[] categorias = {(String) categoriaCBX.getSelectedItem().toString()};
-        return categorias;
+    public String getCategoria() {
+        String categoria = (String) categoriaCBX.getSelectedItem().toString();
+        return categoria;
     }
 
     public String[] getFechas() {
@@ -317,7 +329,7 @@ public class View implements PropertyChangeListener {
             case "Diciembre":
                 return 12;
             default:
-                return -1;
+                return 0;
         }
     }
 }
