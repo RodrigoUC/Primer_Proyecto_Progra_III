@@ -39,7 +39,7 @@ public class Controller {
             model.setCurrent(model.getFilter());
             model.setListFacturasFilter(buscarFacturas());
             model.setListLineasListado(listadoHistorico());
-            model.setListLineasNormales(listaLineasNormales());
+            //model.setListLineasNormales(listaLineasNormales());
         }
         catch(Exception e){
             throw new Exception("Cliente no tiene Facturas");
@@ -92,9 +92,9 @@ public class Controller {
 
     //--------------LISTA DE LINEAS NORMALES SEGUN LA CURRENT FACTURA--------
 
-    List<Linea> listaLineasNormales() throws Exception {
+    void listaLineasNormales(int row) throws Exception {
         try{
-            return model.getCurrentFactura().getVec();
+            model.setListLineasNormales(model.getListLineasListado().get(row).getFactura().getLineas());
         }catch (Exception e) {
             throw new Exception("Error lista lineas");
         }
