@@ -40,11 +40,6 @@ public class Model extends AbstractModel {
     }
 
     public Model() {
-//        this.categoriasAll = new ArrayList<>();
-//        this.categorias = new ArrayList<>();
-//        this.rowsCat = new String[0];
-//        this.colsFech = new String[1];
-//        this.data = new Double[0][0];
     }
 
     public List<Categoria> getCategoriasAll() {  return this.categoriasAll;  }
@@ -52,9 +47,7 @@ public class Model extends AbstractModel {
     public Rango getRango() {  return rango;  }
     public String[] getRows() {  return this.rowsCat;  }
     public String[] getCols() {  return this.colsFech;  }
-    public Double[][] getData() {
-        return this.data;
-    }
+    public Double[][] getData() { return this.data; }
 
     public void setData(Double[][] data){
         this.data = data;
@@ -69,7 +62,10 @@ public class Model extends AbstractModel {
         this.categorias = categorias;
         firePropertyChange(CATEGORIAS);
     }
-    public void setRango(Rango rango) {  this.rango = rango;  }
+    public void setRango(Rango rango) {
+        this.rango = rango;
+        firePropertyChange(RANGE);
+    }
     public void setRows(String[] rows) {
         this.rowsCat = rows;
         firePropertyChange(ROWS);
@@ -145,7 +141,7 @@ public class Model extends AbstractModel {
                     // Obtener el índice de la categoría en la lista de categorías
                     int rowIndex = categorias.indexOf(categoria);
                     // Devolver el valor de la matriz 'data' para esa fila y columna
-                    return data[rowIndex][col - 1]; // La columna 1 de la tabla corresponde a data[rowIndex][0], y así sucesivamente
+                    return data[rowIndex][col - 1];
                 }
 
                 // En caso de un índice fuera de rango, devolver un valor vacío

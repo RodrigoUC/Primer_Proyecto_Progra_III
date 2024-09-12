@@ -13,16 +13,10 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-
-
-
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableColumn;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -48,16 +42,64 @@ public class View implements PropertyChangeListener {
     private JScrollPane scrollPane;
     private JPanel datosPanel;
 
-    public JPanel getPanel() { return panel; }
+    public JPanel getPanel() {
+        return panel;
+    }
 
-    public View() throws Exception{
+    public View() throws Exception {
         // Eventos
+
+        anioInicioCBX.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    if(validate()){
+                        controller.actualizarInfo();
+                    }
+                }
+            }
+        });
+
+        anioFinCBX.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    if(validate()){
+                        controller.actualizarInfo();
+                    }
+                }
+            }
+        });
+
+        mesInicioCBX.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    if(validate()){
+                        controller.actualizarInfo();
+                    }
+                }
+            }
+        });
+
+        mesFinCBX.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    if(validate()){
+                        controller.actualizarInfo();
+                    }
+                }
+            }
+        });
+
         deleteOne.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{
+                try {
                     controller.borrarCategoria(list.getSelectedRow());
-                } catch (Exception ex){
+                    list.setModel(model.getTableModel());
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Information", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
@@ -66,9 +108,10 @@ public class View implements PropertyChangeListener {
         deleteAll.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{
+                try {
                     controller.borrarTodo();
-                } catch (Exception ex){
+                    list.setModel(model.getTableModel());
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Information", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
@@ -77,13 +120,13 @@ public class View implements PropertyChangeListener {
         seleccionarTodoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{
-                    if(validate()) {
+                try {
+                    if (validate()) {
                         controller.seleccionTotal();
                         controller.createData();
                     }
-                } catch (Exception ex){
-                    JOptionPane.showMessageDialog(panel, ex.getMessage(),"Information", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Information", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -92,21 +135,14 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if(validate()) {
+                    if (validate()) {
                         Categoria seleccion = new Categoria(categoriaCBX.getSelectedItem().toString());
                         controller.seleccionUnica(seleccion);
                         controller.createData();
                     }
-                } catch(Exception ex){
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Informacion", JOptionPane.INFORMATION_MESSAGE);
                 }
-            }
-        });
-
-        list.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                    int row = list.getSelectedRow();
             }
         });
     }
@@ -115,12 +151,12 @@ public class View implements PropertyChangeListener {
     private Controller controller;
     private Model model;
 
-    public void setModel(pos.presentation.estadisticas.Model model){
+    public void setModel(pos.presentation.estadisticas.Model model) {
         this.model = model;
         model.addPropertyChangeListener(this);
     }
 
-    public void setController(Controller controller){
+    public void setController(Controller controller) {
         this.controller = controller;
     }
 
@@ -134,48 +170,62 @@ public class View implements PropertyChangeListener {
 
                 for (int i = 0; i < columnModel.getColumnCount(); i++) {
                     TableColumn column = columnModel.getColumn(i);
-                    column.setPreferredWidth(150); // Establece un ancho base
+                    column.setPreferredWidth(75); // Establece un ancho base
                 }
-                // Redibujar la tabla para ajustar el tamaño
-                list.getTableHeader().setResizingAllowed(true);
-
+                if (model.getCols().length > 3) {
+                    list.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                }
                 break;
 
-//            case Model.DATA:
-//                DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-//                Double[][] data = model.getData();
-//                String[] rows = model.getRows();
-//                String[] cols = model.getCols();
-//                if (rows != null && cols != null && data != null && rows.length > 0 && cols.length > 0 && data.length > 0) {
-//                    for (int i = 0; i < rows.length; i++) {
-//                        for (int j = 0; j < cols.length; j++) {
-//                            dataset.addValue(data[i][j], rows[i], cols[j]);
-//                        }
-//                    }
-//                    JFreeChart chart = ChartFactory.createLineChart("Ventas por mes", "Mes", "Ventas", dataset, PlotOrientation.VERTICAL, true, true, false);
-//                    CategoryPlot plot = (CategoryPlot) chart.getPlot();
-//                    LineAndShapeRenderer renderer = (LineAndShapeRenderer) plot.getRenderer();
-//                    renderer.setBaseShapesVisible(true);
-//                    ChartPanel chartPanel = new ChartPanel(chart);
-//                    graficoPanel.removeAll();
-//                    graficoPanel.add(chartPanel);
-//                }
-//                break;
+            case Model.DATA:
+                DefaultCategoryDataset dataset = getDefaultCategoryDataset();
+                JFreeChart chart = ChartFactory.createLineChart("Ventas por mes", "Mes", "Ventas", dataset, PlotOrientation.VERTICAL, true, true, false);
+                CategoryPlot plot = (CategoryPlot) chart.getPlot();
+                LineAndShapeRenderer renderer = (LineAndShapeRenderer) plot.getRenderer();
+                renderer.setBaseShapesVisible(true);
+
+                // Crear el panel del gráfico
+                ChartPanel chartPanel = new ChartPanel(chart);
+
+                // Limpiar el panel gráfico y añadir el nuevo gráfico
+                graficoPanel.removeAll();         // Elimina cualquier gráfico anterior
+                graficoPanel.setLayout(new BorderLayout());  // Asegura que el gráfico ocupa todo el espacio.
+                graficoPanel.add(chartPanel, BorderLayout.CENTER);  // Añadir el gráfico al centro
+
+                // Revalida y repinta el panel para refrescar la interfaz
+                graficoPanel.revalidate();
+                graficoPanel.repaint();
+                break;
         }
         this.panel.revalidate();
     }
 
-    public List<Categoria> getCategoriasList(){
+    private DefaultCategoryDataset getDefaultCategoryDataset() {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        Double[][] data = model.getData();
+        String[] rows = model.getRows();
+        String[] cols = model.getCols();
+        if (rows.length > 0 && cols.length > 0 && data.length > 0) {
+            for (int i = 0; i < rows.length; i++) {
+                for (int j = 0; j < cols.length; j++) {
+                    dataset.addValue(data[i][j].intValue(), rows[i], cols[j]);
+                }
+            }
+        }
+        return dataset;
+    }
+
+    public List<Categoria> getCategoriasList() {
         List<Categoria> categorias = new ArrayList<>();
         String[] categs = getCategorias();
-        for(int i=0; i < categs.length; i++){
+        for (int i = 0; i < categs.length; i++) {
             Categoria cat = new Categoria(categs[i]);
             categorias.add(cat);
         }
         return categorias;
     }
 
-    public String[] getCategorias(){
+    public String[] getCategorias() {
         try {
             int cantCat = categoriaCBX.getItemCount();
             String[] categorias = new String[cantCat];
@@ -185,104 +235,89 @@ public class View implements PropertyChangeListener {
             }
 
             return categorias;
-        } catch(Exception ex){
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
 
-    public String[] getCategoria(){
+    public String[] getCategoria() {
         String[] categorias = {(String) categoriaCBX.getSelectedItem().toString()};
         return categorias;
     }
 
-    public String[] getFechas(){
-        Rango rango = getRango();
-        if(rango.esValido()) {
-            String[] fechas = new String[rango.cantidadDeMeses()];
+    public String[] getFechas() {
+        Rango rango = model.getRango();
+        String[] fechas = new String[rango.cantidadDeMeses() + 1];
 
-            for (int i = 0; i < rango.cantidadDeMeses(); i++) {
-                fechas[i] = rango.getAnioMes(i);
-            }
-            return fechas;
+        for (int i = 0; i <= rango.cantidadDeMeses(); i++) {
+            fechas[i] = rango.getAnioMes(i);
         }
-        else
-            return null;
+        return fechas;
+
     }
 
-    private boolean validate(){
+    private boolean validate() {
         boolean valid = true;
-        if(Integer.parseInt(anioInicioCBX.getSelectedItem().toString()) > Integer.parseInt(anioFinCBX.getSelectedItem().toString())){
+        // Si el año de inicio es mayor al año final.
+        if (Integer.parseInt(anioInicioCBX.getSelectedItem().toString()) > Integer.parseInt(anioFinCBX.getSelectedItem().toString())) {
             valid = false;
             anioInicioCBX.setBorder(Application.BORDER_ERROR);
-        }else{
+        } else {
             anioInicioCBX.setBorder(null);
         }
-        if(Integer.parseInt(anioInicioCBX.getSelectedItem().toString()) < Integer.parseInt(anioFinCBX.getSelectedItem().toString()) || getMes(mesInicioCBX.getSelectedItem().toString()) > getMes(mesFinCBX.getSelectedItem().toString())){
+        // Si el mes de inicio es mayor al mes final en el mismo año
+        if(Integer.parseInt(anioInicioCBX.getSelectedItem().toString()) == Integer.parseInt(anioFinCBX.getSelectedItem().toString()) && getMes(mesInicioCBX.getSelectedItem().toString()) > getMes(mesFinCBX.getSelectedItem().toString())){
             valid = false;
             mesInicioCBX.setBorder(Application.BORDER_ERROR);
-        }else{
+        } else {
             mesInicioCBX.setBorder(null);
         }
         return valid;
     }
 
-    public Rango getRango(){
-        try{
+    public Rango getRango() {
+        try {
             int anioInicio = Integer.parseInt(Objects.requireNonNull(anioInicioCBX.getSelectedItem()).toString());
             String mesInicio = Objects.requireNonNull(mesInicioCBX.getSelectedItem()).toString();
             int anioFin = Integer.parseInt(Objects.requireNonNull(anioFinCBX.getSelectedItem()).toString());
             String mesFin = Objects.requireNonNull(mesFinCBX.getSelectedItem()).toString();
 
-            return new Rango(anioInicio,getMes(mesInicio), anioFin, getMes(mesFin));
-        } catch(Exception ex){
+            return new Rango(anioInicio, getMes(mesInicio), anioFin, getMes(mesFin));
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
 
-    public int getMes(String mes){
-        switch (mes){
-            case "Enero": return 1;
-            case "Febrero": return 2;
-            case "Marzo": return 3;
-            case "Abril": return 4;
-            case "Mayo": return 5;
-            case "Junio": return 6;
-            case "Julio": return 7;
-            case "Agosto": return 8;
-            case "Setiembre": return 9;
-            case "Octubre": return 10;
-            case "Noviembre": return 11;
-            case "Diciembre": return 12;
-            default: return -1;
+    public int getMes(String mes) {
+        switch (mes) {
+            case "Enero":
+                return 1;
+            case "Febrero":
+                return 2;
+            case "Marzo":
+                return 3;
+            case "Abril":
+                return 4;
+            case "Mayo":
+                return 5;
+            case "Junio":
+                return 6;
+            case "Julio":
+                return 7;
+            case "Agosto":
+                return 8;
+            case "Setiembre":
+                return 9;
+            case "Octubre":
+                return 10;
+            case "Noviembre":
+                return 11;
+            case "Diciembre":
+                return 12;
+            default:
+                return -1;
         }
     }
-
-//    public View() throws Exception {
-//
-//        // Grafica
-//        estadisticasDataset = new DefaultCategoryDataset();
-//
-//        // Leer los datos y ingresarlos al estadistica dataset
-//        estadisticasDataset.addValue(0, "Aceite", "2024-7");
-//        estadisticasDataset.addValue(1000, "Aceite", "2024-8");
-//        estadisticasDataset.addValue(1000, "Aguas", "2024-7");
-//        estadisticasDataset.addValue(2000, "Aguas", "2024-8");
-//
-//        graficoChart = ChartFactory.createLineChart("Ventas por mes", "Mes", "Ventas"
-//                , estadisticasDataset, PlotOrientation.VERTICAL, true, true, false);
-//
-//
-//        //      Crear un ChartPanel con el gráfico
-//        ChartPanel chartPanel = new ChartPanel(graficoChart);
-//        chartPanel.setPreferredSize(new Dimension(800, 600));
-//
-//        //      Añadir el ChartPanel al JPanel existente
-//        graficoPanel.setLayout(new BorderLayout());
-//        graficoPanel.add(chartPanel, BorderLayout.CENTER);
-//        graficoPanel.validate();
-//
-//
-
 }
