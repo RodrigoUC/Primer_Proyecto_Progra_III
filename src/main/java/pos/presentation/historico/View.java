@@ -37,7 +37,7 @@ public class View implements PropertyChangeListener {
         });
 
 
-        listFacturas.addMouseListener(new MouseAdapter() {
+        listLineas.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //int row = listFacturas.getSelectedRow();
@@ -46,11 +46,15 @@ public class View implements PropertyChangeListener {
             }
         });
 
-        listLineas.addMouseListener(new MouseAdapter() {
+        listFacturas.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //int row = listLineas.getSelectedRow();
-                //controller.edit(row);
+                int row = listLineas.getSelectedRow();
+                try {
+                    controller.listaLineasNormales(row);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
