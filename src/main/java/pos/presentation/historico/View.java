@@ -4,12 +4,14 @@ import pos.logic.Cliente;
 import pos.presentation.facturacion.TableModel;
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 
 public class View implements PropertyChangeListener {
     private JPanel panel;
@@ -52,6 +54,21 @@ public class View implements PropertyChangeListener {
                 int row = listLineas.getSelectedRow();
                 try {
                     controller.listaLineasNormales(row);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
+        reporteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    controller.print();
+                    if(Desktop.isDesktopSupported()){
+                        File myFile = new File("clientes.pdf");
+                        Desktop.getDesktop().open(myFile);
+                    }
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }

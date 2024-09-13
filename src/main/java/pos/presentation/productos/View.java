@@ -5,6 +5,7 @@ import pos.logic.Producto;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 
 import java.beans.PropertyChangeEvent;
+import java.io.File;
 
 public class View implements PropertyChangeListener {
     private JPanel panel1;
@@ -90,6 +92,21 @@ public class View implements PropertyChangeListener {
                 int row = list.getSelectedRow();
                 controller.edit(row);
                 categorias.setSelectedIndex(row);
+            }
+        });
+
+        reporteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    controller.print();
+                    if(Desktop.isDesktopSupported()){
+                        File myFile = new File("productos.pdf");
+                        Desktop.getDesktop().open(myFile);
+                    }
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
     }
