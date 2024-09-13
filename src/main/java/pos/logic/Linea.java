@@ -5,9 +5,6 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlID;
 import jakarta.xml.bind.annotation.XmlIDREF;
 
-import java.lang.reflect.Field;
-import java.util.Objects;
-
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Linea {
 //    @XmlID

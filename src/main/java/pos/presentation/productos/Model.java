@@ -1,12 +1,10 @@
 package pos.presentation.productos;
 
 import pos.Application;
-import pos.logic.Cliente;
 import pos.logic.Producto;
 import pos.presentation.AbstractModel;
 
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Model extends AbstractModel {

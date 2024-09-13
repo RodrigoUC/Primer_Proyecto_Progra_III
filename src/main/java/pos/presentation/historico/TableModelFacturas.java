@@ -1,7 +1,5 @@
 package pos.presentation.historico;
 
-import pos.logic.Cliente;
-import pos.logic.Factura;
 import pos.logic.LineaHistorico;
 import pos.presentation.AbstractTableModel;
 

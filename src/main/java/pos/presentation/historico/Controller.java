@@ -17,18 +17,14 @@ import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import pos.Application;
 import pos.logic.*;
-import pos.presentation.historico.Model;
-import pos.presentation.historico.View;
 
-import javax.sound.sampled.Line;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
 public class Controller {
-    View view;
-    Model model;
+    private View view;
+    private Model model;
 
     public Controller(View view, Model model) {
         model.init(Service.instance().search(new LineaHistorico()), model.getListLineasNormales(), model.getListFacturas(),Service.instance().search(new Cliente()));

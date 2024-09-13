@@ -4,7 +4,6 @@ import pos.Application;
 import pos.logic.Cliente;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;

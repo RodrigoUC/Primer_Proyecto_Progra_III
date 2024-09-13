@@ -242,47 +242,13 @@ public class Service {
                 .filter(i -> i.getNombreCliente().contains(e.getNombreCliente()))
                 .sorted(Comparator.comparing(Factura::getNombreCliente).thenComparing(Factura::getNombreCliente))
                 .collect(Collectors.toList());
-//        return  data.getFacturas().stream()
-//                .filter(i -> i.getNombreCliente().equals(e.getNombreCliente()))
-//                .sorted(Comparator.comparing(Factura::getNombreCliente))
-//                .collect(Collectors.toList());
     }
 
-    // ----------------------Linea estadística-------------------------
+    // ----------------------Categorias-------------------------
 
     public List<Categoria> search(Categoria e){
         return data.getCategorias();
     }
-
-//    public void create(LineaEstadistica e) throws Exception{
-//        LineaEstadistica result = data.getLineasEstadisticas().stream().filter(i -> i.equals(e)).findFirst().orElse(null);
-//        if (result==null) data.getLineasEstadisticas().add(e);
-//        else throw new Exception("Linea estadistica ya existe");
-//    }
-//
-//    public LineaEstadistica read(LineaEstadistica e) throws Exception{
-//        LineaEstadistica result = data.getLineasEstadisticas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
-//        if (result!=null) return result;
-//        else throw new Exception("Linea estadistica no existe");
-//    }
-//
-//    public void update(LineaEstadistica e) throws Exception{
-//        LineaEstadistica result;
-//        try{
-//            result = this.read(e);
-//            data.getLineasEstadisticas().remove(result);
-//            data.getLineasEstadisticas().add(e);
-//        }catch (Exception ex) {
-//            throw new Exception("Linea estadistica no existe");
-//        }
-//    }
-//
-//    public List<LineaEstadistica> search(LineaEstadistica e){
-//        return data.getLineasEstadisticas().stream()
-//                .filter(i->i.getCodigo().contains(e.getCodigo()))
-//                .sorted(Comparator.comparing(LineaEstadistica::getCodigo))
-//                .collect(Collectors.toList());
-//    }
 
     // ----------------------Linea historico (Listado)-------------------------
     public void create(LineaHistorico e) throws Exception{
@@ -315,8 +281,7 @@ public class Service {
                 .collect(Collectors.toList());
     }
 
-
-    // Calculos
+    //-------------------------------Calculos--------------------------------------
     public Double totalDelMes(String nombreCategoria, int anio, int mes) {
         Double total = 0d;
 
@@ -330,6 +295,5 @@ public class Service {
 
         return total;
     }
-    // Este método lo debe de llamar la cantidad de veces de diferencia.
 
 }

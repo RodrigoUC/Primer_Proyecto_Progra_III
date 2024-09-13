@@ -7,8 +7,6 @@ import pos.presentation.cajeros.View;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -39,7 +37,6 @@ public class Application {
         Icon facturarIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/facturar.png"));
 
         tabbedPane.addTab("Facturar  ", facturarIcon, facturacionView.getPanel());
-//        facturar
 
         // Clientes
         pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
@@ -74,7 +71,6 @@ public class Application {
         tabbedPane.addTab("Estadisticas ", estadisticasIcon, estadisticasView.getPanel());
 
         // Historico
-
         pos.presentation.historico.Model historicoModel = new pos.presentation.historico.Model();
         pos.presentation.historico.View historicoView = new pos.presentation.historico.View();
         historicoController = new pos.presentation.historico.Controller(historicoView, historicoModel);
@@ -82,6 +78,7 @@ public class Application {
 
         tabbedPane.addTab("Historico ", historicoIcon, historicoView.getPanel());
 
+        // Ventana
         window.setSize(1000,550);
         window.setResizable(false);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

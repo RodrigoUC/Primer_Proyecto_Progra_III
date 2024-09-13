@@ -1,7 +1,6 @@
 package pos.presentation.facturacion;
 
 import pos.logic.Linea;
-import pos.logic.Producto;
 import pos.presentation.AbstractTableModel;
 
 import java.util.List;

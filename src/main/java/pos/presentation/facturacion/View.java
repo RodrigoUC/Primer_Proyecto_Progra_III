@@ -4,7 +4,6 @@ import pos.logic.*;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
-import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

@@ -20,8 +20,6 @@ import pos.Application;
 import pos.logic.Cliente;
 import pos.logic.Service;
 
-import java.util.List;
-
 public class Controller {
     View view;
     Model model;

@@ -4,7 +4,6 @@ import pos.Application;
 import pos.logic.*;
 import pos.presentation.AbstractModel;
 
-import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 

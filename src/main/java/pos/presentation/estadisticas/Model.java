@@ -1,8 +1,6 @@
 package pos.presentation.estadisticas;
 
-import pos.data.Data;
 import pos.logic.Categoria;
-import pos.logic.Service;
 import pos.presentation.AbstractModel;
 import pos.presentation.AbstractTableModel;
 
