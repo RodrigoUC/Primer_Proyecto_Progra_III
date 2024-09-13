@@ -35,6 +35,8 @@ public class View implements PropertyChangeListener {
     private JButton reporteButton;
     private JTable list;
     private JComboBox categorias;
+    private JTextField existencias;
+    private JLabel existenciaLbl;
 
     public JPanel getPanel() {
         return panel1;
@@ -141,6 +143,16 @@ public class View implements PropertyChangeListener {
         }
 
         try {
+            Integer.parseInt(existencias.getText());
+            existenciaLbl.setBorder(null);
+            existenciaLbl.setToolTipText(null);
+        } catch (Exception ex) {
+            valid = false;
+            existenciaLbl.setBorder(Application.BORDER_ERROR);
+            existenciaLbl.setToolTipText("Existencia invalida");
+        }
+
+        try {
             Float.parseFloat(precio.getText());
             precioLbl.setBorder(null);
             precioLbl.setToolTipText(null);
@@ -149,8 +161,6 @@ public class View implements PropertyChangeListener {
             precioLbl.setBorder(Application.BORDER_ERROR);
             precioLbl.setToolTipText("Precio invalido");
         }
-
-
 
         return valid;
     }
@@ -163,7 +173,7 @@ public class View implements PropertyChangeListener {
         e.setPrecio(Float.parseFloat(precio.getText()));
         e.setCategoria(nombreCategoria((String) categorias.getSelectedItem()), codigoCategoria((String) categorias.getSelectedItem()));
         e.setUnidad(unidad.getText());
-
+        e.setExistencia(Integer.parseInt(existencias.getText()));
         return e;
     }
 
@@ -189,8 +199,8 @@ public class View implements PropertyChangeListener {
     }
 
     // MVC
-    pos.presentation.productos.Model model;
-    pos.presentation.productos.Controller controller;
+    private pos.presentation.productos.Model model;
+    private pos.presentation.productos.Controller controller;
 
     public void setModel(Model model) {
         this.model = model;
@@ -205,7 +215,7 @@ public class View implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case pos.presentation.productos.Model.LIST:
-            int[] cols = {TableModel.CODIGO,TableModel.DESCRIPCION, TableModel.UNIDAD, TableModel.PRECIO, TableModel.CATEGORIA};
+            int[] cols = {TableModel.CODIGO,TableModel.DESCRIPCION, TableModel.UNIDAD, TableModel.EXISTENCIA, TableModel.PRECIO, TableModel.CATEGORIA};
                 list.setModel(new TableModel(cols, model.getList()));
                 list.setRowHeight(30);
                 TableColumnModel columnModel = list.getColumnModel();
@@ -218,7 +228,7 @@ public class View implements PropertyChangeListener {
                 precio.setText("" + model.getCurrent().getPrecio());
                 unidad.setText(model.getCurrent().getUnidad());
                 categorias.setSelectedItem(model.getCurrent().getCategoria());
-
+                existencias.setText("" + model.getCurrent().getExistencia());
 
                 if (model.getMode() == Application.MODE_EDIT) {
                     codigo.setEnabled(false);
@@ -238,6 +248,8 @@ public class View implements PropertyChangeListener {
                 unidadLbl.setToolTipText(null);
                 categoriaLbl.setBorder(null);
                 categoriaLbl.setToolTipText(null);
+                existenciaLbl.setBorder(null);
+                existenciaLbl.setToolTipText(null);
 
                 break;
             case pos.presentation.clientes.Model.FILTER:

@@ -4,6 +4,7 @@ import pos.logic.*;
 import jakarta.xml.bind.annotation.*;
 import pos.logic.LineaHistorico;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +44,8 @@ public class Data {
     @XmlElement(name = "lineasHistoricas")
     private List<LineaHistorico> lineasHistoricas;
 
+    private Integer categoriasConsecutivo;
+
     public Data() {
         clientes = new ArrayList<>();
         cajero = new ArrayList<>();
@@ -52,6 +55,12 @@ public class Data {
 //        facturas = new ArrayList<>();
         fechas = new ArrayList<>();
         lineasHistoricas = new ArrayList<>();
+        categoriasConsecutivo = 0;
+    }
+
+    public String nextCategoria(){
+        DecimalFormat df = new DecimalFormat("000000");
+        return "CAT-"+df.format(categoriasConsecutivo++);
     }
 
     public List<Cliente> getClientes() {

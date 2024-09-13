@@ -16,7 +16,7 @@ public class Producto {
     @XmlIDREF
     private Categoria categoria;
     private String unidad;
-    private int existencia;
+    private Integer existencia;
 
     public double getPrecio() {
         return precio;
@@ -27,20 +27,21 @@ public class Producto {
     }
 
     public Producto()  {
-        this("","",0.0, new Categoria());
+        this("","",0,0.0, new Categoria());
     }
 
     public boolean disminuirExistenciaEn(int n){
         return existencia - n >= 0;
     }
 
-    public void setExistencia(int existencia) {this.existencia = existencia;}
+    public void setExistencia(Integer existencia) {this.existencia = existencia;}
 
-    public int getExistencia(){ return existencia; }
+    public Integer getExistencia(){ return existencia; }
 
-    public Producto(String descripcion, String codigo, double precio, Categoria categoria) {
+    public Producto(String descripcion, String codigo, Integer existencia, double precio, Categoria categoria) {
         this.descripcion = descripcion;
         this.codigo = codigo;
+        this.existencia = existencia;
         this.precio = precio;
         this.categoria = categoria;
     }
