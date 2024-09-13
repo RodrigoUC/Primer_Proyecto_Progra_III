@@ -24,21 +24,13 @@ public class Rango {
         return (anioHasta - anioDesde) * 12 + (mesHasta - mesDesde) + 1;
     }
 
-    public int getAnio(){
-        return anioDesde + (anioHasta - anioDesde);
-    }
-
-    public int getMes(){
-        return (mesHasta - mesDesde);
-    }
-
     public String getAnioMes(int m){
         int a = 0;
         while(mesDesde + m > 12){
             m -= 12;  // Mes
             a++;     // Año
         }
-        return String.valueOf(anioDesde + a) + "-" + String.format("%02d", mesDesde + m);
+        return anioDesde + a + "-" + String.format("%02d", mesDesde + m);
     }
 
 }

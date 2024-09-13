@@ -190,58 +190,61 @@ public class Service {
     //------------------------Factura---------------------------------
 
     public void create(Factura e) throws Exception{
-        Factura result = data.getFacturas().stream().filter(i -> i.equals(e)).findFirst().orElse(null);
-        if (result==null) data.getFacturas().add(e);
-        else throw new Exception("Factura ya existe (codigo)");
+//        Factura result = data.getFacturas().stream().filter(i -> i.equals(e)).findFirst().orElse(null);
+//        if (result==null) data.getFacturas().add(e);
+//        else throw new Exception("Factura ya existe (codigo)");
     }
 
     public Factura read(Factura e) throws Exception{
-        //compara codigo de factura
-        Factura result = data.getFacturas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
-        if (result!=null) return result;
-        else throw new Exception("Factura no existe");
+//        //compara codigo de factura
+//        Factura result = data.getFacturas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
+//        if (result!=null) return result;
+//        else throw new Exception("Factura no existe");
+        return null;
     }
 
     public List<Factura> readList(Factura e, Categoria c) throws Exception {
-        // Filtra las facturas por fecha
-        List<Factura> facturasFiltradas = data.getFacturas().stream()
-                .filter(f -> f.getFecha().getAnio() == e.getFecha().getAnio() && f.getFecha().getMes() == e.getFecha().getMes())  // Filtra por mes y anio
-                .collect(Collectors.toList());
-
-        // Si no se encuentran facturas, lanza excepción
-        if (facturasFiltradas == null || facturasFiltradas.isEmpty()) {
-            throw new Exception("Factura no existe");
-        }
-
-        // Para cada factura filtrada, filtra las líneas por categoría
-        List<Factura> facturasConLineasFiltradas = facturasFiltradas.stream()
-                .map(factura -> {
-                    // Filtrar las líneas de la factura por la categoría c
-                    List<Linea> lineasFiltradas = factura.getVec().stream()
-                            .filter(linea -> linea.getCategoria().equals(c))
-                            .collect(Collectors.toList());
-
-                    // Crear una nueva factura con las líneas filtradas (o modificar las líneas de la existente)
-                    Factura nuevaFactura = new Factura(factura.getFecha(), lineasFiltradas);
-                    return nuevaFactura;
-                })
-                // Mantener solo las facturas que tienen líneas en la categoría
-                .filter(factura -> !factura.getVec().isEmpty())
-                .collect(Collectors.toList());
-
-        // Si la lista de facturas filtradas por líneas está vacía, lanza excepción
-        if (facturasConLineasFiltradas.isEmpty()) {
-            throw new Exception("No hay facturas con líneas en la categoría especificada");
-        }
-
-        return facturasConLineasFiltradas;
+//        // Filtra las facturas por fecha
+//        List<Factura> facturasFiltradas = data.getFacturas().stream()
+//                .filter(f -> f.getFecha().getAnio() == e.getFecha().getAnio() && f.getFecha().getMes() == e.getFecha().getMes())  // Filtra por mes y anio
+//                .collect(Collectors.toList());
+//
+//        // Si no se encuentran facturas, lanza excepción
+//        if (facturasFiltradas == null || facturasFiltradas.isEmpty()) {
+//            throw new Exception("Factura no existe");
+//        }
+//
+//        // Para cada factura filtrada, filtra las líneas por categoría
+//        List<Factura> facturasConLineasFiltradas = facturasFiltradas.stream()
+//                .map(factura -> {
+//                    // Filtrar las líneas de la factura por la categoría c
+//                    List<Linea> lineasFiltradas = factura.getVec().stream()
+//                            .filter(linea -> linea.getCategoria().equals(c))
+//                            .collect(Collectors.toList());
+//
+//                    // Crear una nueva factura con las líneas filtradas (o modificar las líneas de la existente)
+//                    Factura nuevaFactura = new Factura(factura.getFecha(), lineasFiltradas);
+//                    return nuevaFactura;
+//                })
+//                // Mantener solo las facturas que tienen líneas en la categoría
+//                .filter(factura -> !factura.getVec().isEmpty())
+//                .collect(Collectors.toList());
+//
+//        // Si la lista de facturas filtradas por líneas está vacía, lanza excepción
+//        if (facturasConLineasFiltradas.isEmpty()) {
+//            throw new Exception("No hay facturas con líneas en la categoría especificada");
+//        }
+//
+//        return facturasConLineasFiltradas;
+        return null;
     }
 
     public List<Factura> search(Factura e){
-        return  data.getFacturas().stream()
-                .filter(i -> i.getNombreCliente().contains(e.getNombreCliente()))
-                .sorted(Comparator.comparing(Factura::getNombreCliente).thenComparing(Factura::getNombreCliente))
-                .collect(Collectors.toList());
+//        return  data.getFacturas().stream()
+//                .filter(i -> i.getNombreCliente().contains(e.getNombreCliente()))
+//                .sorted(Comparator.comparing(Factura::getNombreCliente).thenComparing(Factura::getNombreCliente))
+//                .collect(Collectors.toList());
+        return null;
     }
 
     // ----------------------Categorias-------------------------
@@ -285,13 +288,13 @@ public class Service {
     public Double totalDelMes(String nombreCategoria, int anio, int mes) {
         Double total = 0d;
 
-        // Filtrar las facturas por año y mes, luego sumar el total de las líneas de la categoría específica
-        total = data.getFacturas().stream()
-                .filter(factura -> factura.getFecha().getAnio() == anio && factura.getFecha().getMes() == mes)  // Comparación de enteros
-                .flatMap(factura -> factura.getLineas().stream())  // Obtener las líneas de cada factura
-                .filter(linea -> linea.getCategoria().getNombre().equals(nombreCategoria))  // Filtrar por categoría
-                .mapToDouble(linea -> linea.getTotal())  // Obtener el total de cada línea como DoubleStream
-                .sum();  // Sumar todos los totales
+//        // Filtrar las facturas por año y mes, luego sumar el total de las líneas de la categoría específica
+//        total = data.getFacturas().stream()
+//                .filter(factura -> factura.getFecha().getAnio() == anio && factura.getFecha().getMes() == mes)  // Comparación de enteros
+//                .flatMap(factura -> factura.getLineas().stream())  // Obtener las líneas de cada factura
+//                .filter(linea -> linea.getCategoria().getNombre().equals(nombreCategoria))  // Filtrar por categoría
+//                .mapToDouble(linea -> linea.getTotal())  // Obtener el total de cada línea como DoubleStream
+//                .sum();  // Sumar todos los totales
 
         return total;
     }

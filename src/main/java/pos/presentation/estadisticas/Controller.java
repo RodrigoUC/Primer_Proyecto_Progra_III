@@ -5,6 +5,7 @@ import pos.logic.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Controller {
 
@@ -26,7 +27,7 @@ public class Controller {
 
         for (int i = 0; i < rows.length; i++) {
             for (int j = 0; j < cols.length; j++) {
-                data[i][j] = (Double) Service.instance().totalDelMes(rows[i], Integer.parseInt(cols[j].substring(0,3)), Integer.parseInt(cols[j].substring(4)));
+                data[i][j] = Service.instance().totalDelMes(rows[i], Integer.parseInt(cols[j].substring(0,3)), Integer.parseInt(cols[j].substring(4)));
             }
         }
         return data;
@@ -49,34 +50,30 @@ public class Controller {
             categs = new ArrayList<>();
             categs.add(categoria);
             row = new String[1];
-            row[0] = view.getCategoria();
+            row[0] = categoria.getNombre();
         }
         // Si se quieren agregar más categorias.
-        else if(!existeString(model.getRows(), view.getCategoria())){
+        else if(!existeString(model.getRows(), categoria.getNombre())){
             categs = model.getCategorias();
             categs.add(categoria);
             row = new String[model.getRows().length+1];
             for (int i = 0; i < model.getRows().length; i++) {
-                if(model.getRows()[i] != view.getCategoria()) {
+                if(!Objects.equals(model.getRows()[i], categoria.getNombre())) {
                     row[i] = model.getRows()[i];
                 }
             }
-            row[row.length - 1] = view.getCategoria();
-            // Si ya esta agregada la categoria.
-        }else{
+            row[row.length - 1] = categoria.getNombre();
+        }else{ // Si ya esta agregada la categoria.
             categs = model.getCategorias();
             row = model.getRows();
         }
-        model.setRango(view.getRango());
-        model.setCategoriasAll(view.getCategoriasList());
+        // Se setean los valores necesarios
         model.setCategorias(categs);
         model.setRows(row);
-        model.setCols(view.getFechas());
         model.setData(createData());
     }
 
     public void actualizarInfo(){
-        model.setCategorias(view.getCategoriasList());
         model.setRango(view.getRango());
         model.setCols(view.getFechas());
         model.setData(createData());
@@ -124,13 +121,7 @@ public class Controller {
     }
 
     public void shown(){
-        model.setCategoriasAll(view.getCategoriasList());
-        model.setCategorias(view.getCategoriasList());
-        model.setRango(view.getRango());
-        model.setRows(view.getCategorias());
-        model.setCols(view.getFechas());
-        model.setData(createData());
-
+       seleccionTotal();
     }
 
 }
