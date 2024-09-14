@@ -14,6 +14,7 @@ import java.beans.PropertyChangeListener;
 
 import java.beans.PropertyChangeEvent;
 import java.io.File;
+import java.util.Objects;
 
 public class View implements PropertyChangeListener {
     private JPanel panel1;
@@ -171,7 +172,7 @@ public class View implements PropertyChangeListener {
         e.setDescripcion(descripcion.getText());
         e.setCodigo(codigo.getText());
         e.setPrecio(Float.parseFloat(precio.getText()));
-        e.setCategoria(nombreCategoria((String) categorias.getSelectedItem()), codigoCategoria((String) categorias.getSelectedItem()));
+        e.setCategoria(nombreCategoria(Objects.requireNonNull(categorias.getSelectedItem()).toString()), codigoCategoria(categorias.getSelectedItem().toString()));
         e.setUnidad(unidad.getText());
         e.setExistencia(Integer.parseInt(existencias.getText()));
         return e;
