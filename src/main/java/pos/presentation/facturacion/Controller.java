@@ -33,8 +33,19 @@ public class Controller {
         producto.setCodigo(cod);
         try {
             producto = Service.instance().read(producto);
-            return producto;
-        } catch (Exception e) {
+            if(prodYaEstaAgregado(producto)){
+                throw new IllegalArgumentException("Producto ya esta agregado en la factura");
+            }
+            if(producto.getExistencia() <= 0){
+                throw new IllegalArgumentException("No hay suficientes existencias de ese producto");
+            }
+                return producto;
+
+        }
+        catch(IllegalArgumentException e){
+            throw e;
+        }
+        catch (Exception e) {
             throw new Exception("Producto no existe");
         }
     }
@@ -42,6 +53,17 @@ public class Controller {
     public void save(Linea lin) throws Exception {
         model.getListLinea().add(lin);
         model.setListLinea(model.getListLinea());
+    }
+    boolean prodYaEstaAgregado(Producto producto){
+        if(listaLineasEstaVacia()){
+            return false;
+        }
+        for(Linea lin : model.getListLinea()){
+            if(producto == lin.getProducto()){
+               return true;
+            }
+        }
+        return false;
     }
 
     public boolean listaLineasEstaVacia() {
@@ -88,12 +110,16 @@ public class Controller {
         }
     }
 
-    void actualizarCantidad(int cantidad) {          //Recordar preguntar aca sobre existencias
+    void actualizarCantidad(int cantidad) throws Exception{          //Recordar preguntar aca sobre existencias
         try {
+            if(cantidad > model.getCurrent().getProducto().getExistencia()){
+    throw new Exception("No hay suficientes existencias de ese producto");
+            }
             model.getCurrent().setCantidad(cantidad);
             model.setCurrent(null);
             model.setListLinea(model.getListLinea());
         } catch (Exception e) {
+throw e;
         }
     }
 
@@ -126,8 +152,15 @@ public class Controller {
         return model.getActual() == null;
     }
 
-    public void agregarProdctoActual(boolean opcion,double desc) {
+    public void agregarProdctoActual(boolean opcion,double desc)throws Exception {
         if(opcion && !productoActualEsNulo()) {
+            if(prodYaEstaAgregado(model.getActual())){
+                model.setActual(null);
+                throw new Exception("Producto ya esta agregado en la factura");
+            }
+            if(model.getActual().getExistencia() <= 0){
+                throw new Exception("No hay suficientes existencias de ese producto");
+            }
             Linea linea = new Linea(model.getActual(), 1, desc);
             model.getListLinea().add(linea);
             model.setListLinea(model.getListLinea());
@@ -138,7 +171,7 @@ public class Controller {
         }
     }
 
-    public Double total() {     //Calcular descuento
+    public Double total() {
         Double aux = 0.0;
         for (Linea linea : model.getListLinea()) {
             aux += (linea.getProducto().getPrecio() * linea.getCantidad())-(linea.getProducto().getPrecio() * linea.getCantidad()*(linea.getDescuento()/100));

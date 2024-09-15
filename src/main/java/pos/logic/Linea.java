@@ -22,13 +22,18 @@ public class Linea {
         codigo="LIN-"+id++;      //Creo que seria asi para que todas las lineas sean diferentes,aunque el problema es cuando se creen los objetos automaticos
     }
     public Linea() {
+        producto=null;
+        cantidad=0;
+        descuento=0;
+        codigo="LIN";
     }
     public Linea (String codigo){
-        this.codigo = codigo;   //Por ejemplo si se ocupa crear una linea a partir de otra para que no modifique "id"
+        this.codigo = codigo;
     }
 
     public Double getTotal(){ return producto.getPrecio() + (producto.getPrecio() * descuento); }
 
+    static public void setId(int i){ id=i; }        //Con esto se setearia el valor de id cuando se lea
     public void setProducto(Producto producto) {this.producto = producto;}
     public void setCantidad(int cantidad) {this.cantidad = cantidad;}
     public void setDescuento(double descuento) {this.descuento = descuento;}
