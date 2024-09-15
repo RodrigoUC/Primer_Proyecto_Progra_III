@@ -49,8 +49,8 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (validate()) {
-                    Producto n = take();
                     try {
+                        Producto n = take();
                         controller.save(n);
                         JOptionPane.showMessageDialog(panel1, "REGISTRO APLICADO", "", JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception ex) {
@@ -167,16 +167,23 @@ public class View implements PropertyChangeListener {
     }
 
 
-    public Producto take() {
+    public Producto take() throws Exception{
         Producto e = new Producto();
         e.setDescripcion(descripcion.getText());
         e.setCodigo(codigo.getText());
+        if(Integer.parseInt(precio.getText()) <= 0){
+            throw new Exception("Se ha digitado una cantidad invalida para el precio");
+        }
         e.setPrecio(Float.parseFloat(precio.getText()));
         e.setCategoria(nombreCategoria(Objects.requireNonNull(categorias.getSelectedItem()).toString()), codigoCategoria(categorias.getSelectedItem().toString()));
         e.setUnidad(unidad.getText());
+        if(Integer.parseInt(existencias.getText()) <= 0){
+            throw new Exception("Se ha digitado una cantidad invalida para existencia");
+        }
         e.setExistencia(Integer.parseInt(existencias.getText()));
         return e;
     }
+
 
     public String nombreCategoria(String cat){
 

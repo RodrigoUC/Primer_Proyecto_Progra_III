@@ -67,7 +67,6 @@ public class Application {
         pos.presentation.estadisticas.View estadisticasView = new pos.presentation.estadisticas.View();
         estadisticasController = new pos.presentation.estadisticas.Controller(estadisticasView, estadisticasModel);
         Icon estadisticasIcon = new ImageIcon(Application.class.getResource("presentation/icons/statisctics.png"));
-
         tabbedPane.addTab("Estadisticas ", estadisticasIcon, estadisticasView.getPanel());
 
         // Historico
@@ -87,7 +86,6 @@ public class Application {
         window.setVisible(true);
 
     }
-
     public static pos.presentation.clientes.Controller clientesController;
     public static Controller cajerosController;
     public static pos.presentation.productos.Controller productosController;

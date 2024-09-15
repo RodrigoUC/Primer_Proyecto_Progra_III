@@ -19,7 +19,6 @@ public class View implements PropertyChangeListener {
             public void actionPerformed(ActionEvent e) {
                 if(clientes.getSelectedItem() == null || cajeros.getSelectedItem() == null){
                     JOptionPane.showMessageDialog(panel, "Debe Ingresar un cajero y un cliente para Cobrar","Informacion" , JOptionPane.INFORMATION_MESSAGE);
-
                 }
                 else {
                     controller.cobrar();
@@ -37,18 +36,21 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Boton de buscar
-                if (clientes.getSelectedItem() == null || cajeros.getSelectedItem() == null) {
-                    JOptionPane.showMessageDialog(panel, "Debe Ingresar un cajero y un cliente para empezar a agregar Productos","Informacion" , JOptionPane.INFORMATION_MESSAGE);
-                }
-                else{
-                    int option = JOptionPane.showOptionDialog(null, controller.getViewBuscar().getPanel(), "Buscar",
-                            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
-                    if (option == JOptionPane.OK_OPTION) {
-                        controller.agregarProdctoActual(true, ((Cliente) (clientes.getSelectedItem())).getDescuento());
+                try {
+                    if (clientes.getSelectedItem() == null || cajeros.getSelectedItem() == null) {
+                        JOptionPane.showMessageDialog(panel, "Debe Ingresar un cajero y un cliente para empezar a agregar Productos", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        controller.agregarProdctoActual(false, 0);
+                        int option = JOptionPane.showOptionDialog(null, controller.getViewBuscar().getPanel(), "Buscar",
+                                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+                        if (option == JOptionPane.OK_OPTION) {
+                            controller.agregarProdctoActual(true, ((Cliente) (clientes.getSelectedItem())).getDescuento());
+                        } else {
+                            controller.agregarProdctoActual(false, 0);
+                        }
                     }
-
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -57,16 +59,20 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Boton de cantidad
-                if (!controller.currentEsNulo()) {
-                    String texto=controller.pedirCantidad();
-                    if (texto != null && validarInts(texto)) {
-                        int cantidad = Integer.parseInt(texto);
-                        JOptionPane.showMessageDialog(null, "Se ingreso exitosamente la cantidad");
-                        controller.actualizarCantidad(cantidad);
+                try {
+                    if (!controller.currentEsNulo()) {
+                        String texto = controller.pedirCantidad();
+                        if (texto != null && validarInts(texto)) {
+                            int cantidad = Integer.parseInt(texto);
+                            controller.actualizarCantidad(cantidad);
+                            JOptionPane.showMessageDialog(null, "Se ingreso exitosamente la cantidad");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No se ingreso ha ingresado un valor valido");
+                        }
                     }
-                    else{
-                        JOptionPane.showMessageDialog(null, "No se ingreso nada o se ingreso algun caracter invalido");
-                    }
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -89,7 +95,7 @@ public class View implements PropertyChangeListener {
                 controller.actualizarDescuento(descuento);
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "No se ingreso nada o se ingreso algun caracter invalido");
+                        JOptionPane.showMessageDialog(null, "No se ingreso un valor valido");
                     }
                 }
             }
@@ -210,7 +216,7 @@ public class View implements PropertyChangeListener {
             Cajero cajero = (Cajero) cajeros.getSelectedItem();
             Cliente cliente = (Cliente) clientes.getSelectedItem();
             Factura factura = new Factura(cajero, cliente);
-            factura.setVec(controller.getListLinea());  //Pasar a controller
+
 
             return factura;
         }
