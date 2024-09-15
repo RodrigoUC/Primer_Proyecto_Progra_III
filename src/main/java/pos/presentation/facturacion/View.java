@@ -47,7 +47,6 @@ public class View implements PropertyChangeListener {
                         } else {
                             controller.agregarProdctoActual(false, 0);
                         }
-
                     }
                 }
                 catch(Exception ex){
@@ -217,7 +216,7 @@ public class View implements PropertyChangeListener {
             Cajero cajero = (Cajero) cajeros.getSelectedItem();
             Cliente cliente = (Cliente) clientes.getSelectedItem();
             Factura factura = new Factura(cajero, cliente);
-            factura.setVec(controller.getListLinea());  //Pasar a controller
+
 
             return factura;
         }

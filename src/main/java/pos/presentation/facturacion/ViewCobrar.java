@@ -1,6 +1,7 @@
 package pos.presentation.facturacion;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -70,9 +71,12 @@ public class ViewCobrar implements PropertyChangeListener {
     }
     public void Cobrar(){
         precio.setText(String.valueOf(controller.total()));
+        panel.setPreferredSize(new Dimension(400, 300));
         dialog = new JDialog((JFrame)null, "Cobrar",true);
+        dialog.setMinimumSize(new Dimension(400, 300));
         dialog.setContentPane(panel);
         dialog.pack();      //Ajusta el tamano automaticamente
+        dialog.setResizable(false);     //Quita la posibilidad de hacer mas grande o pequena la ventana
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }

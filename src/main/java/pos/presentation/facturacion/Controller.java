@@ -203,15 +203,17 @@ throw e;
 
 
     String pedirCantidad(){
-        ImageIcon icono = new ImageIcon(getClass().getResource("/pos/presentation/icons/cantidad.png"));
+        ImageIcon icono = new ImageIcon(getClass().getResource("/pos/presentation/icons/cantidad.png"));    //Puse esto aca porque accede a algo del model, y desde view esto no se puede hacer
         String texto = (String) JOptionPane.showInputDialog(null, "Cantidad?", model.getCurrent().getProducto().getDescripcion(), JOptionPane.PLAIN_MESSAGE, icono, null, "");
    return texto;
     }
     public void guardarFactura(){
         try {
             Factura factura = view.take();
+            factura.setVec(getListLinea());
             model.init(Service.instance().search(new Linea()), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
             for(Linea linea : factura.getVec()){
+                linea.getProducto().setExistencia(linea.getProducto().getExistencia()-linea.getCantidad()); //Le quita la cantidad que se compraron a existencias
                 Service.instance().create(linea);
             }
 
