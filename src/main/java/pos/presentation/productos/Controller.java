@@ -16,6 +16,7 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import pos.Application;
+import pos.logic.Categoria;
 import pos.logic.Producto;
 import pos.logic.Service;
 
@@ -125,6 +126,10 @@ public class Controller {
         cell.setPadding(0);
         if(!hasBorder) cell.setBorder(Border.NO_BORDER);
         return cell;
+    }
+
+    public Categoria getCategoria(Categoria e) {
+        return null;
     }
 
 }

@@ -76,7 +76,8 @@ public class Producto {
     }
 
     public void setCategoria(String nombre, String id) {
-        this.categoria = new Categoria(nombre, id);
+        this.categoria.setNombre(nombre);
+        this.categoria.setId(id);
     }
 
     public void setUnidad(String unidad) {this.unidad = unidad;}

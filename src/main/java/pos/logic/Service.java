@@ -114,13 +114,9 @@ public class Service {
     // ----------------------PRODUCTOS-------------------------
     public void create(Producto e) throws Exception {
         Producto result = data.getProductos().stream().filter(i -> i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
-        Categoria resultado = data.getCategorias().stream().filter(i -> i.getNombre().equals(e.getCategoria().getNombre())).findFirst().orElse(null);
 
         if (result == null) data.getProductos().add(e);
         else throw new Exception("Producto ya existe");
-
-        if (resultado == null) data.getCategorias().add(e.getCategoria());
-        // Aquí es posible que quieras evitar lanzar una excepción para categorías existentes.
     }
 
     public Producto read(Producto e) throws Exception{
@@ -251,6 +247,10 @@ public class Service {
 
     public List<Categoria> search(Categoria e){
         return data.getCategorias();
+    }
+
+    public Categoria read(Categoria e){
+        return data.getCategorias().stream().filter(i->i.getNombre().equals(e.getNombre())).findFirst().orElse(null);
     }
 
     // ----------------------Linea historico (Listado)-------------------------
