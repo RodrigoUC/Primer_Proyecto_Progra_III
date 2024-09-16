@@ -76,7 +76,6 @@ public class Controller {
         PdfWriter writer = new PdfWriter(dest);
         PdfDocument pdf = new PdfDocument(writer);
 
-        //Document document = new Document(pdf, PageSize.A4.rotate());
         Document document = new Document(pdf);
         document.setMargins(20, 20, 20, 20);
 
@@ -84,7 +83,6 @@ public class Controller {
         header.setWidth(400);
         header.setHorizontalAlignment(HorizontalAlignment.CENTER);
         header.addCell(getCell(new Paragraph("Listado de Cajeros").setFont(font).setBold().setFontSize(20f), TextAlignment.CENTER,false));
-        //header.addCell(getCell(new Image(ImageDataFactory.create("logo.jpg")), HorizontalAlignment.CENTER,false));
         document.add(header);
 
         document.add(new Paragraph(""));document.add(new Paragraph(""));
@@ -110,14 +108,6 @@ public class Controller {
         Cell cell = new Cell().add(paragraph);
         cell.setPadding(0);
         cell.setTextAlignment(alignment);
-        if(!hasBorder) cell.setBorder(Border.NO_BORDER);
-        return cell;
-    }
-
-    private Cell getCell(Image image, HorizontalAlignment alignment, boolean hasBorder) {
-        Cell cell = new Cell().add(image);
-        image.setHorizontalAlignment(alignment);
-        cell.setPadding(0);
         if(!hasBorder) cell.setBorder(Border.NO_BORDER);
         return cell;
     }

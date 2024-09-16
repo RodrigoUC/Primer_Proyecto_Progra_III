@@ -50,6 +50,7 @@ public class Model extends AbstractModel {
     public List<Factura> getListFacturas() {
         return listFacturas;
     }
+
     public List<Factura> getListFacturasFilter() {
         return listFacturasFilter;
     }
@@ -59,7 +60,7 @@ public class Model extends AbstractModel {
 
     public void setListFacturas(List<Factura> listFacturas) {
         this.listFacturas = listFacturas;
-    firePropertyChange(LISTFACTURAS);
+        firePropertyChange(LISTFACTURAS);
     }
     public void setListFacturasFilter(List<Factura> listFacturasFilter) {
         this.listFacturasFilter = listFacturasFilter;

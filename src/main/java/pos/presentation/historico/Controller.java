@@ -56,8 +56,8 @@ public class Controller {
         }
     }
 
-    public List<Factura> buscarFacturas() throws Exception {
-        List<Factura> facturas = new ArrayList<Factura>();
+    public List<Factura>    buscarFacturas() throws Exception {
+        List<Factura> facturas;
         Factura factura = new Factura();
         try {
             factura.setCliente(model.getFilter());
@@ -89,7 +89,7 @@ public class Controller {
         try{
             List<LineaHistorico> listado = new ArrayList<LineaHistorico>();
             System.out.println("cantidad facturas: " + model.getListFacturasFilter().size());
-            for(int i=0;i<model.getListFacturasFilter().size(); i++){
+            for(int i=0; i<model.getListFacturasFilter().size(); i++){
                 listado.add(new LineaHistorico(model.getListFacturasFilter().get(i)));
                 System.out.println("    listado.add(new LineaHistorico(factura))    ");//*********************
             }
@@ -112,59 +112,54 @@ public class Controller {
     }
 
     public void print()throws Exception{
-        String dest="Listado.pdf";
-        PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
-        PdfWriter writer = new PdfWriter(dest);
-        PdfDocument pdf = new PdfDocument(writer);
+        try {
+            String dest = "historico.pdf";
+            PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
+            PdfWriter writer = new PdfWriter(dest);
+            PdfDocument pdf = new PdfDocument(writer);
 
-        //Document document = new Document(pdf, PageSize.A4.rotate());
-        Document document = new Document(pdf);
-        document.setMargins(20, 20, 20, 20);
+            Document document = new Document(pdf);
+            document.setMargins(20, 20, 20, 20);
 
-        Table header = new Table(1);
-        header.setWidth(400);
-        header.setHorizontalAlignment(HorizontalAlignment.CENTER);
-        header.addCell(getCell(new Paragraph("Listado de Facturas").setFont(font).setBold().setFontSize(20f), TextAlignment.CENTER,false));
-        //header.addCell(getCell(new Image(ImageDataFactory.create("logo.jpg")), HorizontalAlignment.CENTER,false));
-        document.add(header);
+            Table header = new Table(1);
+            header.setWidth(400);
+            header.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            header.addCell(getCell(new Paragraph("Listado de Facturas").setFont(font).setBold().setFontSize(20f), TextAlignment.CENTER, false));
+            document.add(header);
 
-        document.add(new Paragraph(""));document.add(new Paragraph(""));
+            document.add(new Paragraph(""));
+            document.add(new Paragraph(""));
 
-        Color bkg = ColorConstants.RED;
-        Color frg= ColorConstants.WHITE;
-        Table body = new Table(5);
-        body.setWidth(400);
-        body.setHorizontalAlignment(HorizontalAlignment.CENTER);
-        body.addCell(getCell(new Paragraph("Numero").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
-        body.addCell(getCell(new Paragraph("Cliente").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
-        body.addCell(getCell(new Paragraph("Cajero").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
-        body.addCell(getCell(new Paragraph("Fecha").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
-        body.addCell(getCell(new Paragraph("Importe").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
+            Color bkg = ColorConstants.RED;
+            Color frg = ColorConstants.WHITE;
+            Table body = new Table(5);
+            body.setWidth(400);
+            body.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            body.addCell(getCell(new Paragraph("Numero").setBackgroundColor(bkg).setFontColor(frg), TextAlignment.CENTER, true));
+            body.addCell(getCell(new Paragraph("Cliente").setBackgroundColor(bkg).setFontColor(frg), TextAlignment.CENTER, true));
+            body.addCell(getCell(new Paragraph("Cajero").setBackgroundColor(bkg).setFontColor(frg), TextAlignment.CENTER, true));
+            body.addCell(getCell(new Paragraph("Fecha").setBackgroundColor(bkg).setFontColor(frg), TextAlignment.CENTER, true));
+            body.addCell(getCell(new Paragraph("Importe").setBackgroundColor(bkg).setFontColor(frg), TextAlignment.CENTER, true));
 
 
-        for(Factura e: model.getListFacturasFilter()){
-            body.addCell(getCell(new Paragraph(e.getCodigo()),TextAlignment.CENTER,true));
-            body.addCell(getCell(new Paragraph(e.getCliente().getNombre()),TextAlignment.CENTER,true));
-            body.addCell(getCell(new Paragraph(e.getCajero().getNombre()),TextAlignment.CENTER,true));
-            body.addCell(getCell(new Paragraph(e.getFecha().toString()),TextAlignment.CENTER,true));
-            body.addCell(getCell(new Paragraph(String.valueOf(e.getTotal())),TextAlignment.CENTER,true));
+            for (Factura e : model.getListFacturasFilter()) {
+                body.addCell(getCell(new Paragraph(e.getCodigo()), TextAlignment.CENTER, true));
+                body.addCell(getCell(new Paragraph(e.getCliente().getNombre()), TextAlignment.CENTER, true));
+                body.addCell(getCell(new Paragraph(e.getCajero().getNombre()), TextAlignment.CENTER, true));
+                body.addCell(getCell(new Paragraph(e.getFecha().toString()), TextAlignment.CENTER, true));
+                body.addCell(getCell(new Paragraph(String.valueOf(e.getTotal())), TextAlignment.CENTER, true));
+            }
+            document.add(body);
+            document.close();
+        } catch (Exception ex){
+            throw ex;
         }
-        document.add(body);
-        document.close();
     }
 
     private Cell getCell(Paragraph paragraph, TextAlignment alignment, boolean hasBorder) {
         Cell cell = new Cell().add(paragraph);
         cell.setPadding(0);
         cell.setTextAlignment(alignment);
-        if(!hasBorder) cell.setBorder(Border.NO_BORDER);
-        return cell;
-    }
-
-    private Cell getCell(Image image, HorizontalAlignment alignment, boolean hasBorder) {
-        Cell cell = new Cell().add(image);
-        image.setHorizontalAlignment(alignment);
-        cell.setPadding(0);
         if(!hasBorder) cell.setBorder(Border.NO_BORDER);
         return cell;
     }

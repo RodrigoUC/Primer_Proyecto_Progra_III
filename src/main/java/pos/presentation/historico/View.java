@@ -64,11 +64,11 @@ public class View implements PropertyChangeListener {
                 try {
                     controller.print();
                     if(Desktop.isDesktopSupported()){
-                        File myFile = new File("clientes.pdf");
+                        File myFile = new File("historico.pdf");
                         Desktop.getDesktop().open(myFile);
                     }
                 } catch (Exception ex) {
-                    throw new RuntimeException(ex);
+                    JOptionPane.showMessageDialog(panel, "No se han hecho busquedas.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

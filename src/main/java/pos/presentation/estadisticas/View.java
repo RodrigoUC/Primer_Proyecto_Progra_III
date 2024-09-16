@@ -111,7 +111,7 @@ public class View implements PropertyChangeListener {
                         list.setModel(model.getTableModel());
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Information", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(panel, "No se ha podido eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -124,7 +124,7 @@ public class View implements PropertyChangeListener {
                     controller.actualizarInfo();
                     list.setModel(model.getTableModel());
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Information", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(panel, "No se han podido eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -137,7 +137,7 @@ public class View implements PropertyChangeListener {
                         controller.seleccionTotal();
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Information", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(panel, "No se ha podido seleccionar todo.", "Information", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -151,7 +151,7 @@ public class View implements PropertyChangeListener {
                         controller.seleccionUnica(seleccion);
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(panel, "No se pudo seleccionar", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
