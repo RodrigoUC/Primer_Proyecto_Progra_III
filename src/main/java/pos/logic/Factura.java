@@ -87,6 +87,16 @@ public class Factura {
       return (desc+cliente.getDescuento())/100;
    }
 
+   public Double getTotalPorIDCategoria(String idCategoria){
+      Double total = 0.0d;
+      for (Linea l : vec) {
+         if(idCategoria == l.getCategoria().getId()){
+            total += l.getTotalLinea();
+         }
+      }
+      return total;
+   }
+
  public List<Linea> getLineas() { return vec; }
 
    @Override

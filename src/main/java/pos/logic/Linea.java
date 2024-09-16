@@ -46,7 +46,7 @@ public class Linea {
     public String getCodigo(){return codigo;}
 
     public double getTotalLinea(){
-        return (producto.getPrecio()*cantidad)*(descuento/100);
+        return (producto.getPrecio()*cantidad)-((descuento/100)*producto.getPrecio()*cantidad);
     }
 
 }
