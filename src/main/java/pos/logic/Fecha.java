@@ -49,7 +49,7 @@ public class Fecha {
     }
 
     public String toString() {
-        return String.format("%.2f-&.2f", getAnio(), getMes());
+        return codigo;
     }
 
 }

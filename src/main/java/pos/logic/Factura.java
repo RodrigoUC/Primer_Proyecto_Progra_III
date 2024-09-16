@@ -91,10 +91,10 @@ public class Factura {
       return (desc+cliente.getDescuento())/100;
    }
 
-   public Double getTotalPorIDCategoria(String idCategoria){
-      Double total = 0.0d;
+   public Double getTotalPorCategoria(String categoria){
+      double total = 0.0d;
       for (Linea l : vec) {
-         if(idCategoria == l.getCategoria().getId()){
+         if(Objects.equals(categoria, l.getCategoria().getNombre())){
             total += l.getTotalLinea();
          }
       }

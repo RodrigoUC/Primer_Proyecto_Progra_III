@@ -218,6 +218,7 @@ public class Service {
         //compara codigo de factura
         Factura result = data.getFacturas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
         if (result!=null){
+            result.setCajero(read(e.getCajero()));
             return result;
         }
         else throw new Exception("Factura no existe");
@@ -311,18 +312,18 @@ public class Service {
     }
 
     //-------------------------------Calculos--------------------------------------
-    public Double totalDelMes(String nombreCategoria, int anio, int mes) {
-        Double total = 0d;
 
-        // Filtrar las facturas por año y mes, luego sumar el total de las líneas de la categoría específica
-        total = data.getFacturas().stream()
-                .filter(factura -> factura.getFecha().getAnio() == anio && factura.getFecha().getMes() == mes)  // Comparación de enteros
-                .flatMap(factura -> factura.getLineas().stream())  // Obtener las líneas de cada factura
-                .filter(linea -> linea.getCategoria().getNombre().equals(nombreCategoria))  // Filtrar por categoría
-                .mapToDouble(Linea::getTotalLinea)  // Obtener el total de cada línea como DoubleStream
-                .sum();  // Sumar todos los totales
+    public Double totalDelMes(String categoria, int anio, int mes){
+        double total = 0d;
+
+        List<Factura> facturas = data.getFacturas().stream().filter(factura -> factura.getFecha().getAnio() == anio && factura.getFecha().getMes() == mes).toList();
+
+        for (Factura factura : facturas) {
+            total += factura.getTotalPorCategoria(categoria);
+        }
 
         return total;
+
     }
 
 }
