@@ -18,6 +18,7 @@ import com.itextpdf.layout.properties.TextAlignment;
 import pos.Application;
 import pos.logic.*;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class Controller {
             //seteo de lineasNormales en View
         }
         catch(Exception e){
-            throw new Exception("Cliente no tiene Facturas");
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -67,9 +68,9 @@ public class Controller {
             return facturas;
 
         } catch (Exception e) {
-            throw new Exception("No hay facturas del cliente");
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
+        return null;
     }
 
     Cliente buscarCliente(String nombre) throws Exception {
@@ -79,8 +80,9 @@ public class Controller {
             cliente = Service.instance().readNombre(cliente);
             return cliente;
         } catch (Exception e) {
-            throw new Exception("Cliente no existe");
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+        return null;
     }
 
     //-----------------LISTADO DE LINEAS DE FACTURAS DEL CLIENTE----------

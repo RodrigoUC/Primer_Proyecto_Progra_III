@@ -263,11 +263,10 @@ public class Service {
     }
 
     public List<Factura> search(Factura e){
-//        return  data.getFacturas().stream()
-//                .filter(i -> i.getNombreCliente().contains(e.getNombreCliente()))
-//                .sorted(Comparator.comparing(Factura::getNombreCliente).thenComparing(Factura::getNombreCliente))
-//                .collect(Collectors.toList());
-        return data.getFacturas().stream().filter(i->i.getNombreCliente().equals(e.getNombreCliente())).sorted().collect(Collectors.toList());
+        return  data.getFacturas().stream()
+                .filter(i -> i.getNombreCliente().equals(e.getNombreCliente()))
+                .sorted(Comparator.comparing(Factura::getNombreCliente).thenComparing(Factura::getNombreCliente))
+                .collect(Collectors.toList());
     }
 
     public List<Factura> searchAll(Factura e){
