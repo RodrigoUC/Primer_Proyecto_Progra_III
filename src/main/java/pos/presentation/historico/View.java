@@ -100,17 +100,18 @@ public class View implements PropertyChangeListener {
                 columnModelFacturas.getColumn(1).setPreferredWidth(150);
 
                 break;
-            case Model.LISTLINEASNORMALES:
+            case Model.CURRENTLINEAFACTURA:
                 int[] colsl = {TableModel.CODIGO, TableModel.ARTICULO, TableModel.CATEGORIA, TableModel.CANTIDAD, TableModel.PRECIO, TableModel.DESCUENTO, TableModel.NETO, TableModel.IMPORTE};
-//                listLineas.setModel(new TableModel(colsl, model.getListLineasNormales()));
-//                listLineas.setRowHeight(30);
-//                TableColumnModel columnModelLineas = listLineas.getColumnModel();
-//                columnModelLineas.getColumn(0).setPreferredWidth(150);
-//                columnModelLineas.getColumn(1).setPreferredWidth(150);
+                listLineas.setModel(new TableModel(colsl, model.getListLineasNormales()));
+                listLineas.setRowHeight(30);
+                TableColumnModel columnModelLineas = listLineas.getColumnModel();
+                columnModelLineas.getColumn(0).setPreferredWidth(150);
+                columnModelLineas.getColumn(1).setPreferredWidth(150);
                 break;
             case Model.FILTER:
                Cliente.setText(model.getFilter().getNombre());
                 break;
+
         }
         this.panel.revalidate();
     }

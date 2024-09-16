@@ -16,14 +16,23 @@ public class Model extends AbstractModel {
     List<Linea> listLineasNormales; // Lineas normales segun una(1) Factura
     LineaHistorico currentLineaFactura;
 
+    public LineaHistorico getCurrentLineaFactura() {
+        return currentLineaFactura;
+    }
+
+    public void setCurrentLineaFactura(LineaHistorico currentLineaFactura) {
+        this.currentLineaFactura = currentLineaFactura;
+    firePropertyChange(CURRENTLINEAFACTURA);
+    }
+
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         super.addPropertyChangeListener(listener);
         firePropertyChange(LISTFACTURASFILTER);
         firePropertyChange(LISTLINEASLISTADO);
         firePropertyChange(LISTLINEASNORMALES);
+        firePropertyChange(CURRENTLINEAFACTURA);
         firePropertyChange(FILTER);
-        firePropertyChange(CURRENTFACTURA);
     }
 
     public Model() {
@@ -61,15 +70,14 @@ public class Model extends AbstractModel {
         this.filter = filter;
         firePropertyChange(FILTER);
     }
-    public void setCurrentLineaFacturaFactura(LineaHistorico currentListaFactura) {
-        this.currentLineaFactura = currentListaFactura;
-        firePropertyChange(CURRENTFACTURA);
-    }
+
+
     public LineaHistorico getCurrentFactura() {return currentLineaFactura;}
 
     public static final String LISTFACTURASFILTER = "listFacturasFilter";
     public static final String LISTLINEASLISTADO = "listLineasListado";
     public static final String LISTLINEASNORMALES = "listLineasNormales";
     public static final String FILTER = "filter";
-    public static final String CURRENTFACTURA = "currentFactura";
+    public static final String CURRENTLINEAFACTURA = "currentLineaFactura";
+
 }

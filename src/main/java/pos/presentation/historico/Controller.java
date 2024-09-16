@@ -104,7 +104,8 @@ public class Controller {
 
     void listaLineasNormales(int row) throws Exception {
         try{
-            model.setListLineasNormales(model.getListLineasListado().get(row).getFactura().getLineas());
+            model.setCurrentLineaFactura(model.getListLineasListado().get(row));
+            model.setListLineasNormales(model.getCurrentFactura().getFactura().getLineas());
         }catch (Exception e) {
             throw new Exception("Error lista lineas");
         }
