@@ -29,9 +29,7 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    Cliente filter = controller.buscarCliente(Cliente.getText());
-                    model.setFilter(filter);
-                    controller.search(filter);
+                    controller.search(Cliente.getText());
                 } catch (Exception ex){
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
                 }

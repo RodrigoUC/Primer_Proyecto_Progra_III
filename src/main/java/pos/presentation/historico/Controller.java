@@ -42,15 +42,14 @@ public class Controller {
         } catch (Exception ex) {}
     }
 
-    public void search(Cliente filter) throws Exception {
-        model.setFilter(filter);
+    public void search(String nombre) throws Exception {
+
         model.setMode(Application.MODE_CREATE);
         try{
-            //buscarCliente(filter.getNombre());
-            model.setCurrent(model.getFilter());
+            model.setFilter(buscarCliente(nombre));
             model.setListFacturasFilter(buscarFacturas());
             model.setListLineasListado(listadoHistorico());
-            //model.setListLineasNormales(listaLineasNormales());
+            //seteo de lineasNormales en View
         }
         catch(Exception e){
             throw new Exception("Cliente no tiene Facturas");
@@ -61,7 +60,7 @@ public class Controller {
         List<Factura> facturas = new ArrayList<Factura>();
         Factura factura = new Factura();
         try {
-            factura.setCliente(model.getFilter()); //antes getCurrent, testear
+            factura.setCliente(model.getFilter());
             facturas = Service.instance().search(factura);
             System.out.println(factura.getNombreCliente()); //busca la lista de factuas del cliente pero retorna lista vacia
             System.out.println(facturas.size());
@@ -77,9 +76,7 @@ public class Controller {
         Cliente cliente = new Cliente();
         cliente.setNombre(nombre);
         try {
-            //cliente = Service.instance().read(cliente);
             cliente = Service.instance().readNombre(cliente);
-            //cliente = (Cliente) Service.instance().search(cliente);
             return cliente;
         } catch (Exception e) {
             throw new Exception("Cliente no existe");
@@ -91,8 +88,10 @@ public class Controller {
     List<LineaHistorico> listadoHistorico() throws Exception {
         try{
             List<LineaHistorico> listado = new ArrayList<LineaHistorico>();
-            for(Factura factura : model.getListFacturasFilter()){
-                listado.add(new LineaHistorico(factura));
+            System.out.println("cantidad facturas: " + model.getListFacturasFilter().size());
+            for(int i=0;i<model.getListFacturasFilter().size(); i++){
+                listado.add(new LineaHistorico(model.getListFacturasFilter().get(i)));
+                System.out.println("    listado.add(new LineaHistorico(factura))    ");//*********************
             }
             return listado;
         }catch (Exception e) {
