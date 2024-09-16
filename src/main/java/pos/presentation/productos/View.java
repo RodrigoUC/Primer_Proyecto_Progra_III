@@ -1,6 +1,7 @@
 package pos.presentation.productos;
 
 import pos.Application;
+import pos.logic.Categoria;
 import pos.logic.Producto;
 
 import javax.swing.*;
@@ -175,7 +176,7 @@ public class View implements PropertyChangeListener {
             throw new Exception("Se ha digitado una cantidad invalida para el precio");
         }
         e.setPrecio(Float.parseFloat(precio.getText()));
-        e.setCategoria(nombreCategoria(Objects.requireNonNull(categorias.getSelectedItem()).toString()), codigoCategoria(categorias.getSelectedItem().toString()));
+        e.setCategoria(Objects.requireNonNull(categorias.getSelectedItem()).toString());
         e.setUnidad(unidad.getText());
         if(Integer.parseInt(existencias.getText()) <= 0){
             throw new Exception("Se ha digitado una cantidad invalida para existencia");
@@ -235,7 +236,7 @@ public class View implements PropertyChangeListener {
                 descripcion.setText(model.getCurrent().getDescripcion());
                 precio.setText("" + model.getCurrent().getPrecio());
                 unidad.setText(model.getCurrent().getUnidad());
-                categorias.setSelectedItem(model.getCurrent().getCategoria());
+                categorias.setSelectedItem(model.getCurrent().getCategoria().getNombre());
                 existencias.setText("" + model.getCurrent().getExistencia());
 
                 if (model.getMode() == Application.MODE_EDIT) {

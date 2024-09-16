@@ -1,35 +1,32 @@
 package pos.logic;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlID;
-import jakarta.xml.bind.annotation.XmlIDREF;
+import jakarta.xml.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Factura {
-//   @XmlID
+   @XmlID
    private String codigo;
-
-   public void setVec(List<Linea> vec) {
-      this.vec = vec;
-   }
-
+   @XmlIDREF
    private List<Linea> vec;
-//   @XmlIDREF
+   @XmlIDREF
    private Cajero cajero;
-//   @XmlIDREF
+   @XmlIDREF
    private Cliente cliente;
-//   @XmlIDREF
+   @XmlIDREF
    private Fecha fecha;
 
    public Factura() {
+      LocalDate local = LocalDate.now();
       this.cajero = null;
       this.cliente = null;
-      fecha = new Fecha();
+      fecha = new Fecha(local.getYear(), local.getMonthValue(), local.getDayOfMonth());
+      codigo = "FAC-";
    }
 
    public Factura(Fecha fecha, List<Linea> vec) {
@@ -37,15 +34,22 @@ public class Factura {
       this.vec = vec;
       this.cajero = null;
       this.cliente = null;
+      codigo = "FAC-";
    }
 
    public Factura(Cajero cajero, Cliente cliente) {
+      LocalDate local = LocalDate.now();
       this.cajero = cajero;
       this.cliente = cliente;
-      fecha = new Fecha();
+      fecha = new Fecha(local.getYear(), local.getMonthValue(), local.getDayOfMonth());
+      codigo = "FAC-";
+   }
+
+   public void setVec(List<Linea> vec) {
+      this.vec = vec;
    }
    public String getCodigo() { return codigo; }
-   public void setCodigo(String codigo) { this.codigo = codigo; }
+   public void setCodigo(String codigo) { this.codigo += codigo; }
    public void setCajero(Cajero cajero) { this.cajero = cajero; }
    public void setCliente(Cliente cliente) {
       this.cliente = cliente;

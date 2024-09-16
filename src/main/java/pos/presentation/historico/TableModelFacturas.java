@@ -23,7 +23,7 @@ public class TableModelFacturas extends AbstractTableModel<LineaHistorico> imple
             case NUMERO: return e.getNumero();
             case CLIENTE: return e.getNombreCliente();
             case CAJERO: return e.getNombreCajero();
-            case FECHA: return e.getFecha().getFechaComoCadena();
+            case FECHA: return e.getFechaString();
             case IMPORTE: return e.getImporte();
             default: return "";
         }

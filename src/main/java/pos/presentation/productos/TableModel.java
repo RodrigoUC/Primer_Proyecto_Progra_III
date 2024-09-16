@@ -21,22 +21,15 @@ public class TableModel extends AbstractTableModel<Producto> implements javax.sw
 
     @Override
     protected Object getPropertyAt(Producto e, int col) {
-        switch (cols[col]) {
-            case DESCRIPCION:
-                return e.getDescripcion();
-            case CODIGO:
-                return e.getCodigo();
-            case PRECIO:
-                return e.getPrecio();
-            case CATEGORIA:
-                return e.getStringCategoria();
-            case UNIDAD:
-                return e.getUnidad();
-            case EXISTENCIA:
-                return e.getExistencia();
-            default:
-                return "";
-        }
+        return switch (cols[col]) {
+            case DESCRIPCION -> e.getDescripcion();
+            case CODIGO -> e.getCodigo();
+            case PRECIO -> e.getPrecio();
+            case CATEGORIA -> e.getStringCategoria();
+            case UNIDAD -> e.getUnidad();
+            case EXISTENCIA -> e.getExistencia();
+            default -> "";
+        };
     }
 
 

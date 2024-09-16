@@ -6,17 +6,17 @@ import jakarta.xml.bind.annotation.*;
 public class LineaHistorico { //Listado
     @XmlID
     private String numero;
-//    @XmlIDREF
+    @XmlIDREF
     private Factura factura;
     private String clienteStr; //puse el string para no tener que jalar un obj
     private String cajeroStr;  //igual se filtra por el nombre del cliente en Busqueda
-//    @XmlIDREF
+    @XmlIDREF
     private Fecha fecha;
     private double importe;
 
 
     public LineaHistorico() {
-        this.numero = "";
+        this.numero = "HIST-";
         factura = new Factura();
     }
 
@@ -29,7 +29,6 @@ public class LineaHistorico { //Listado
 
     public void setFactura(Factura factura) {
         this.factura = factura;
-        numero = factura.getCodigo();
         clienteStr =factura.getCliente().getNombre();
         cajeroStr=factura.getCajero().getNombre();
         fecha = factura.getFecha();
@@ -39,6 +38,10 @@ public class LineaHistorico { //Listado
     public String getNombreCajero() {return cajeroStr;}
     public Fecha getFecha() {return fecha;}
     public double getImporte() {return importe;}
+    public void setImporte(double importe) {this.importe = importe;}
+    public String getFechaString() {
+        return fecha.toString();
+    }
     public String toString(){
         return "";
     }

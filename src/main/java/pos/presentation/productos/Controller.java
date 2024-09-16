@@ -129,7 +129,7 @@ public class Controller {
     }
 
     public Categoria getCategoria(Categoria e) {
-        return null;
+        return Service.instance().read(e);
     }
 
 }

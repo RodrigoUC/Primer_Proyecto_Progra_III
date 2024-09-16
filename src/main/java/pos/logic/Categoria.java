@@ -12,16 +12,11 @@ public class Categoria {
     String id;
     String nombre;
 
-    public Categoria() {this("", "");}
+    public Categoria() {this("");}
 
     public Categoria(String nombre){
         this.nombre = nombre;
-        this.id = "";
-    }
-
-    public Categoria(String nombre, String id) {
-        this.nombre = nombre;
-        this.id = id;
+        this.id = "CAT-" + nombre;
     }
 
     public String getNombre() {
@@ -37,6 +32,6 @@ public class Categoria {
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = "CAT-" + id;
     }
 }

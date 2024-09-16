@@ -32,9 +32,9 @@ public class Data {
     @XmlElement(name = "linea")
     private List<Linea> lineas;
 
-//    @XmlElementWrapper(name = "facturas")
-//    @XmlElement(name = "factura")
-//    private List<Factura> facturas;
+    @XmlElementWrapper(name = "facturas")
+    @XmlElement(name = "factura")
+    private List<Factura> facturas;
 
     @XmlElementWrapper(name = "fechas")
     @XmlElement(name = "fecha")
@@ -44,7 +44,11 @@ public class Data {
     @XmlElement(name = "lineasHistoricas")
     private List<LineaHistorico> lineasHistoricas;
 
-    private Integer categoriasConsecutivo;
+    @XmlElement(name = "numeroFactura")
+    private int facturasConsecutivo;
+
+    @XmlElement(name = "lineasConsecutivo")
+    private int lineasConsecutivo;
 
     public Data() {
         clientes = new ArrayList<>();
@@ -52,15 +56,21 @@ public class Data {
         productos = new ArrayList<>();
         categorias = new ArrayList<>();
         lineas = new ArrayList<>();
-//        facturas = new ArrayList<>();
+        facturas = new ArrayList<>();
         fechas = new ArrayList<>();
         lineasHistoricas = new ArrayList<>();
-        categoriasConsecutivo = 0;
+        facturasConsecutivo = 0;
+        lineasConsecutivo = 0;
     }
 
-    public String nextCategoria(){
-        DecimalFormat df = new DecimalFormat("000000");
-        return "CAT-"+df.format(categoriasConsecutivo++);
+    public String nextLinea(){
+        lineasConsecutivo++;
+        return String.valueOf(lineasConsecutivo);
+    }
+
+    public String nextFactura(){
+        facturasConsecutivo++;
+        return String.valueOf(facturasConsecutivo);
     }
 
     public List<Cliente> getClientes() {
@@ -75,7 +85,7 @@ public class Data {
 
     public List<Linea> getLineas() { return lineas; }
 
-//    public List<Factura> getFacturas() { return facturas; }
+    public List<Factura> getFacturas() { return facturas; }
 
     public List<Fecha> getFechas() { return fechas; }
 

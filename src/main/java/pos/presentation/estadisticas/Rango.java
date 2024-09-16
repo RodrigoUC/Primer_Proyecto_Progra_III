@@ -21,7 +21,7 @@ public class Rango {
     }
 
     public int cantidadDeMeses(){
-        return (anioHasta - anioDesde) * 12 + (mesHasta - mesDesde) + 1;
+        return ((anioHasta - anioDesde) * 12) + ((mesHasta - mesDesde) + 1);
     }
 
     public String getAnioMes(int m){
