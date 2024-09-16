@@ -4,6 +4,7 @@ import pos.logic.Categoria;
 import pos.presentation.AbstractModel;
 import pos.presentation.AbstractTableModel;
 
+import javax.swing.*;
 import javax.swing.table.TableModel;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ public class Model extends AbstractModel {
     String[] rowsCat;
     String[] colsFech;
     Double[][] data;
-
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -81,12 +81,12 @@ public class Model extends AbstractModel {
     public static final String DATA = "data";
 
 
-    public void init(List<Categoria> categorias, Rango rango, String[] rows, String[] cols, Double[][] data) {
+    public void init(List<Categoria> categorias) {
         this.categoriasAll = categorias;
-        this.rango = rango;
-        this.rowsCat = rows;
-        this.colsFech = cols;
-        this.data = data;
+        this.categorias = new ArrayList<>();
+        this.rowsCat = new String[0];
+        this.colsFech = new String[1];
+        this.data = new Double[0][0];
     }
 
 
@@ -123,7 +123,7 @@ public class Model extends AbstractModel {
 
             @Override
             public Class<?> getColumnClass(int col) {
-                return Object.class; // Cambiar según el tipo de datos que necesitas
+                return Object.class; // Cambiar según el tipo de datos que necesita
             }
 
 
