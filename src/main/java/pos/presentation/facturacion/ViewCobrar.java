@@ -33,6 +33,10 @@ public class ViewCobrar implements PropertyChangeListener {
                     double total = Double.parseDouble(efectivo.getText()) + Double.parseDouble(tarjeta.getText()) + Double.parseDouble(cheque.getText() ) + Double.parseDouble(sinpe.getText());
                     if(Double.parseDouble(precio.getText()) <= total){
                     controller.guardarFactura();
+                    sinpe.setText("0");
+                    cheque.setText("0");
+                    tarjeta.setText("0");
+                    efectivo.setText("0");
                     cerrar();
                         JOptionPane.showMessageDialog(null, "Se ha efectuado la compra", "Información", JOptionPane.INFORMATION_MESSAGE);
                     }
