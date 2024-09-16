@@ -28,7 +28,7 @@ public class Controller {
     private Model model;
 
     public Controller(View view, Model model) {
-        model.init(Service.instance().search(new LineaHistorico()), model.getListLineasNormales(), model.getListFacturas(),Service.instance().search(new Cliente()));
+        model.init();
         this.view = view;
         this.model = model;
         view.setController(this);
@@ -38,14 +38,12 @@ public class Controller {
     public void editFacturas(int row){
         Factura e = model.getListFacturasFilter().get(row); // o getListFacturas()
         try {
-            model.setMode(Application.MODE_EDIT);
-            model.setCurrentFactura(Service.instance().read(e));
+//            model.setMode(Application.MODE_EDIT);
+//            model.setCurrentFactura(Service.instance().read(e));
         } catch (Exception ex) {}
     }
 
     public void search(String nombre) throws Exception {
-
-        model.setMode(Application.MODE_CREATE);
         try{
             model.setFilter(buscarCliente(nombre));
             model.setListFacturasFilter(buscarFacturas());

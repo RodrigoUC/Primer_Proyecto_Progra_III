@@ -72,7 +72,6 @@ public class View implements PropertyChangeListener {
                 }
             }
         });
-
     }
 
 //    // MVC
@@ -99,6 +98,7 @@ public class View implements PropertyChangeListener {
                 TableColumnModel columnModelFacturas = listFacturas.getColumnModel();
                 columnModelFacturas.getColumn(0).setPreferredWidth(150);
                 columnModelFacturas.getColumn(1).setPreferredWidth(150);
+
                 break;
             case Model.LISTLINEASNORMALES:
                 int[] colsl = {TableModel.CODIGO, TableModel.ARTICULO, TableModel.CATEGORIA, TableModel.CANTIDAD, TableModel.PRECIO, TableModel.DESCUENTO, TableModel.NETO, TableModel.IMPORTE};
