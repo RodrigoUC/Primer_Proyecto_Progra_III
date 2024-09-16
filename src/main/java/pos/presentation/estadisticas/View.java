@@ -135,7 +135,6 @@ public class View implements PropertyChangeListener {
                 try {
                     if (validate()) {
                         controller.seleccionTotal();
-                        controller.createData();
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Information", JOptionPane.INFORMATION_MESSAGE);
@@ -150,7 +149,6 @@ public class View implements PropertyChangeListener {
                     if (validate()) {
                         Categoria seleccion = new Categoria(categoriaCBX.getSelectedItem().toString());
                         controller.seleccionUnica(seleccion);
-                        controller.createData();
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Informacion", JOptionPane.INFORMATION_MESSAGE);
@@ -219,8 +217,8 @@ public class View implements PropertyChangeListener {
         String[] cols = model.getCols();
         if (rows.length > 0 && cols.length > 0 && data.length > 0) {
             for (int i = 0; i < rows.length; i++) {
-                for (int j = 0; j < cols.length; j++) {
-                    dataset.addValue(data[i][j].intValue(), rows[i], cols[j]);
+                for (int j = 1; j < cols.length; j++) {
+                    dataset.addValue(data[i][j-1].intValue(), rows[i], cols[j-1]);
                 }
             }
         }
@@ -266,7 +264,6 @@ public class View implements PropertyChangeListener {
             fechas[i] = rango.getAnioMes(i);
         }
         return fechas;
-
     }
 
     private boolean validate() {

@@ -27,7 +27,12 @@ public class Controller {
 
         for (int i = 0; i < rows.length; i++) {
             for (int j = 0; j < cols.length; j++) {
-                data[i][j] = Service.instance().totalDelMes(rows[i], Integer.parseInt(cols[j].substring(0,3)), Integer.parseInt(cols[j].substring(4)));
+                data[i][j] = Service.instance().totalDelMes(rows[i], Integer.parseInt(cols[j].substring(0,4)), Integer.parseInt(cols[j].substring(5)));
+
+                System.out.println(rows[i]);
+                System.out.println(cols[j]);
+                System.out.println(cols[j].substring(0,4));
+                System.out.println(Integer.parseInt(cols[j].substring(5)));
             }
         }
         return data;

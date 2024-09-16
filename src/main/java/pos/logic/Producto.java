@@ -70,14 +70,9 @@ public class Producto {
         return categoria.getNombre();
     }
 
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
-
-    public void setCategoria(String nombre, String id) {
+    public void setCategoria(String nombre) {
         this.categoria.setNombre(nombre);
-        this.categoria.setId(id);
+        this.categoria.setId(nombre);
     }
 
     public void setUnidad(String unidad) {this.unidad = unidad;}

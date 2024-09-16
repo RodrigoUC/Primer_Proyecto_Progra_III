@@ -3,6 +3,7 @@ package pos.presentation.facturacion;
 import pos.logic.*;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
@@ -13,7 +14,7 @@ public class Controller {
 
     public Controller(View view, Model model) {
         try {
-            model.init(Service.instance().search(new Linea()), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
+            model.init(new ArrayList<>(), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
             this.view = view;
             this.model = model;
             this.viewBuscar = new ViewBuscar();
@@ -211,7 +212,7 @@ throw e;
         try {
             Factura factura = view.take();
             factura.setVec(getListLinea());
-            model.init(Service.instance().search(new Linea()), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
+            model.init(new ArrayList<>(), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
             for(Linea linea : factura.getVec()){
                 linea.getProducto().setExistencia(linea.getProducto().getExistencia()-linea.getCantidad()); //Le quita la cantidad que se compraron a existencias
                 Service.instance().create(linea);
