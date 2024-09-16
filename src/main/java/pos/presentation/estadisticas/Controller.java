@@ -121,7 +121,7 @@ public class Controller {
     }
 
     public void shown(){
-       seleccionTotal();
+       actualizarInfo();
     }
 
 }

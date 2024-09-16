@@ -34,4 +34,8 @@ public class Categoria {
     public void setId(String id) {
         this.id = "CAT-" + id;
     }
+
+    public String toString() {
+        return nombre;
+    }
 }
