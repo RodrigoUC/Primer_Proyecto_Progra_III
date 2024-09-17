@@ -10,12 +10,10 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
-import pos.Application;
 import pos.logic.*;
 
 import javax.swing.*;
@@ -35,40 +33,28 @@ public class Controller {
         view.setModel(model);
     }
 
-    public void editFacturas(int row){
-        Factura e = model.getListFacturasFilter().get(row); // o getListFacturas()
-        try {
-//            model.setMode(Application.MODE_EDIT);
-//            model.setCurrentFactura(Service.instance().read(e));
-        } catch (Exception ex) {}
-    }
-
     public void search(String nombre) throws Exception {
         try{
             model.setFilter(buscarCliente(nombre));
             model.setListFacturasFilter(buscarFacturas());
             model.setListLineasListado(listadoHistorico());
-            //seteo de lineasNormales en View
         }
         catch(Exception e){
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
-    public List<Factura>    buscarFacturas() throws Exception {
+    public List<Factura>buscarFacturas() throws Exception {
         List<Factura> facturas;
         Factura factura = new Factura();
         try {
             factura.setCliente(model.getFilter());
             facturas = Service.instance().search(factura);
-            System.out.println(factura.getNombreCliente()); //busca la lista de factuas del cliente pero retorna lista vacia
-            System.out.println(facturas.size());
             return facturas;
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            throw e;
         }
-        return null;
     }
 
     Cliente buscarCliente(String nombre) throws Exception {
@@ -78,9 +64,8 @@ public class Controller {
             cliente = Service.instance().readNombre(cliente);
             return cliente;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            throw e;
         }
-        return null;
     }
 
     //-----------------LISTADO DE LINEAS DE FACTURAS DEL CLIENTE----------
@@ -88,16 +73,14 @@ public class Controller {
     List<LineaHistorico> listadoHistorico() throws Exception {
         try{
             List<LineaHistorico> listado = new ArrayList<LineaHistorico>();
-            System.out.println("cantidad facturas: " + model.getListFacturasFilter().size());
             for(int i=0; i<model.getListFacturasFilter().size(); i++){
                 listado.add(new LineaHistorico(model.getListFacturasFilter().get(i)));
-                System.out.println("    listado.add(new LineaHistorico(factura))    ");//*********************
             }
             return listado;
         }catch (Exception e) {
-            throw new Exception("Error listado historico");
+            JOptionPane.showMessageDialog(null,"Error listado historico", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
+        return null;
     }
 
     //--------------LISTA DE LINEAS NORMALES SEGUN LA CURRENT FACTURA--------
@@ -107,7 +90,7 @@ public class Controller {
             model.setCurrentLineaFactura(model.getListLineasListado().get(row));
             model.setListLineasNormales(model.getCurrentFactura().getFactura().getLineas());
         }catch (Exception e) {
-            throw new Exception("Error lista lineas");
+            JOptionPane.showMessageDialog(null, "Error listado normales", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }

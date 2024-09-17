@@ -1,7 +1,5 @@
 package pos.presentation.historico;
 
-import pos.logic.Cliente;
-import pos.presentation.facturacion.TableModel;
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
@@ -37,19 +35,10 @@ public class View implements PropertyChangeListener {
         });
 
 
-        listLineas.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                //int row = listFacturas.getSelectedRow();
-                //controller.editFacturas(row);
-                //categorias.setSelectedIndex(row);
-            }
-        });
-
         listFacturas.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int row = listLineas.getSelectedRow();
+                int row = listFacturas.getSelectedRow();
                 try {
                     controller.listaLineasNormales(row);
                 } catch (Exception ex) {
@@ -74,7 +63,7 @@ public class View implements PropertyChangeListener {
         });
     }
 
-//    // MVC
+    // MVC
 
     private pos.presentation.historico.Controller controller;
     private pos.presentation.historico.Model model;
@@ -87,7 +76,7 @@ public class View implements PropertyChangeListener {
     public void setController(Controller controller){
         this.controller = controller;
     }
-//
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
@@ -100,9 +89,9 @@ public class View implements PropertyChangeListener {
                 columnModelFacturas.getColumn(1).setPreferredWidth(150);
 
                 break;
-            case Model.CURRENTLINEAFACTURA:
-                int[] colsl = {TableModel.CODIGO, TableModel.ARTICULO, TableModel.CATEGORIA, TableModel.CANTIDAD, TableModel.PRECIO, TableModel.DESCUENTO, TableModel.NETO, TableModel.IMPORTE};
-                listLineas.setModel(new TableModel(colsl, model.getListLineasNormales()));
+            case Model.LISTLINEASNORMALES:
+                int[] colsl = {TableModelLineas.CODIGO, TableModelLineas.ARTICULO, TableModelLineas.CATEGORIA, TableModelLineas.CANTIDAD, TableModelLineas.PRECIO, TableModelLineas.DESCUENTO, TableModelLineas.NETO, TableModelLineas.IMPORTE};
+                listLineas.setModel(new TableModelLineas(colsl, model.getListLineasNormales()));
                 listLineas.setRowHeight(30);
                 TableColumnModel columnModelLineas = listLineas.getColumnModel();
                 columnModelLineas.getColumn(0).setPreferredWidth(150);

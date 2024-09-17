@@ -1,6 +1,5 @@
 package pos.presentation.historico;
 
-import pos.Application;
 import pos.logic.*;
 import pos.presentation.AbstractModel;
 
@@ -15,10 +14,6 @@ public class Model extends AbstractModel {
     List<LineaHistorico> listLineasListado; //Pestana Listado
     List<Linea> listLineasNormales; // Lineas normales segun una(1) Factura
     LineaHistorico currentLineaFactura;
-
-    public LineaHistorico getCurrentLineaFactura() {
-        return currentLineaFactura;
-    }
 
     public void setCurrentLineaFactura(LineaHistorico currentLineaFactura) {
         this.currentLineaFactura = currentLineaFactura;

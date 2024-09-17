@@ -40,10 +40,6 @@ public class Data {
     @XmlElement(name = "fecha")
     private List<Fecha> fechas;
 
-    @XmlElementWrapper(name = "lineasHistoricas")
-    @XmlElement(name = "lineasHistoricas")
-    private List<LineaHistorico> lineasHistoricas;
-
     @XmlElement(name = "numeroFactura")
     private int facturasConsecutivo;
 
@@ -58,7 +54,6 @@ public class Data {
         lineas = new ArrayList<>();
         facturas = new ArrayList<>();
         fechas = new ArrayList<>();
-        lineasHistoricas = new ArrayList<>();
         facturasConsecutivo = 0;
         lineasConsecutivo = 0;
     }
@@ -89,5 +84,4 @@ public class Data {
 
     public List<Fecha> getFechas() { return fechas; }
 
-    public List<LineaHistorico> getLineasHistoricas() { return lineasHistoricas; }
 }

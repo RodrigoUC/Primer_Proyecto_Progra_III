@@ -4,6 +4,7 @@ import jakarta.xml.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,15 +26,8 @@ public class Factura {
       LocalDate local = LocalDate.now();
       this.cajero = null;
       this.cliente = null;
+      vec = new ArrayList<>();
       fecha = new Fecha(local.getYear(), local.getMonthValue(), local.getDayOfMonth());
-      codigo = "FAC-";
-   }
-
-   public Factura(Fecha fecha, List<Linea> vec) {
-      this.fecha = fecha;
-      this.vec = vec;
-      this.cajero = null;
-      this.cliente = null;
       codigo = "FAC-";
    }
 
@@ -41,6 +35,7 @@ public class Factura {
       LocalDate local = LocalDate.now();
       this.cajero = cajero;
       this.cliente = cliente;
+      vec = new ArrayList<>();
       fecha = new Fecha(local.getYear(), local.getMonthValue(), local.getDayOfMonth());
       codigo = "FAC-";
    }
@@ -68,28 +63,27 @@ public class Factura {
       return cliente.getNombre();
    }
 
-   public double getTotal() {
-      double total = 0.0;
-      for (Linea l : vec) {
-         total += l.getTotalLinea();
-      }
-      return total*(cliente.getDescuento()/100);
+   public float getTotal() {
+      if(cliente.getDescuento() != 0)
+         return getSubTotal() + getSubTotal()*(cliente.getDescuento()/100);
+      else
+         return getSubTotal();
    }
 
-   public double getSubTotal() {
-      double total = 0.0;
+   public float getSubTotal() {
+      float total = 0f;
       for (Linea l : vec) {
-         total += l.getTotalLinea();
+         total += (float) l.getTotalLinea();
       }
       return total;
    }
-   public double getDescuentos() {
-      double desc = 0.0;
-      for (Linea l : vec) {
-         desc += l.getDescuento();
-      }
-      return (desc+cliente.getDescuento())/100;
-   }
+//   public double getDescuentos() {
+//      double desc = 0.0;
+//      for (Linea l : vec) {
+//         desc += l.getDescuento();
+//      }
+//      return (desc+cliente.getDescuento())/100;
+//   } Se usa?
 
    public Double getTotalPorCategoria(String categoria){
       double total = 0.0d;

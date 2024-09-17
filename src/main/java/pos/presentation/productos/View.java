@@ -1,7 +1,6 @@
 package pos.presentation.productos;
 
 import pos.Application;
-import pos.logic.Categoria;
 import pos.logic.Producto;
 
 import javax.swing.*;
@@ -172,10 +171,10 @@ public class View implements PropertyChangeListener {
         Producto e = new Producto();
         e.setDescripcion(descripcion.getText());
         e.setCodigo(codigo.getText());
-        if(Integer.parseInt(precio.getText()) <= 0){
+        if(Double.parseDouble(precio.getText()) <= 0){
             throw new Exception("Se ha digitado una cantidad invalida para el precio");
         }
-        e.setPrecio(Float.parseFloat(precio.getText()));
+        e.setPrecio(Double.parseDouble(precio.getText()));
         e.setCategoria(Objects.requireNonNull(categorias.getSelectedItem()).toString());
         e.setUnidad(unidad.getText());
         if(Integer.parseInt(existencias.getText()) <= 0){
@@ -183,28 +182,6 @@ public class View implements PropertyChangeListener {
         }
         e.setExistencia(Integer.parseInt(existencias.getText()));
         return e;
-    }
-
-
-    public String nombreCategoria(String cat){
-
-        return switch (cat) {
-            case "ACEITE - 001" -> "Aceite";
-            case "AGUA - 002" -> "Agua";
-            case "DULCE - 003" -> "Dulce";
-            case "VINO - 004" -> "Vino";
-            default -> "Indefinida";
-        };
-    }
-    public String codigoCategoria(String cat){
-
-        return switch (cat) {
-            case "ACEITE - 001" -> "001";
-            case "AGUA - 002" -> "002";
-            case "DULCE - 003" -> "003";
-            case "VINO - 004" -> "004";
-            default -> "404";
-        };
     }
 
     // MVC

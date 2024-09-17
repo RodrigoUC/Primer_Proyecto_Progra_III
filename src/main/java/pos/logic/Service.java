@@ -163,32 +163,11 @@ public class Service {
         return data.getFechas();
     }
 
-    public Fecha read(Fecha e){
-        return data.getFechas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
-    }
-
 
     //-------------------Lineas----------------------------------------------
     public void create(Linea e) throws Exception{
         e.setId(data.nextLinea());
         data.getLineas().add(e);
-    }
-
-    public Linea read(Linea e) throws Exception{
-        Linea result = data.getLineas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
-        if (result!=null) return result;
-        else throw new Exception("Linea no existe");
-    }
-
-    public void update(Linea e) throws Exception{
-        Linea result;
-        try{
-            result = this.read(e);
-            data.getLineas().remove(result);
-            data.getLineas().add(e);
-        }catch (Exception ex) {
-            throw new Exception("Linea no existe");
-        }
     }
 
     public void delete(Linea e) throws Exception{
@@ -200,10 +179,6 @@ public class Service {
                 .filter(i->i.getCodigo().contains(e.getCodigo()))
                 .sorted(Comparator.comparing(Linea::getCodigo))
                 .collect(Collectors.toList());
-    }
-
-    public List<Linea> searchAll(Linea e){
-        return data.getLineas();
     }
 
     //------------------------Factura---------------------------------
@@ -218,59 +193,11 @@ public class Service {
         else throw new Exception("Factura ya existe (codigo)");
     }
 
-    public Factura read(Factura e) throws Exception{
-        //compara codigo de factura
-        Factura result = data.getFacturas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
-        if (result!=null){
-            result.setCajero(read(e.getCajero()));
-            return result;
-        }
-        else throw new Exception("Factura no existe");
-    }
-
-    public List<Factura> readList(Factura e, Categoria c) throws Exception {
-        // Filtra las facturas por fecha
-        List<Factura> facturasFiltradas = data.getFacturas().stream()
-                .filter(f -> f.getFecha().getAnio() == e.getFecha().getAnio() && f.getFecha().getMes() == e.getFecha().getMes())  // Filtra por mes y anio
-                .collect(Collectors.toList());
-
-        // Si no se encuentran facturas, lanza excepción
-        if (facturasFiltradas == null || facturasFiltradas.isEmpty()) {
-            throw new Exception("Factura no existe");
-        }
-
-        // Para cada factura filtrada, filtra las líneas por categoría
-        List<Factura> facturasConLineasFiltradas = facturasFiltradas.stream()
-                .map(factura -> {
-                    // Filtrar las líneas de la factura por la categoría c
-                    List<Linea> lineasFiltradas = factura.getVec().stream()
-                            .filter(linea -> linea.getCategoria().equals(c))
-                            .collect(Collectors.toList());
-
-                    // Crear una nueva factura con las líneas filtradas (o modificar las líneas de la existente)
-                    Factura nuevaFactura = new Factura(factura.getFecha(), lineasFiltradas);
-                    return nuevaFactura;
-                })
-                // Mantener solo las facturas que tienen líneas en la categoría
-                .filter(factura -> !factura.getVec().isEmpty())
-                .collect(Collectors.toList());
-
-        // Si la lista de facturas filtradas por líneas está vacía, lanza excepción
-        if (facturasConLineasFiltradas.isEmpty()) {
-            throw new Exception("No hay facturas con líneas en la categoría especificada");
-        }
-        return facturasConLineasFiltradas;
-    }
-
     public List<Factura> search(Factura e){
         return  data.getFacturas().stream()
                 .filter(i -> i.getNombreCliente().equals(e.getNombreCliente()))
                 .sorted(Comparator.comparing(Factura::getNombreCliente).thenComparing(Factura::getNombreCliente))
                 .collect(Collectors.toList());
-    }
-
-    public List<Factura> searchAll(Factura e){
-        return data.getFacturas();
     }
 
     // ----------------------Categorias-------------------------
@@ -286,37 +213,6 @@ public class Service {
 
     public Categoria read(Categoria e){
         return data.getCategorias().stream().filter(i->i.getId().equals(e.getId())).findFirst().orElse(null);
-    }
-
-//    // ----------------------Linea historico (Listado)-------------------------
-    public void create(LineaHistorico e) throws Exception{
-        LineaHistorico result = data.getLineasHistoricas().stream().filter(i -> i.equals(e)).findFirst().orElse(null);
-        if (result==null) data.getLineasHistoricas().add(e);
-        else throw new Exception("Linea historica ya existe");
-    }
-
-    public LineaHistorico read(LineaHistorico e) throws Exception{
-        LineaHistorico result = data.getLineasHistoricas().stream().filter(i->i.getNumero().equals(e.getNumero())).findFirst().orElse(null);
-        if (result!=null) return result;
-        else throw new Exception("Linea historica no existe");
-    }
-
-    public void update(LineaHistorico e) throws Exception{
-        LineaHistorico result;
-        try{
-            result = this.read(e);
-            data.getLineasHistoricas().remove(result);
-            data.getLineasHistoricas().add(e);
-        }catch (Exception ex) {
-            throw new Exception("Linea historica no existe");
-        }
-    }
-
-    public List<LineaHistorico> search(LineaHistorico e){
-        return data.getLineasHistoricas().stream()
-                .filter(i->i.getNumero().contains(e.getNumero()))
-                .sorted(Comparator.comparing(LineaHistorico::getNumero))
-                .collect(Collectors.toList());
     }
 
     //-------------------------------Calculos--------------------------------------
