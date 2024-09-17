@@ -121,6 +121,7 @@ public class View implements PropertyChangeListener {
                         Producto prod = controller.buscarProducto(codProducto.getText());
                         Linea lin = new Linea(prod, 1, ((Cliente) clientes.getSelectedItem()).getDescuento());
                         controller.save(lin);
+                        codProducto.setText("");
                         JOptionPane.showMessageDialog(panel, "LINEA AGREGADA", "", JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -167,9 +168,6 @@ public class View implements PropertyChangeListener {
         this.controller = controller;
     }
 
-    public void agregarLinea(Producto p){
-        model.getListLinea().add(new Linea(p,1,0)); //No estoy seguro si se manda 0% de descuento
-    }
     public boolean validarInts(String texto){
         try {
             Integer.parseInt(texto);
@@ -185,8 +183,6 @@ public class View implements PropertyChangeListener {
         }
         return false;
     }
-
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
@@ -224,6 +220,4 @@ public class View implements PropertyChangeListener {
             return null;
         }
     }
-
-
 }

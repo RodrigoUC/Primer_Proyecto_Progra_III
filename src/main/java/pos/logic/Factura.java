@@ -77,14 +77,6 @@ public class Factura {
       }
       return total;
    }
-//   public double getDescuentos() {
-//      double desc = 0.0;
-//      for (Linea l : vec) {
-//         desc += l.getDescuento();
-//      }
-//      return (desc+cliente.getDescuento())/100;
-//   } Se usa?
-
    public Double getTotalPorCategoria(String categoria){
       double total = 0.0d;
       for (Linea l : vec) {

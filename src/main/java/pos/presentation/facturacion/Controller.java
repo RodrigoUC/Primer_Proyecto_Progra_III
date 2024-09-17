@@ -111,7 +111,7 @@ public class Controller {
         }
     }
 
-    void actualizarCantidad(int cantidad) throws Exception{          //Recordar preguntar aca sobre existencias
+    void actualizarCantidad(int cantidad) throws Exception{
         try {
             if(cantidad > model.getCurrent().getProducto().getExistencia()){
     throw new Exception("No hay suficientes existencias de ese producto");
@@ -145,10 +145,6 @@ throw e;
         model.setListProducto(Service.instance().search(new Producto()));
         return viewBuscar;
     }
-    public ViewCobrar getViewCobrar() {
-        return viewCobrar;
-    }
-
     public boolean productoActualEsNulo() {
         return model.getActual() == null;
     }
@@ -204,7 +200,7 @@ throw e;
 
 
     String pedirCantidad(){
-        ImageIcon icono = new ImageIcon(getClass().getResource("/pos/presentation/icons/cantidad.png"));    //Puse esto aca porque accede a algo del model, y desde view esto no se puede hacer
+        ImageIcon icono = new ImageIcon(getClass().getResource("/pos/presentation/icons/cantidad.png"));
         String texto = (String) JOptionPane.showInputDialog(null, "Cantidad?", model.getCurrent().getProducto().getDescripcion(), JOptionPane.PLAIN_MESSAGE, icono, null, "");
    return texto;
     }

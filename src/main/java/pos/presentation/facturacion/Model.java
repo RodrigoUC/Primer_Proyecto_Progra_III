@@ -104,9 +104,6 @@ public class Model extends AbstractModel {
         this.listCajeros = list;
         firePropertyChange(LISTCAJERO);
     }
-    public List<Cajero> getListCajeros() {
-        return listCajeros;
-    }
     public void setListClientes(List<Cliente> list) {
         this.listClientes = list;
         firePropertyChange(LISTCLIENTE);
@@ -121,9 +118,6 @@ public class Model extends AbstractModel {
         firePropertyChange(CURRENT);
     }
 
-    public List<Cliente> getListClientes() {
-        return listClientes;
-    }
     public DefaultComboBoxModel<Cajero> getCajeros() {
         return cajeros;
     }
