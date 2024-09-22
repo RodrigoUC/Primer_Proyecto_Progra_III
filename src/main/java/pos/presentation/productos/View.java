@@ -201,12 +201,13 @@ public class View implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case pos.presentation.productos.Model.LIST:
-            int[] cols = {TableModel.CODIGO,TableModel.DESCRIPCION, TableModel.UNIDAD, TableModel.EXISTENCIA, TableModel.PRECIO, TableModel.CATEGORIA};
+            int[] cols = {TableModel.CODIGO,TableModel.DESCRIPCION, TableModel.UNIDAD, TableModel.EXISTENCIA, TableModel.PRECIO, TableModel.CATEGORIA, TableModel.IMAGEN};
                 list.setModel(new TableModel(cols, model.getList()));
-                list.setRowHeight(30);
+                list.setRowHeight(40);
                 TableColumnModel columnModel = list.getColumnModel();
                 columnModel.getColumn(1).setPreferredWidth(150);
                 columnModel.getColumn(3).setPreferredWidth(150);
+                columnModel.getColumn(6).setPreferredWidth(150);
                 break;
             case pos.presentation.clientes.Model.CURRENT:
                 codigo.setText(model.getCurrent().getCodigo());
