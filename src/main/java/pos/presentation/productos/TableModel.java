@@ -35,7 +35,7 @@ public class TableModel extends AbstractTableModel<Producto> implements javax.sw
             case DESCRIPCION -> e.getDescripcion();
             case CODIGO -> e.getCodigo();
             case PRECIO -> e.getPrecio();
-            case CATEGORIA -> e.getStringCategoria();
+            case CATEGORIA -> e.getCategoria().getNombre();
             case UNIDAD -> e.getUnidad();
             case EXISTENCIA -> e.getExistencia();
             case IMAGEN -> getImagen(e.getCategoria().getNombre());
@@ -45,7 +45,6 @@ public class TableModel extends AbstractTableModel<Producto> implements javax.sw
 
     private Icon getImagen(String nombre){
         try{
-            System.out.println("Loading image: " + "/presentation/icons/" + nombre + ".png");
             return new ImageIcon(Application.class.getResource("/pos/presentation/icons/" + nombre + ".png"));
         }
         catch(Exception e){ return null; }

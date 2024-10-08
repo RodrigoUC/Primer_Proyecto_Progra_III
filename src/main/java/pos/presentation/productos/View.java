@@ -91,10 +91,8 @@ public class View implements PropertyChangeListener {
         list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
                 int row = list.getSelectedRow();
                 controller.edit(row);
-                categorias.setSelectedIndex(row);
             }
         });
 
@@ -174,7 +172,7 @@ public class View implements PropertyChangeListener {
         if(Double.parseDouble(precio.getText()) <= 0){
             throw new Exception("Se ha digitado una cantidad invalida para el precio");
         }
-        e.setPrecio(Double.parseDouble(precio.getText()));
+        e.setPrecio(Float.parseFloat(precio.getText()));
         e.setCategoria(Objects.requireNonNull(categorias.getSelectedItem()).toString());
         e.setUnidad(unidad.getText());
         if(Integer.parseInt(existencias.getText()) <= 0){
@@ -199,31 +197,21 @@ public class View implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        searchNombre.setText(model.getFilter().getDescripcion());
         switch (evt.getPropertyName()) {
-            case pos.presentation.productos.Model.LIST:
-            int[] cols = {TableModel.CODIGO,TableModel.DESCRIPCION, TableModel.UNIDAD, TableModel.EXISTENCIA, TableModel.PRECIO, TableModel.CATEGORIA, TableModel.IMAGEN};
+            case Model.LIST:
+                int[] cols = {TableModel.CODIGO, TableModel.DESCRIPCION, TableModel.UNIDAD, TableModel.PRECIO, TableModel.CATEGORIA, TableModel.IMAGEN};
                 list.setModel(new TableModel(cols, model.getList()));
-                list.setRowHeight(40);
+                list.setRowHeight(30);
                 TableColumnModel columnModel = list.getColumnModel();
                 columnModel.getColumn(1).setPreferredWidth(150);
-                columnModel.getColumn(3).setPreferredWidth(150);
-                columnModel.getColumn(6).setPreferredWidth(150);
                 break;
-            case pos.presentation.clientes.Model.CURRENT:
+            case Model.CURRENT:
                 codigo.setText(model.getCurrent().getCodigo());
                 descripcion.setText(model.getCurrent().getDescripcion());
-                precio.setText("" + model.getCurrent().getPrecio());
                 unidad.setText(model.getCurrent().getUnidad());
-                categorias.setSelectedItem(model.getCurrent().getCategoria().getNombre());
-                existencias.setText("" + model.getCurrent().getExistencia());
-
-                if (model.getMode() == Application.MODE_EDIT) {
-                    codigo.setEnabled(false);
-                    delete.setEnabled(true);
-                } else {
-                    codigo.setEnabled(true);
-                    delete.setEnabled(false);
-                }
+                precio.setText(String.format("%.0f", model.getCurrent().getPrecio()));
+                categorias.setSelectedItem(model.getCurrent().getCategoria());
 
                 codigoLbl.setBorder(null);
                 codigoLbl.setToolTipText(null);
@@ -235,15 +223,20 @@ public class View implements PropertyChangeListener {
                 unidadLbl.setToolTipText(null);
                 categoriaLbl.setBorder(null);
                 categoriaLbl.setToolTipText(null);
-                existenciaLbl.setBorder(null);
-                existenciaLbl.setToolTipText(null);
-
                 break;
-            case pos.presentation.clientes.Model.FILTER:
-                searchNombre.setText(model.getFilter().getDescripcion());
+            case Model.CATEGORIAS:
+                categorias.setModel(new DefaultComboBoxModel(model.getCategorias().toArray()));
                 break;
+        }
+        if (model.getMode() == Application.MODE_EDIT) {
+            codigo.setEnabled(false);
+            delete.setEnabled(true);
+        } else {
+            codigo.setEnabled(true);
+            delete.setEnabled(false);
         }
 
         this.panel1.revalidate();
     }
+
 }

@@ -15,8 +15,11 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import pos.Application;
+import pos.logic.Categoria;
 import pos.logic.Producto;
 import pos.logic.Service;
+
+import java.util.List;
 
 
 public class Controller {
@@ -24,17 +27,20 @@ public class Controller {
     Model model;
 
     public Controller(View view, Model model) {
-        model.init(Service.instance().search(new Producto()));
+        model.init();
         this.view = view;
         this.model = model;
+        model.setCategorias(Service.instance().search(new Categoria()));
+        model.setList(Service.instance().search(model.getFilter()));
         view.setController(this);
         view.setModel(model);
     }
     public void search(Producto filter) throws  Exception{
         model.setFilter(filter);
+        List<Producto> rows = Service.instance().search(model.getFilter());
         model.setMode(Application.MODE_CREATE);
         model.setCurrent(new Producto());
-        model.setList(Service.instance().search(model.getFilter()));
+        model.setList(rows);
     }
 
     public void save(Producto e) throws  Exception{

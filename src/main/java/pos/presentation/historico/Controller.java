@@ -61,7 +61,7 @@ public class Controller {
         Cliente cliente = new Cliente();
         cliente.setNombre(nombre);
         try {
-            cliente = Service.instance().readNombre(cliente);
+            cliente = Service.instance().read(cliente);
             return cliente;
         } catch (Exception e) {
             throw e;
