@@ -104,7 +104,7 @@ public class Controller {
 
     void actualizarDescuento(int descuento) {
         try {
-            model.getCurrent().setDescuento((double) descuento);
+            model.getCurrent().setDescuento(descuento);
             model.setCurrent(null);
             model.setListLinea(model.getListLinea());
         } catch (Exception e) {
@@ -125,14 +125,8 @@ throw e;
     }
 
     public void actualizarComboBox() {
-        model.actualizarComboBoxClientes(Service.instance().search(new Cliente()));
-        model.actualizarComboBoxCajeros(Service.instance().search(new Cajero()));
-    }
-    public DefaultComboBoxModel<Cliente> getClientes(){
-        return model.getClientes();
-    }
-    public DefaultComboBoxModel<Cajero> getCajeros(){
-        return model.getCajeros();
+        model.setListClientes(Service.instance().search(new Cliente()));
+        model.setListCajeros(Service.instance().search(new Cajero()));
     }
 
     public void searchProducto(Producto filter) {
@@ -237,5 +231,12 @@ throw e;
             }
         }
         return descuento;
+    }
+
+    public void actualizarCliente(Cliente selectedItem) {
+        this.model.getCurrentFactura().setCliente(selectedItem);
+    }
+    public void actualizarCajero(Cajero selectedItem) {
+        this.model.getCurrentFactura().setCajero(selectedItem);
     }
 }

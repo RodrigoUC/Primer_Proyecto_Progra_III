@@ -76,6 +76,24 @@ public class Factura {
       }
       return total;
    }
+   public int cantidadArticulos(){
+      int cantidad = 0;
+      if(!vec.isEmpty()) {
+         for (Linea linea : vec) {
+            cantidad += linea.getCantidad();
+         }
+      }
+      return cantidad;
+   }
+   public double getTotalDescuento(){
+      Double descuento = 0.0;
+      if(!vec.isEmpty()) {
+         for (Linea linea : vec) {
+            descuento += (linea.getDescuento()/100)*linea.getCantidad()*linea.getProducto().getPrecio();
+         }
+      }
+      return descuento;
+   }
    public Double getTotalPorCategoria(String categoria){
       double total = 0.0d;
       for (Linea l : vec) {
@@ -87,6 +105,11 @@ public class Factura {
    }
 
  public List<Linea> getLineas() { return vec; }
+
+   public void setLineas(List<Linea> vec) { this.vec = vec; }
+
+
+
 
    @Override
    public boolean equals(Object o) {

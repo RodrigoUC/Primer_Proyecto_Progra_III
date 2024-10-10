@@ -22,7 +22,7 @@ public class ViewCobrar implements PropertyChangeListener {
     private JLabel sinp;
     private JLabel precio;
 
-    //No se que tan legal es esto
+
     private JDialog dialog;
 
     ViewCobrar(){

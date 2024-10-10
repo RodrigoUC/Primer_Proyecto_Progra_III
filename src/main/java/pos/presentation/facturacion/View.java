@@ -8,6 +8,9 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import static pos.presentation.facturacion.Model.CAJERO;
+import static pos.presentation.facturacion.Model.CLIENTE;
+
 public class View implements PropertyChangeListener {
 
     public JPanel getPanel() {
@@ -17,7 +20,7 @@ public class View implements PropertyChangeListener {
         cobrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(clientes.getSelectedItem() == null || cajeros.getSelectedItem() == null){
+                if(model.getCurrentFactura().getCliente() == null || model.getCurrentFactura().getCajero() == null){
                     JOptionPane.showMessageDialog(panel, "Debe Ingresar un cajero y un cliente para Cobrar","Informacion" , JOptionPane.INFORMATION_MESSAGE);
                 }
                 else {
@@ -37,7 +40,7 @@ public class View implements PropertyChangeListener {
             public void actionPerformed(ActionEvent e) {
                 //Boton de buscar
                 try {
-                    if (clientes.getSelectedItem() == null || cajeros.getSelectedItem() == null) {
+                    if (model.getCurrentFactura().getCliente() == null || model.getCurrentFactura().getCajero() == null) {
                         JOptionPane.showMessageDialog(panel, "Debe Ingresar un cajero y un cliente para empezar a agregar Productos", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         int option = JOptionPane.showOptionDialog(null, controller.getViewBuscar().getPanel(), "Buscar",
@@ -87,7 +90,7 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e){
                 //Boton de descuento
-                if (!controller.currentEsNulo()) {
+                if (model.getCurrent() != null) {
                    String texto= controller.pedirDescuento();
                     if (texto != null && verificarDescuento(texto)) {
                         int descuento = Integer.parseInt(texto);
@@ -134,6 +137,18 @@ public class View implements PropertyChangeListener {
             public void mouseClicked(MouseEvent e) {
                 int row = lista.getSelectedRow();
              controller.edit(row);
+            }
+        });
+        clientes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.actualizarCliente((Cliente)clientes.getSelectedItem());
+            }
+        });
+        cajeros.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.actualizarCajero((Cajero)cajeros.getSelectedItem());
             }
         });
     }
@@ -193,18 +208,26 @@ public class View implements PropertyChangeListener {
                 TableColumnModel columnModel = lista.getColumnModel();
                 columnModel.getColumn(1).setPreferredWidth(150);
                 columnModel.getColumn(3).setPreferredWidth(150);
-                cantidadArt.setText(Integer.toString(controller.getCantidadProductos()));
-                subTotal.setText(Double.toString(controller.total()));
-                descuentos.setText(Double.toString(controller.getDescuentoTotal()));
-                total.setText(Double.toString(controller.total()));
+                cantidadArt.setText(Integer.toString(model.getCurrentFactura().cantidadArticulos()));
+                subTotal.setText(Double.toString(model.getCurrentFactura().getSubTotal()));
+                descuentos.setText(Double.toString(model.getCurrentFactura().getTotalDescuento()));
+                total.setText(Double.toString(model.getCurrentFactura().getSubTotal()));
 
                 break;
             case Model.LISTCAJERO:
-                cajeros.setModel(controller.getCajeros());
+                DefaultComboBoxModel<Cajero> cajero = new DefaultComboBoxModel<Cajero>();
+                cajero.addAll(model.getCajeros());
+                cajeros.setModel(cajero);
                 break;
             case Model.LISTCLIENTE:
-                clientes.setModel(controller.getClientes());
+                DefaultComboBoxModel<Cliente> cliente = new DefaultComboBoxModel<Cliente>();
+                cliente.addAll(model.getClientes());
+                clientes.setModel(cliente);
                 break;
+            case CAJERO:
+                cajeros.setSelectedItem(model.getCurrentFactura().getCajero());
+            case CLIENTE:
+                clientes.setSelectedItem(model.getCurrentFactura().getCliente());
         }
     }
     public Factura take(){
@@ -212,7 +235,6 @@ public class View implements PropertyChangeListener {
             Cajero cajero = (Cajero) cajeros.getSelectedItem();
             Cliente cliente = (Cliente) clientes.getSelectedItem();
             Factura factura = new Factura(cajero, cliente);
-
 
             return factura;
         }

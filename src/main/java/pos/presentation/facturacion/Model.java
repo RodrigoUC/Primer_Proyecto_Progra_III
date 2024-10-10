@@ -1,9 +1,6 @@
 package pos.presentation.facturacion;
 
-import pos.logic.Cajero;
-import pos.logic.Linea;
-import pos.logic.Cliente;
-import pos.logic.Producto;
+import pos.logic.*;
 import pos.presentation.AbstractModel;
 
 import javax.swing.*;
@@ -12,12 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Model extends AbstractModel {
-    private List<Linea> listLinea;
     private List<Cajero> listCajeros;
     private List<Cliente> listClientes;
-    DefaultComboBoxModel<Cajero> cajeros  ;
-    DefaultComboBoxModel<Cliente> clientes;
     Linea current;
+    Factura currentFactura;
+
 
     public Producto getFilter() {
         return filter;
@@ -40,7 +36,15 @@ public class Model extends AbstractModel {
         this.actual = actual;
     }
 
+    public Factura getCurrentFactura() {
+        return currentFactura;
+    }
 
+    public void setCurrentFactura(Factura currentFactura) {
+        this.currentFactura = currentFactura;
+        firePropertyChange(CLIENTE);
+        firePropertyChange(CAJERO);
+    }
 
     public List<Producto> getListProducto() {
         return listProducto;
@@ -62,6 +66,8 @@ public class Model extends AbstractModel {
         firePropertyChange(CURRENT);
         firePropertyChange(LISTPRODUCTO);
         firePropertyChange(FILTER);
+        firePropertyChange(CLIENTE);
+        firePropertyChange(CAJERO);
     }
 
     public Model() {
@@ -72,31 +78,27 @@ public class Model extends AbstractModel {
            setListLinea(listLinea);
            setListCajeros(listCajero);
            setListClientes(listCliente);
-           cajeros = new DefaultComboBoxModel<Cajero>();
-           clientes = new DefaultComboBoxModel<Cliente>();
+           setCurrentFactura(new Factura(null,null));
            current = null;
            listProducto = new ArrayList<Producto>();
            filter = new Producto();
 
-
-           if (listCliente != null) {
-               for (Cliente cliente : listCliente) {
-                   clientes.addElement(cliente);
-               }
-           }
-           if (listCajero != null) {
-               for (Cajero cajero : listCajero) {
-                   cajeros.addElement(cajero);
-               }
-           }
     }
 
+    public void setCliente(Cliente cliente) {
+        currentFactura.setCliente(cliente);
+        firePropertyChange(CLIENTE);
+    }
+    public void setCajero(Cajero cajero) {
+        currentFactura.setCajero(cajero);
+        firePropertyChange(CAJERO);
+    }
     public List<Linea> getListLinea() {
-        return listLinea;
+        return currentFactura.getLineas();
     }
 
     public void setListLinea(List<Linea> list) {
-        this.listLinea = list;
+        currentFactura.setVec(list);
         firePropertyChange(LISTLINEA);
     }
 
@@ -118,29 +120,14 @@ public class Model extends AbstractModel {
         firePropertyChange(CURRENT);
     }
 
-    public DefaultComboBoxModel<Cajero> getCajeros() {
-        return cajeros;
+    public List<Cajero> getCajeros() {
+        return listCajeros;
     }
 
-    public DefaultComboBoxModel<Cliente> getClientes() {
-        return clientes;
+    public List<Cliente> getClientes() {
+        return listClientes;
     }
 
-    public void actualizarComboBoxCajeros(List<Cajero> lis){
-        cajeros.removeAllElements();
-        listCajeros=lis;
-        for(Cajero cajero: listCajeros){
-            cajeros.addElement(cajero);
-        }
-    }
-
-    public void actualizarComboBoxClientes(List<Cliente> lis) {
-        clientes.removeAllElements();
-        listClientes=lis;
-        for(Cliente cliente: listClientes){
-            clientes.addElement(cliente);
-        }
-    }
 
     public static final String LISTLINEA = "listLinea";
     public static final String LISTCAJERO = "listCajero";
@@ -148,6 +135,8 @@ public class Model extends AbstractModel {
     public static final String CURRENT = "current";
     public static final String LISTPRODUCTO = "listProducto";
     public static final String FILTER = "filter";
+    public static final String CAJERO = "cajero";
+    public static final String CLIENTE = "cliente";
 
 }
 
