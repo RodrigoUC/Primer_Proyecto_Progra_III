@@ -1,13 +1,12 @@
 package pos.data;
 
 import pos.logic.Linea;
-import pos.logic.Producto;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-//codigo, Producto producto, int cantidad, double descuento
+
 public class LineaDao {
     Database db;
 
@@ -18,11 +17,11 @@ public class LineaDao {
     public void create(Linea e) throws Exception {
         String sql = "insert into " +
                 "Linea " +
-                "(codigo ,producto, cantidad, descuento) " +
-                "values(?,?,?,?,?)";
+                "(producto, factura, cantidad, descuento) " +
+                "values(?,?,?,?)";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, e.getCodigo());
-        stm.setString(2, e.getProducto().getCodigo());
+        stm.setString(1, e.getProducto().getCodigo());
+        stm.setString(2, e.getFactura().getCodigo());
         stm.setInt(3, e.getCantidad());
         stm.setDouble(4, e.getDescuento());
         db.executeUpdate(stm);
@@ -35,7 +34,6 @@ public class LineaDao {
                 "where l.codigo=?  or l.codigo like ?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, codigo);
-        //stm.setString(2, "%" + nombre + "%");
         ResultSet rs = db.executeQuery(stm);
         if (rs.next()) {
             return from(rs, "l");
@@ -47,13 +45,14 @@ public class LineaDao {
     public void update(Linea e) throws Exception {
         String sql = "update " +
                 "Linea " +
-                "set codigo=?, producto=?, cantidad=?, descuento=?" +
-                "where id=?";
+                "set producto=?, factura=?, cantidad=?, descuento=?" +
+                "where codigo=?";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, e.getCodigo());
-        stm.setString(2, e.getProducto().getCodigo());
+        stm.setString(1, e.getProducto().getCodigo());
+        stm.setString(2, e.getFactura().getCodigo());
         stm.setInt(3, e.getCantidad());
         stm.setDouble(4, e.getDescuento());
+        stm.setString(5, e.getCodigo());
         int count = db.executeUpdate(stm);
         if (count == 0) {
             throw new Exception("Linea NO EXISTE");
@@ -95,9 +94,8 @@ public class LineaDao {
     public Linea from(ResultSet rs, String alias) throws Exception {
         Linea e = new Linea();
         e.setId(rs.getString(alias + ".id"));
-        //e.setProducto(rs.getString(alias + ".producto"));
         e.setCantidad(Integer.parseInt(rs.getString(alias + ".cantidad")));
-        e.setDescuento(Double.parseDouble(rs.getString(alias + ".descuento")));
+        e.setDescuento(Float.parseFloat(rs.getString(alias + ".descuento")));
 
         return e;
     }

@@ -14,9 +14,9 @@ public class Controller {
 
     public Controller(View view, Model model) {
         try {
-            model.init(new ArrayList<>(), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
             this.view = view;
             this.model = model;
+            model.init(new ArrayList<>(), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
             this.viewBuscar = new ViewBuscar();
             this.viewCobrar = new ViewCobrar();
             view.setController(this);
@@ -120,7 +120,7 @@ public class Controller {
             model.setCurrent(null);
             model.setListLinea(model.getListLinea());
         } catch (Exception e) {
-throw e;
+            throw e;
         }
     }
 
@@ -143,7 +143,7 @@ throw e;
         return model.getActual() == null;
     }
 
-    public void agregarProdctoActual(boolean opcion,double desc)throws Exception {
+    public void agregarProdctoActual(boolean opcion,float desc)throws Exception {
         if(opcion && !productoActualEsNulo()) {
             if(prodYaEstaAgregado(model.getActual())){
                 model.setActual(null);
@@ -192,7 +192,6 @@ throw e;
         }
     }
 
-
     String pedirCantidad(){
         ImageIcon icono = new ImageIcon(getClass().getResource("/pos/presentation/icons/cantidad.png"));
         String texto = (String) JOptionPane.showInputDialog(null, "Cantidad?", model.getCurrent().getProducto().getDescripcion(), JOptionPane.PLAIN_MESSAGE, icono, null, "");
@@ -205,9 +204,9 @@ throw e;
             model.init(new ArrayList<>(), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
             for(Linea linea : factura.getVec()){
                 linea.getProducto().setExistencia(linea.getProducto().getExistencia()-linea.getCantidad()); //Le quita la cantidad que se compraron a existencias
+                linea.setFactura(factura);
                 Service.instance().create(linea);
             }
-
             Service.instance().create(factura);
         }
         catch(Exception e) {

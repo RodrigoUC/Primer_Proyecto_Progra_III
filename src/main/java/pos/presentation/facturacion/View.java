@@ -48,7 +48,7 @@ public class View implements PropertyChangeListener {
                         if (option == JOptionPane.OK_OPTION) {
                             controller.agregarProdctoActual(true, ((Cliente) (clientes.getSelectedItem())).getDescuento());
                         } else {
-                            controller.agregarProdctoActual(false, 0);
+                            controller.agregarProdctoActual(false, 0f);
                         }
                     }
                 }

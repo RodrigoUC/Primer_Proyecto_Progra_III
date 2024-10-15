@@ -17,11 +17,13 @@ public class Service {
         if (theInstance == null) theInstance = new Service();
         return theInstance;
     }
-    private Data data;
+//    private Data data;
     private ProductoDao productoDao;
     private CategoriaDao categoriaDao;
     private ClienteDao clienteDao;
     private CajeroDao cajeroDao;
+    private FacturaDao facturaDao;
+    private LineaDao lineaDao;
 
     private Service(){
         try{
@@ -29,10 +31,12 @@ public class Service {
             productoDao = new ProductoDao();
             clienteDao = new ClienteDao();
             cajeroDao = new CajeroDao();
-            data = new Data();
+            facturaDao = new FacturaDao();
+            lineaDao = new LineaDao();
+//            data = new Data();
         }
         catch(Exception e){
-            data = new Data();
+//            data = new Data();
         }
     }
 
@@ -243,50 +247,96 @@ public class Service {
 
 //    -------------------Fechas----------------------------------------------
 
-    public void create(Fecha e) throws Exception{
-        Fecha result = data.getFechas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
-        if (result == null) data.getFechas().add(e);
-    }
-
-    public List<Fecha> search(Fecha e){
-        return data.getFechas();
-    }
+//    public void create(Fecha e) throws Exception{
+//        Fecha result = data.getFechas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
+//        if (result == null) data.getFechas().add(e);
+//    }
+//
+//    public List<Fecha> search(Fecha e){
+//        return data.getFechas();
+//    }
 
 
 //    -------------------Lineas----------------------------------------------
-    public void create(Linea e) throws Exception{
-        e.setId(data.nextLinea());
-        data.getLineas().add(e);
+//    public void create(Linea e) throws Exception{
+//        e.setId(data.nextLinea());
+//        data.getLineas().add(e);
+//    }
+//
+//    public void delete(Linea e) throws Exception{
+//    data.getLineas().remove(e);
+//    }
+//
+//    public List<Linea> search(Linea e){
+//        return  data.getLineas().stream()
+//                .filter(i->i.getCodigo().contains(e.getCodigo()))
+//                .sorted(Comparator.comparing(Linea::getCodigo))
+//                .collect(Collectors.toList());
+//    }
+    public void create(Linea e) throws Exception {
+        lineaDao.create(e);
     }
 
-    public void delete(Linea e) throws Exception{
-    data.getLineas().remove(e);
+    public Linea read(Linea e) throws Exception {
+        return lineaDao.read(e.getCodigo());
     }
 
-    public List<Linea> search(Linea e){
-        return  data.getLineas().stream()
-                .filter(i->i.getCodigo().contains(e.getCodigo()))
-                .sorted(Comparator.comparing(Linea::getCodigo))
-                .collect(Collectors.toList());
+    public void update(Linea e) throws Exception {
+        lineaDao.update(e);
+    }
+
+    public void delete(Linea e) throws Exception {
+        lineaDao.delete(e);
+    }
+
+    public List<Linea> search(Linea e) {
+        try {
+            return lineaDao.search(e);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
 //    ------------------------Factura---------------------------------
 
-    public void create(Factura e) throws Exception{
-        Factura result = data.getFacturas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
-        if (result==null) {
-            e.setCodigo(data.nextFactura());
-            create(e.getFecha());
-            data.getFacturas().add(e);
-        }
-        else throw new Exception("Factura ya existe (codigo)");
+//    public void create(Factura e) throws Exception{
+//        Factura result = data.getFacturas().stream().filter(i->i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
+//        if (result==null) {
+//            e.setCodigo(data.nextFactura());
+//            create(e.getFecha());
+//            data.getFacturas().add(e);
+//        }
+//        else throw new Exception("Factura ya existe (codigo)");
+//    }
+//
+//    public List<Factura> search(Factura e){
+//        return  data.getFacturas().stream()
+//                .filter(i -> i.getNombreCliente().equals(e.getNombreCliente()))
+//                .sorted(Comparator.comparing(Factura::getNombreCliente).thenComparing(Factura::getNombreCliente))
+//                .collect(Collectors.toList());
+//    }
+    public void create(Factura e) throws Exception {
+      facturaDao.create(e);
     }
 
-    public List<Factura> search(Factura e){
-        return  data.getFacturas().stream()
-                .filter(i -> i.getNombreCliente().equals(e.getNombreCliente()))
-                .sorted(Comparator.comparing(Factura::getNombreCliente).thenComparing(Factura::getNombreCliente))
-                .collect(Collectors.toList());
+    public Factura read(Factura e) throws Exception {
+        return facturaDao.read(e.getCodigo());
+    }
+
+    public void update(Factura e) throws Exception {
+        facturaDao.update(e);
+    }
+
+    public void delete(Factura e) throws Exception {
+        facturaDao.delete(e);
+    }
+
+    public List<Factura> search(Factura e) {
+        try {
+            return facturaDao.search(e);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     //-------------------------------Calculos--------------------------------------
@@ -294,11 +344,11 @@ public class Service {
     public Double totalDelMes(String categoria, int anio, int mes){
         double total = 0d;
 
-        List<Factura> facturas = data.getFacturas().stream().filter(factura -> factura.getFecha().getAnio() == anio && factura.getFecha().getMes() == mes).toList();
-
-        for (Factura factura : facturas) {
-            total += factura.getTotalPorCategoria(categoria);
-        }
+//        List<Factura> facturas = data.getFacturas().stream().filter(factura -> factura.getFecha().getAnio() == anio && factura.getFecha().getMes() == mes).toList();
+//
+//        for (Factura factura : facturas) {
+//            total += factura.getTotalPorCategoria(categoria);
+//        }
 
         return total;
 

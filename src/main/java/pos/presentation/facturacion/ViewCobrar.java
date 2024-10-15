@@ -25,6 +25,9 @@ public class ViewCobrar implements PropertyChangeListener {
 
     private JDialog dialog;
 
+    Controller controller;
+    Model model;
+
     ViewCobrar(){
     OKButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
@@ -90,6 +93,4 @@ public class ViewCobrar implements PropertyChangeListener {
         }
     }
 
-    Controller controller;
-    Model model;
 }

@@ -29,28 +29,31 @@ create table Cliente (
 		nombre varchar(45) not null,
 		telefono varchar(8) not null,
 		email varchar(45) not null,
-		descuento float,
+		descuento float not null,
 		Primary Key (id)
 	);
 	
+create table Linea (
+		codigo int AUTO_INCREMENT,
+		producto varchar(10),
+		factura int,
+		cantidad int not null,
+		descuento float not null,
+		Primary Key (codigo)
+	);
+	
 create table Factura (
-		numero int AUTO_INCREMENT,
+		codigo int AUTO_INCREMENT,
 		cajero varchar(10),
 		cliente varchar(10),
-		producto varchar(10),
-		Primary Key (numero)
+		Primary Key (codigo)
 	);
 	
 ALTER TABLE Producto ADD Foreign Key (categoria) REFERENCES Categoria(id);
-
-ALTER TABLE Factura ADD Foreign Key (cajero) REFERENCES Cajero(id),
-	ADD Foreign Key (cliente) REFERENCES Cliente(id),
-	ADD Foreign Key (producto) REFERENCES Producto(codigo);
-
-insert into Categoria (id, nombre) values('001', 'Aguas');
-insert into Categoria (id, nombre) values('002', 'Dulces');
-insert into Categoria (id, nombre) values('003', 'Aceites');
-insert into Categoria (id, nombre) values('004', 'Vinos');
+ALTER TABLE Factura ADD Foreign Key (cajero) REFERENCES Cajero(id);
+ALTER Table Factura ADD Foreign Key (cliente) REFERENCES Cliente(id);
+ALTER TABLE Linea ADD Foreign Key (producto) REFERENCES Producto(codigo);
+ALTER TABLE Linea ADD Foreign Key (factura) REFERENCES Factura(codigo);
 
 insert into Cliente (id, nombre, telefono, email, descuento) 
 	values('001', 'Juan Mena', '62745212', 'juanmena@gmail.com', 0.0);
@@ -62,6 +65,11 @@ insert into Cliente (id, nombre, telefono, email, descuento)
 insert into Cajero (id, nombre) values('001', 'Andres Fernandez');
 insert into Cajero (id, nombre) values('002', 'Fernanda Sanarrusia');
 insert into Cajero (id, nombre) values('003', 'Luis Rubi');
+
+insert into Categoria (id, nombre) values('001', 'Aguas');
+insert into Categoria (id, nombre) values('002', 'Dulces');
+insert into Categoria (id, nombre) values('003', 'Aceites');
+insert into Categoria (id, nombre) values('004', 'Vinos');
 
 insert into Producto (codigo, descripcion, unidad, precio, existencia, categoria) 
 	values('34567', 'Agua', 'Botella', 198, 300.0, '002');

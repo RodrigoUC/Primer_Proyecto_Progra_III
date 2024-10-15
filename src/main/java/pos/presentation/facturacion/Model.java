@@ -14,7 +14,6 @@ public class Model extends AbstractModel {
     Linea current;
     Factura currentFactura;
 
-
     public Producto getFilter() {
         return filter;
     }
@@ -55,9 +54,6 @@ public class Model extends AbstractModel {
         firePropertyChange(LISTPRODUCTO);
     }
 
-
-
-
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         super.addPropertyChangeListener(listener);
         firePropertyChange(LISTLINEA);
@@ -71,6 +67,7 @@ public class Model extends AbstractModel {
     }
 
     public Model() {
+        currentFactura = new Factura();
     }
 
     public void init(List<Linea> listLinea,List<Cajero> listCajero, List<Cliente> listCliente) {
@@ -82,7 +79,6 @@ public class Model extends AbstractModel {
            current = null;
            listProducto = new ArrayList<Producto>();
            filter = new Producto();
-
     }
 
     public void setCliente(Cliente cliente) {

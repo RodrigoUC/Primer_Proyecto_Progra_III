@@ -1,24 +1,16 @@
 package pos.logic;
 
-import jakarta.xml.bind.annotation.*;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Factura {
-   @XmlID
    private String codigo;
-   @XmlIDREF
    private List<Linea> vec;
-   @XmlIDREF
    private Cajero cajero;
-   @XmlIDREF
    private Cliente cliente;
-   @XmlIDREF
    private Fecha fecha;
 
    public Factura() {
@@ -27,7 +19,6 @@ public class Factura {
       this.cliente = null;
       vec = new ArrayList<>();
       fecha = new Fecha(local.getYear(), local.getMonthValue(), local.getDayOfMonth());
-      codigo = "FAC-";
    }
 
    public Factura(Cajero cajero, Cliente cliente) {
@@ -36,7 +27,6 @@ public class Factura {
       this.cliente = cliente;
       vec = new ArrayList<>();
       fecha = new Fecha(local.getYear(), local.getMonthValue(), local.getDayOfMonth());
-      codigo = "FAC-";
    }
 
    public void setVec(List<Linea> vec) {
@@ -104,7 +94,7 @@ public class Factura {
       return total;
    }
 
- public List<Linea> getLineas() { return vec; }
+   public List<Linea> getLineas() { return vec; }
 
    public void setLineas(List<Linea> vec) { this.vec = vec; }
 
