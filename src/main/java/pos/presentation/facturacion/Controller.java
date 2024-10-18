@@ -52,14 +52,14 @@ public class Controller {
     }
 
     public void save(Linea lin) throws Exception {
-        model.getListLinea().add(lin);
-        model.setListLinea(model.getListLinea());
+        model.getLineas().add(lin);
+        model.setLineas(model.getLineas());
     }
     boolean prodYaEstaAgregado(Producto producto){
         if(listaLineasEstaVacia()){
             return false;
         }
-        for(Linea lin : model.getListLinea()){
+        for(Linea lin : model.getLineas()){
             if(producto == lin.getProducto()){
                return true;
             }
@@ -68,7 +68,7 @@ public class Controller {
     }
 
     public boolean listaLineasEstaVacia() {
-        return model.getListLinea().isEmpty();
+        return model.getLineas().isEmpty();
     }
 
     public boolean currentEsNulo() {
@@ -76,7 +76,7 @@ public class Controller {
     }
 
     public void edit(int row) {
-        Linea linea = model.getListLinea().get(row);
+        Linea linea = model.getLineas().get(row);
         try {
             model.setCurrent(linea);
         } catch (Exception ex) {
@@ -94,9 +94,9 @@ public class Controller {
     public void delete() {
         try {
             if (!currentEsNulo()) {
-                model.getListLinea().remove(model.getCurrent());
+                model.getLineas().remove(model.getCurrent());
                 model.setCurrent(null);
-                model.setListLinea(model.getListLinea());
+                model.setLineas(model.getLineas());
             }
         }
             catch(Exception e){}
@@ -106,7 +106,7 @@ public class Controller {
         try {
             model.getCurrent().setDescuento(descuento);
             model.setCurrent(null);
-            model.setListLinea(model.getListLinea());
+            model.setLineas(model.getLineas());
         } catch (Exception e) {
         }
     }
@@ -118,7 +118,7 @@ public class Controller {
             }
             model.getCurrent().setCantidad(cantidad);
             model.setCurrent(null);
-            model.setListLinea(model.getListLinea());
+            model.setLineas(model.getLineas());
         } catch (Exception e) {
             throw e;
         }
@@ -153,8 +153,9 @@ public class Controller {
                 throw new Exception("No hay suficientes existencias de ese producto");
             }
             Linea linea = new Linea(model.getActual(), 1, desc);
-            model.getListLinea().add(linea);
-            model.setListLinea(model.getListLinea());
+            linea.setFactura(model.getCurrentFactura());
+            model.getLineas().add(linea);
+            model.setLineas(model.getLineas());
             model.setActual(null);
         }
         else{
@@ -164,13 +165,13 @@ public class Controller {
 
     public Double total() {
         Double aux = 0.0;
-        for (Linea linea : model.getListLinea()) {
+        for (Linea linea : model.getLineas()) {
             aux += (linea.getProducto().getPrecio() * linea.getCantidad())-(linea.getProducto().getPrecio() * linea.getCantidad()*(linea.getDescuento()/100));
         }
         return aux;
     }
     public List<Linea> getListLinea() {
-        return model.getListLinea();
+        return model.getLineas();
     }
     String pedirDescuento(){
         ImageIcon icono = new ImageIcon(getClass().getResource("/pos/presentation/icons/descuento.png"));
@@ -181,8 +182,8 @@ public class Controller {
         if(!listaLineasEstaVacia()) {
             int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea eliminar todas las lineas de la factura?", "Cancelar", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
-                model.getListLinea().clear();
-                model.setListLinea(model.getListLinea());
+                model.getLineas().clear();
+                model.setLineas(model.getLineas());
             }
         }
     }
@@ -200,9 +201,9 @@ public class Controller {
     public void guardarFactura(){
         try {
             Factura factura = view.take();
-            factura.setVec(getListLinea());
+            //factura.setVec(getListLinea());
             model.init(new ArrayList<>(), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
-            for(Linea linea : factura.getVec()){
+            for(Linea linea : model.getLineas()){
                 linea.getProducto().setExistencia(linea.getProducto().getExistencia()-linea.getCantidad()); //Le quita la cantidad que se compraron a existencias
                 linea.setFactura(factura);
                 Service.instance().create(linea);
@@ -216,7 +217,7 @@ public class Controller {
     public Integer getCantidadProductos(){
         int cantidad = 0;
         if(!listaLineasEstaVacia()) {
-            for (Linea linea : model.getListLinea()) {
+            for (Linea linea : model.getLineas()) {
             cantidad += linea.getCantidad();
             }
         }
@@ -225,7 +226,7 @@ public class Controller {
     public Double getDescuentoTotal(){
         Double descuento = 0.0;
         if(!listaLineasEstaVacia()) {
-            for (Linea linea : model.getListLinea()) {
+            for (Linea linea : model.getLineas()) {
              descuento += (linea.getDescuento()/100)*linea.getCantidad()*linea.getProducto().getPrecio();
             }
         }

@@ -123,6 +123,7 @@ public class View implements PropertyChangeListener {
                     try {
                         Producto prod = controller.buscarProducto(codProducto.getText());
                         Linea lin = new Linea(prod, 1, ((Cliente) clientes.getSelectedItem()).getDescuento());
+                        lin.setFactura(model.getCurrentFactura());
                         controller.save(lin);
                         codProducto.setText("");
                         JOptionPane.showMessageDialog(panel, "LINEA AGREGADA", "", JOptionPane.INFORMATION_MESSAGE);
@@ -203,7 +204,7 @@ public class View implements PropertyChangeListener {
         switch (evt.getPropertyName()) {
             case Model.LISTLINEA:
                 int[] cols = {TableModel.CODIGO, TableModel.ARTICULO, TableModel.CATEGORIA, TableModel.CANTIDAD, TableModel.PRECIO, TableModel.DESCUENTO, TableModel.NETO, TableModel.IMPORTE};
-                lista.setModel(new TableModel(cols, model.getListLinea()));
+                lista.setModel(new TableModel(cols, model.getLineas()));
                 lista.setRowHeight(30);
                 TableColumnModel columnModel = lista.getColumnModel();
                 columnModel.getColumn(1).setPreferredWidth(150);

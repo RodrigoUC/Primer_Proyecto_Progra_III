@@ -85,15 +85,15 @@ public class Controller {
 
     //--------------LISTA DE LINEAS NORMALES SEGUN LA CURRENT FACTURA--------
 
-    void listaLineasNormales(int row) throws Exception {
-        try{
-            model.setCurrentLineaFactura(model.getListLineasListado().get(row));
-            model.setListLineasNormales(model.getCurrentFactura().getFactura().getLineas());
-        }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error listado normales", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-    }
+//    void listaLineasNormales(int row) throws Exception {
+//        try{
+//            model.setCurrentLineaFactura(model.getListLineasListado().get(row));
+//            model.setListLineasNormales(model.getCurrentFactura().getFactura().getLineas());
+//        }catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Error listado normales", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//
+//    }
 
     public void print()throws Exception{
         try {
