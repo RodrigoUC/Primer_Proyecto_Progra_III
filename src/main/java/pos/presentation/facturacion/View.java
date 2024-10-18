@@ -208,10 +208,10 @@ public class View implements PropertyChangeListener {
                 TableColumnModel columnModel = lista.getColumnModel();
                 columnModel.getColumn(1).setPreferredWidth(150);
                 columnModel.getColumn(3).setPreferredWidth(150);
-                cantidadArt.setText(Integer.toString(model.getCurrentFactura().cantidadArticulos()));
-                subTotal.setText(Double.toString(model.getCurrentFactura().getSubTotal()));
-                descuentos.setText(Double.toString(model.getCurrentFactura().getTotalDescuento()));
-                total.setText(Double.toString(model.getCurrentFactura().getSubTotal()));
+//                cantidadArt.setText(Integer.toString(model.getCurrentFactura().cantidadArticulos()));
+//                subTotal.setText(Double.toString(model.getCurrentFactura().getSubTotal()));
+//                descuentos.setText(Double.toString(model.getCurrentFactura().getTotalDescuento()));
+//                total.setText(Double.toString(model.getCurrentFactura().getSubTotal()));
 
                 break;
             case Model.LISTCAJERO:
