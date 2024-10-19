@@ -1,13 +1,13 @@
 package pos.presentation.historico;
 
-import pos.logic.LineaHistorico;
+import pos.logic.Linea;
 import pos.presentation.AbstractTableModel;
 
 import java.util.List;
 
-public class TableModelFacturas extends AbstractTableModel<LineaHistorico> implements javax.swing.table.TableModel {
+public class TableModelFacturas extends AbstractTableModel<Linea> implements javax.swing.table.TableModel {
 
-    public TableModelFacturas(int[] cols, List<LineaHistorico> rows) {
+    public TableModelFacturas(int[] cols, List<Linea> rows) {
         super(cols, rows);
     }
 
@@ -18,13 +18,13 @@ public class TableModelFacturas extends AbstractTableModel<LineaHistorico> imple
     public static final int IMPORTE = 4;
 
     @Override
-    protected Object getPropertyAt(LineaHistorico e, int col){
+    protected Object getPropertyAt(Linea e, int col){
         switch (cols[col]){
-            case NUMERO: return e.getNumero();
-            case CLIENTE: return e.getNombreCliente();
-            case CAJERO: return e.getNombreCajero();
-            case FECHA: return e.getFechaString();
-            case IMPORTE: return e.getImporte();
+            case NUMERO: return e.getCodigo();
+            case CLIENTE: return e.getFactura().getNombreCliente();
+            case CAJERO: return e.getFactura().getCajero();
+            case FECHA: return e.getFactura().getFecha().toString();
+            case IMPORTE: return e.getTotalLinea(); //No se si es total o totalLinea, revisar
             default: return "";
         }
     }

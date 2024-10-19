@@ -63,7 +63,7 @@ public class LineaDao {
     public void delete(Linea e) throws Exception {
         String sql = "delete " +
                 "from Linea " +
-                "where id=?";
+                "where codigo=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, e.getCodigo());
         int count = db.executeUpdate(stm);
@@ -90,6 +90,25 @@ public class LineaDao {
         }
         return resultado;
     }
+
+    public List<Linea> searchByFactura(String codigoFactura) throws Exception {
+        List<Linea> resultado = new ArrayList<>();
+        String sql = "select * from Linea l " +
+                "inner join Factura f on l.factura = f.codigo " +
+                "where f.codigo = ?";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, codigoFactura);
+        ResultSet rs = db.executeQuery(stm);
+
+        ProductoDao productoDao = new ProductoDao();  // Para obtener el producto de cada linea.
+        while (rs.next()) {
+            Linea r = from(rs, "l");  // Map los datos de la tabla Linea.
+            r.setProducto(productoDao.from(rs, "p"));  // Map el producto relacionado.
+            resultado.add(r);
+        }
+        return resultado;
+    }
+
 
     public Linea from(ResultSet rs, String alias) throws Exception {
         Linea e = new Linea();

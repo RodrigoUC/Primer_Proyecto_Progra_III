@@ -62,26 +62,41 @@ public class Controller {
         cliente.setNombre(nombre);
         try {
             cliente = Service.instance().read(cliente);
+            listadoHistorico();
             return cliente;
         } catch (Exception e) {
             throw e;
         }
     }
 
-    //-----------------LISTADO DE LINEAS DE FACTURAS DEL CLIENTE----------
 
-    List<LineaHistorico> listadoHistorico() throws Exception {
-        try{
-            List<LineaHistorico> listado = new ArrayList<LineaHistorico>();
-            for(int i=0; i<model.getListFacturasFilter().size(); i++){
-                listado.add(new LineaHistorico(model.getListFacturasFilter().get(i)));
+    //-----------------LISTADO DE LINEAS DE FACTURAS DEL CLIENTE----------
+    List<Linea> listadoHistorico() throws Exception {
+        try {
+            List<Linea> listado = new ArrayList<Linea>();
+            model.setListFacturasFilter(buscarFacturas()); //facturas que coincidan con id
+            for (int i = 0; i < model.getListFacturasFilter().size(); i++) {
+                listado.add(new Linea(model.getListFacturasFilter().get(i)));   //lineas con las facturas que coinciden con id
             }
             return listado;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error listado historico", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
+    }
+
+
+    //--------------LISTA DE LINEAS DE ABAJO SEGUN EL CODIGO DE FACTURA--------
+    List<Linea> listaLineasNormales(int row) throws Exception {       //
+        try{
+            return Service.instance().searchbyFactura(model.getListLineasListado().get(row).getFactura().getCodigo());
         }catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error listado historico", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
+
+
 
     //--------------LISTA DE LINEAS NORMALES SEGUN LA CURRENT FACTURA--------
 

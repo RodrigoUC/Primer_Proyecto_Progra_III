@@ -96,7 +96,7 @@ public class FacturaDao {
         }
         return resultado;
     }
-
+    
     public Factura from(ResultSet rs, String alias) throws Exception {
         Factura e = new Factura();
         e.setCodigo(rs.getString(alias + ".codigo"));

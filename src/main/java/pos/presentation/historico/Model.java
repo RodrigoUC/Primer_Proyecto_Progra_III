@@ -11,11 +11,11 @@ public class Model extends AbstractModel {
 
     Cliente filter;
     List<Factura> listFacturasFilter;
-    List<LineaHistorico> listLineasListado; //Pestana Listado
-    List<Linea> listLineasNormales; // Lineas normales segun una(1) Factura
-    LineaHistorico currentLineaFactura;
+    List<Linea> listLineasListado; //Pestana Listado //selecciona numero de factura, y abajo muestra las lineas con ese numero
+    List<Linea> listLineasNormales; //que coinciden con id del nombre de la factura
+    Linea currentLineaFactura;      //linea Listado
 
-    public void setCurrentLineaFactura(LineaHistorico currentLineaFactura) {
+    public void setCurrentLineaFactura(Linea currentLineaFactura) {
         this.currentLineaFactura = currentLineaFactura;
     firePropertyChange(CURRENTLINEAFACTURA);
     }
@@ -34,23 +34,23 @@ public class Model extends AbstractModel {
     }
 
     public void init() {
-        this.listLineasListado = new ArrayList<LineaHistorico>();
+        this.listLineasListado = new ArrayList<Linea>();
         this.listLineasNormales = new ArrayList<Linea>();
         this.listFacturasFilter = new ArrayList<Factura>();
-        this.currentLineaFactura = new LineaHistorico();
+        this.currentLineaFactura = new Linea();
         this.filter = new Cliente();
     }
 
     public List<Factura> getListFacturasFilter() {
         return listFacturasFilter;
     }
-    public List<LineaHistorico> getListLineasListado() {return listLineasListado;}
+    public List<Linea> getListLineasListado() {return listLineasListado;}
     public List<Linea> getListLineasNormales() {return listLineasNormales;}
     public void setListFacturasFilter(List<Factura> listFacturasFilter) {
         this.listFacturasFilter = listFacturasFilter;
         firePropertyChange(LISTFACTURASFILTER);
     }
-    public void setListLineasListado(List<LineaHistorico> Lineaslistado) {
+    public void setListLineasListado(List<Linea> Lineaslistado) {
         this.listLineasListado = Lineaslistado;
         firePropertyChange(LISTLINEASLISTADO);
     }
@@ -67,7 +67,7 @@ public class Model extends AbstractModel {
     }
 
 
-    public LineaHistorico getCurrentFactura() {return currentLineaFactura;}
+    public Linea getCurrentFactura() {return currentLineaFactura;}
 
     public static final String LISTFACTURASFILTER = "listFacturasFilter";
     public static final String LISTLINEASLISTADO = "listLineasListado";

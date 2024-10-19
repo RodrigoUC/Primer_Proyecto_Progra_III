@@ -297,6 +297,14 @@ public class Service {
         }
     }
 
+    public List<Linea> searchbyFactura(String codigoFactura) {
+        try {
+            return lineaDao.searchByFactura(codigoFactura);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
 //    ------------------------Factura---------------------------------
 
 //    public void create(Factura e) throws Exception{

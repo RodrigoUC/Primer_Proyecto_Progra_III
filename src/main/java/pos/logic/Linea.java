@@ -19,6 +19,15 @@ public class Linea {
         this.factura = null;
         codigo="LIN-";      //Creo que seria asi para que todas las lineas sean diferentes,aunque el problema es cuando se creen los objetos automaticos
     }
+
+    public Linea(Factura factura) {
+        this.producto = null;
+        this.cantidad = 0;
+        this.descuento = 0;
+        this.factura = factura;
+        codigo="LIN-";      //Creo que seria asi para que todas las lineas sean diferentes,aunque el problema es cuando se creen los objetos automaticos
+    }
+
     public Linea() {
         producto=null;
         factura=null;
