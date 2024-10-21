@@ -4,6 +4,7 @@ import pos.logic.Factura;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +18,14 @@ public class FacturaDao {
     public void create(Factura e) throws Exception {
         String sql = "insert into " +
                 "Factura " +
-                "(cajero, cliente) " +
-                "values(?,?)";
+                "(cajero, cliente, fecha) " +
+                "values(?,?,?)";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1,e.getCajero().getId());
         stm.setString(2,e.getCliente().getId());
-        db.executeUpdate(stm);
+        stm.setString(3, e.getFecha().format(DateTimeFormatter.ofPattern("yyyy/MM/dd)")));
+        int numero = db.executeUpdateWithKeys(stm);
+        e.setCodigo(String.valueOf(numero));
     }
 
     public Factura read(String codigo) throws Exception {

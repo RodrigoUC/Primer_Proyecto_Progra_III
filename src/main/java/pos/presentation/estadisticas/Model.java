@@ -16,7 +16,7 @@ public class Model extends AbstractModel {
     Rango rango;
     String[] rowsCat;
     String[] colsFech;
-    Double[][] data;
+    Float[][] data;
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -34,7 +34,7 @@ public class Model extends AbstractModel {
         this.categorias = new ArrayList<>();
         this.rowsCat = new String[0];
         this.colsFech = new String[1];
-        this.data = new Double[0][0];
+        this.data = new Float[0][0];
     }
 
     public Model() {
@@ -45,9 +45,9 @@ public class Model extends AbstractModel {
     public Rango getRango() {  return rango;  }
     public String[] getRows() {  return this.rowsCat;  }
     public String[] getCols() {  return this.colsFech;  }
-    public Double[][] getData() { return this.data; }
+    public Float[][] getData() { return this.data; }
 
-    public void setData(Double[][] data){
+    public void setData(Float[][] data){
         this.data = data;
         firePropertyChange(DATA);
     }
@@ -86,7 +86,7 @@ public class Model extends AbstractModel {
         this.categorias = new ArrayList<>();
         this.rowsCat = new String[0];
         this.colsFech = new String[1];
-        this.data = new Double[0][0];
+        this.data = new Float[0][0];
     }
 
 

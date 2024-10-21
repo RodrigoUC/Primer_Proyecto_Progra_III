@@ -4,6 +4,7 @@ import pos.logic.Categoria;
 import pos.logic.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,16 +21,17 @@ public class Controller {
         view.setModel(model);
     }
 
-    public Double[][] createData(){
+    public Float[][] createData(){
         String[] rows = model.getRows();
         String[] cols = model.getCols();
-        Double[][] data = new Double[rows.length][cols.length];
+        Float[][] data = new Float[rows.length][cols.length];
 
-        for (int i = 0; i < rows.length; i++) {
-            for (int j = 0; j < cols.length; j++) {
-                data[i][j] = Service.instance().totalDelMes(rows[i], Integer.parseInt(cols[j].substring(0,4)), Integer.parseInt(cols[j].substring(5)));
-            }
-        }
+//        for (int i = 0; i < rows.length; i++) {
+//            for (int j = 0; j < cols.length; j++) {
+////                data[i][j] = Service.instance().totalDelMes(rows[i], Integer.parseInt(cols[j].substring(0,4)), Integer.parseInt(cols[j].substring(5)));
+//            }
+//        }
+        data = Service.instance().estadisticas(model.getCategorias(), Arrays.stream(model.getCols()).toList(), model.getRango());
         return data;
     }
 
@@ -117,7 +119,7 @@ public class Controller {
         model.setRango(new Rango());
         model.setRows(new String[0]);
         model.setCols(new String[1]);
-        model.setData(new Double[0][0]);
+        model.setData(new Float[0][0]);
     }
 
     public void shown(){

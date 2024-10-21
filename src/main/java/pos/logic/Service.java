@@ -5,6 +5,7 @@ import pos.data.*;
 
 import pos.data.CategoriaDao;
 import pos.data.ProductoDao;
+import pos.presentation.estadisticas.Rango;
 
 import java.util.Comparator;
 import java.util.List;
@@ -349,16 +350,19 @@ public class Service {
 
     //-------------------------------Calculos--------------------------------------
 
-    public Double totalDelMes(String categoria, int anio, int mes){
-        double total = 0d;
+    public Float[][] estadisticas(List<Categoria> rows, List<String> cols, Rango rango){
+        Float[][] total;
 
 //        List<Factura> facturas = data.getFacturas().stream().filter(factura -> factura.getFecha().getAnio() == anio && factura.getFecha().getMes() == mes).toList();
 //
 //        for (Factura factura : facturas) {
 //            total += factura.getTotalPorCategoria(categoria);
 //        }
-
-        return total;
+        try{
+            return lineaDao.estadisticas(rows,cols,rango);
+        }catch(Exception e){
+            throw new RuntimeException();
+        }
 
     }
 

@@ -2,6 +2,7 @@ package pos.logic;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,22 +12,20 @@ public class Factura {
 //   private List<Linea> vec;
    private Cajero cajero;
    private Cliente cliente;
-   private Fecha fecha;
+   private LocalDate fecha;
 
    public Factura() {
-      LocalDate local = LocalDate.now();
       this.cajero = null;
       this.cliente = null;
 //      vec = new ArrayList<>();
-      fecha = new Fecha(local.getYear(), local.getMonthValue(), local.getDayOfMonth());
+      this.fecha = LocalDate.now();
    }
 
    public Factura(Cajero cajero, Cliente cliente) {
-      LocalDate local = LocalDate.now();
       this.cajero = cajero;
       this.cliente = cliente;
 //      vec = new ArrayList<>();
-      fecha = new Fecha(local.getYear(), local.getMonthValue(), local.getDayOfMonth());
+      this.fecha = LocalDate.now();
    }
 
 //   public void setVec(List<Linea> vec) {
@@ -38,7 +37,7 @@ public class Factura {
    public void setCliente(Cliente cliente) {
       this.cliente = cliente;
    }
-   public void setFecha(Fecha fecha) { this.fecha = fecha; }
+   public void setFecha(LocalDate fecha) { this.fecha = fecha; }
    public Cajero getCajero() {
       return cajero;
    }
@@ -46,7 +45,7 @@ public class Factura {
 //   public List<Linea> getVec() {
 //        return vec;
 //   }
-   public Fecha getFecha() {return fecha;}
+   public LocalDate getFecha() {return fecha;}
 
    public String getNombreCliente(){
       return cliente.getNombre();

@@ -212,7 +212,7 @@ public class View implements PropertyChangeListener {
 
     private DefaultCategoryDataset getDefaultCategoryDataset() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        Double[][] data = model.getData();
+        Float[][] data = model.getData();
         String[] rows = model.getRows();
         String[] cols = model.getCols();
         if (rows.length > 0 && cols.length > 0 && data.length > 0) {

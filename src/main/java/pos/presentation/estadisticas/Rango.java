@@ -24,6 +24,10 @@ public class Rango {
         return ((anioHasta - anioDesde) * 12) + ((mesHasta - mesDesde) + 1);
     }
 
+    public int getAnioDesde() { return anioDesde; }
+    public int getMesDesde() { return mesDesde; }
+    public int getAnioHasta() { return anioHasta; }
+    public int getMesHasta() { return mesHasta; }
     public String getAnioMes(int m){
         int a = 0;
         while(mesDesde + m > 12){

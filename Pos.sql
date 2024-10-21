@@ -46,6 +46,7 @@ create table Factura (
 		codigo int AUTO_INCREMENT,
 		cajero varchar(10),
 		cliente varchar(10),
+        fecha date,
 		Primary Key (codigo)
 	);
 	
@@ -79,3 +80,11 @@ insert into Producto (codigo, descripcion, unidad, precio, existencia, categoria
 	values('23456', 'Pan', 'Bolsa', 20, 200.0, '003');
 insert into Producto (codigo, descripcion, unidad, precio, existencia, categoria) 
 	values('12345', 'Vino', 'Botella', 50, 350.0, '004');
+
+insert into Factura (cajero, cliente, fecha) values ('001', '001', '2024-10-19');
+insert into Factura (cajero, cliente, fecha) values ('001', '002', '2024-10-19');
+insert into Factura (cajero, cliente, fecha) values ('001', '003', '2024-10-19');
+
+insert into Linea (producto, factura, cantidad, descuento) values ('34567', '1', 5, 0);
+insert into Linea (producto, factura, cantidad, descuento) values ('34567', '2', 2, 0);
+insert into Linea (producto, factura, cantidad, descuento) values ('45678', '2', 7, 10);

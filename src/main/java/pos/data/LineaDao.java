@@ -1,6 +1,8 @@
 package pos.data;
 
+import pos.logic.Categoria;
 import pos.logic.Linea;
+import pos.presentation.estadisticas.Rango;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +26,8 @@ public class LineaDao {
         stm.setString(2, e.getFactura().getCodigo());
         stm.setInt(3, e.getCantidad());
         stm.setDouble(4, e.getDescuento());
-        db.executeUpdate(stm);
+        int numero = db.executeUpdateWithKeys(stm);
+        e.setId(String.valueOf(numero));
     }
 
     public Linea read(String codigo) throws Exception {
@@ -119,5 +122,42 @@ public class LineaDao {
         return e;
     }
 
+    public Float[][] estadisticas(List<Categoria> rows, List<String> cols, Rango rango) throws Exception {
+        Float[][] resultado = new Float[rows.size()][cols.size()];
+        if(rows.size()==0) return resultado;
+        String sql = "select " +
+                "c.id as categoria, " +
+                "CONCAT(year(f.fecha), '-', LPAD(month(f.fecha),2,0)) as periodo, " +
+                "sum(l.cantidad*p.precio*(1.l.descuento/100)) as total " +
+                "from linea l " +
+                "inner join factura f on l.factura=f.numero " +
+                "inner join producto p on l.producto=p.codigo " +
+                "inner join categoria c on p.categoria=c.id " +
+                "where year(f.fecha)>=? " +
+                "and month(f.fecha)>=? " +
+                "and year(f.fecha)<=? " +
+                "and month(fecha)<=? " +
+                "and c.id in ("+",?".repeat(rows.size()).substring(1)+") " +
+                "group by categoria, periodo";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setInt(1,rango.getAnioDesde());
+        stm.setInt(2,rango.getMesDesde());
+        stm.setInt(3, rango.getAnioHasta());
+        stm.setInt(4, rango.getMesHasta());
+
+        for(int i = 0; i < rows.size(); i++) {
+            stm.setString(5+i, rows.get(i).getId());
+        }
+        ResultSet rs = db.executeQuery(stm);
+        ProductoDao productoDao = new ProductoDao();
+        int row = 0;
+        int col = 0;
+        while(rs.next()) {
+            row = rows.indexOf(new Categoria(rs.getString("c")));
+            col = cols.indexOf(rs.getString("periodo"));
+        }
+        return new Float[row][col];
+
+    }
 }
 
