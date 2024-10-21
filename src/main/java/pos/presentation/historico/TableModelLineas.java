@@ -18,7 +18,7 @@ public class TableModelLineas extends AbstractTableModel<Linea> implements javax
     public static final int PRECIO = 4;
     public static final int DESCUENTO = 5;
     public static final int NETO = 6;
-    public static final int IMPORTE = 7;
+    //public static final int IMPORTE = 7;
 
     @Override
     protected Object getPropertyAt(Linea e, int col){
@@ -30,7 +30,7 @@ public class TableModelLineas extends AbstractTableModel<Linea> implements javax
             case PRECIO: return e.getProducto().getPrecio();
             case DESCUENTO: return e.getDescuento();
             case NETO: return e.getTotalLinea(); //cambiar
-            case IMPORTE: return e.getTotalLinea(); //ver como funciona
+            //case IMPORTE: return e.getTotalLinea(); //ver como funciona
             default: return "";
         }
     }
@@ -45,6 +45,6 @@ public class TableModelLineas extends AbstractTableModel<Linea> implements javax
         colNames[PRECIO] = "Precio";
         colNames[DESCUENTO] = "Descuento";
         colNames[NETO] = "Neto";
-        colNames[IMPORTE] = "Importe";
+        //colNames[IMPORTE] = "Importe";
     }
 }

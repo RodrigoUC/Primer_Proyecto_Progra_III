@@ -1,14 +1,8 @@
 package pos.logic;
 
-import com.mysql.cj.xdevapi.Client;
 import pos.data.*;
 
-import pos.data.CategoriaDao;
-import pos.data.ProductoDao;
-
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Service implements IService {
     private static Service theInstance;
@@ -348,7 +342,7 @@ public class Service implements IService {
 
     public List<Factura> search(Factura e) {
         try {
-            return facturaDao.search(e);
+            return facturaDao.searchByNombreCliente(e.getNombreCliente());
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -368,5 +362,7 @@ public class Service implements IService {
         return total;
 
     }
+
+
 
 }

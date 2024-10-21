@@ -55,7 +55,7 @@ public class FacturaDao {
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, e.getCajero().getId());
         stm.setString(2, e.getCliente().getId());
-        stm.setString(3, e.getCodigo());
+        stm.setInt(3, e.getCodigo());
         int count = db.executeUpdate(stm);
         if (count == 0) {
             throw new Exception("Factura NO EXISTE");
@@ -68,7 +68,7 @@ public class FacturaDao {
                 "from Factura " +
                 "where codigo=?";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, e.getCodigo());
+        stm.setInt(1, e.getCodigo());
         int count = db.executeUpdate(stm);
         if (count == 0) {
             throw new Exception("Factura NO EXISTE");
@@ -96,10 +96,33 @@ public class FacturaDao {
         }
         return resultado;
     }
-    
+
+    public List<Factura> searchByNombreCliente(String nombreCliente) throws Exception {
+        List<Factura> resultado = new ArrayList<>();
+        String sql = "select * " +
+                "from Factura p " +
+                "inner join Cliente cl on p.cliente_id = cl.id " +
+                "where cl.nombre like ?";
+
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, "%" + nombreCliente + "%");  // Buscar coincidencias parciales en el nombre del cliente
+
+        ResultSet rs = db.executeQuery(stm);
+        ClienteDao clienteDao = new ClienteDao();
+
+        while (rs.next()) {
+            Factura factura = from(rs, "p");  // Obtener la factura desde el ResultSet
+            factura.setCliente(clienteDao.from(rs, "cl"));  // Asignar cliente
+            resultado.add(factura);  // Añadir factura al resultado
+        }
+
+        return resultado;
+    }
+
+
     public Factura from(ResultSet rs, String alias) throws Exception {
         Factura e = new Factura();
-        e.setCodigo(rs.getString(alias + ".codigo"));
+        e.setCodigo(rs.getInt(alias + ".codigo"));
         return e;
     }
 

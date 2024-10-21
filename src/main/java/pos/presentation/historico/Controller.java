@@ -138,15 +138,15 @@ public class Controller {
             body.addCell(getCell(new Paragraph("Cliente").setBackgroundColor(bkg).setFontColor(frg), TextAlignment.CENTER, true));
             body.addCell(getCell(new Paragraph("Cajero").setBackgroundColor(bkg).setFontColor(frg), TextAlignment.CENTER, true));
             body.addCell(getCell(new Paragraph("Fecha").setBackgroundColor(bkg).setFontColor(frg), TextAlignment.CENTER, true));
-            body.addCell(getCell(new Paragraph("Importe").setBackgroundColor(bkg).setFontColor(frg), TextAlignment.CENTER, true));
+            //body.addCell(getCell(new Paragraph("Importe").setBackgroundColor(bkg).setFontColor(frg), TextAlignment.CENTER, true));
 
 
             for (Factura e : model.getListFacturasFilter()) {
-                body.addCell(getCell(new Paragraph(e.getCodigo()), TextAlignment.CENTER, true));
+                body.addCell(getCell(new Paragraph(String.valueOf(e.getCodigo())), TextAlignment.CENTER, true));
                 body.addCell(getCell(new Paragraph(e.getCliente().getNombre()), TextAlignment.CENTER, true));
                 body.addCell(getCell(new Paragraph(e.getCajero().getNombre()), TextAlignment.CENTER, true));
                 body.addCell(getCell(new Paragraph(e.getFecha().toString()), TextAlignment.CENTER, true));
-                body.addCell(getCell(new Paragraph(String.valueOf(e.getTotal())), TextAlignment.CENTER, true));
+                //body.addCell(getCell(new Paragraph(String.valueOf(e.getTotal())), TextAlignment.CENTER, true));
             }
             document.add(body);
             document.close();
