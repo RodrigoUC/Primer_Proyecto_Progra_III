@@ -26,7 +26,7 @@ public class LineaHistorico { //Listado
         clienteStr =factura.getCliente().getNombre();
         cajeroStr=factura.getCajero().getNombre();
         fecha = factura.getFecha();
-        importe = factura.getTotal();
+        //importe = factura.getTotal();
     }
 
     public String getNombreCliente() {return clienteStr;}
