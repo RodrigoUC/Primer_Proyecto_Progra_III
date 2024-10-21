@@ -23,7 +23,7 @@ public class LineaDao {
                 "values(?,?,?,?)";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, e.getProducto().getCodigo());
-        stm.setString(2, e.getFactura().getCodigo());
+        stm.setInt(2, e.getFactura().getCodigo());
         stm.setInt(3, e.getCantidad());
         stm.setDouble(4, e.getDescuento());
         int numero = db.executeUpdateWithKeys(stm);
@@ -52,10 +52,10 @@ public class LineaDao {
                 "where codigo=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, e.getProducto().getCodigo());
-        stm.setString(2, e.getFactura().getCodigo());
+        stm.setInt(2, e.getFactura().getCodigo());
         stm.setInt(3, e.getCantidad());
         stm.setDouble(4, e.getDescuento());
-        stm.setString(5, e.getCodigo());
+        stm.setInt(5, e.getCodigo());
         int count = db.executeUpdate(stm);
         if (count == 0) {
             throw new Exception("Linea NO EXISTE");
@@ -68,7 +68,7 @@ public class LineaDao {
                 "from Linea " +
                 "where codigo=?";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, e.getCodigo());
+        stm.setInt(1, e.getCodigo());
         int count = db.executeUpdate(stm);
         if (count == 0) {
             throw new Exception("Linea NO EXISTE");
@@ -115,7 +115,7 @@ public class LineaDao {
 
     public Linea from(ResultSet rs, String alias) throws Exception {
         Linea e = new Linea();
-        e.setId(rs.getString(alias + ".id"));
+        e.setId(rs.getInt(alias + ".id"));
         e.setCantidad(Integer.parseInt(rs.getString(alias + ".cantidad")));
         e.setDescuento(Float.parseFloat(rs.getString(alias + ".descuento")));
 

@@ -1,6 +1,5 @@
 package pos.logic;
 
-import com.mysql.cj.xdevapi.Client;
 import pos.data.*;
 
 import pos.data.CategoriaDao;
@@ -9,9 +8,8 @@ import pos.presentation.estadisticas.Rango;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class Service {
+public class Service implements IService {
     private static Service theInstance;
 
     public static Service instance(){
@@ -279,7 +277,8 @@ public class Service {
     }
 
     public Linea read(Linea e) throws Exception {
-        return lineaDao.read(e.getCodigo());
+        //return lineaDao.read(e.getCodigo());
+        return null;
     }
 
     public void update(Linea e) throws Exception {
@@ -296,6 +295,11 @@ public class Service {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    @Override
+    public List<Linea> searchbyFactura(int i) {
+        return List.of();
     }
 
     public List<Linea> searchbyFactura(String codigoFactura) {
@@ -329,7 +333,8 @@ public class Service {
     }
 
     public Factura read(Factura e) throws Exception {
-        return facturaDao.read(e.getCodigo());
+        //return facturaDao.read(e.getCodigo());
+        return null;
     }
 
     public void update(Factura e) throws Exception {
@@ -342,7 +347,7 @@ public class Service {
 
     public List<Factura> search(Factura e) {
         try {
-            return facturaDao.search(e);
+            return facturaDao.searchByNombreCliente(e.getNombreCliente());
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
