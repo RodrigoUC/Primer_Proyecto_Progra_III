@@ -27,7 +27,7 @@ public class LineaDao {
         stm.setInt(3, e.getCantidad());
         stm.setDouble(4, e.getDescuento());
         int numero = db.executeUpdateWithKeys(stm);
-        e.setId(String.valueOf(numero));
+        e.setId(numero);
     }
 
     public Linea read(String codigo) throws Exception {

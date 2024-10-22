@@ -15,7 +15,7 @@ public class TableModelFacturas extends AbstractTableModel<Linea> implements jav
     public static final int CLIENTE = 1;
     public static final int CAJERO = 2;
     public static final int FECHA = 3;
-    //public static final int IMPORTE = 4;
+    public static final int IMPORTE = 4;
 
     @Override
     protected Object getPropertyAt(Linea e, int col){
@@ -25,6 +25,7 @@ public class TableModelFacturas extends AbstractTableModel<Linea> implements jav
             case CAJERO: return e.getFactura().getCajero();
             case FECHA: return e.getFactura().getFecha().toString();
             //case IMPORTE: return e.getTotalLinea(); //No se si es total o totalLinea, revisar
+            case IMPORTE: return 0;
             default: return "";
         }
     }
@@ -36,6 +37,6 @@ public class TableModelFacturas extends AbstractTableModel<Linea> implements jav
         colNames[CLIENTE] = "Cliente";
         colNames[CAJERO] = "Cajero";
         colNames[FECHA] = "Fecha";
-        //colNames[IMPORTE] = "Importe";
+        colNames[IMPORTE] = "Importe";
     }
 }

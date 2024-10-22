@@ -333,8 +333,7 @@ public class Service implements IService {
     }
 
     public Factura read(Factura e) throws Exception {
-        //return facturaDao.read(e.getCodigo());
-        return null;
+        return facturaDao.read(e.getCodigo());
     }
 
     public void update(Factura e) throws Exception {

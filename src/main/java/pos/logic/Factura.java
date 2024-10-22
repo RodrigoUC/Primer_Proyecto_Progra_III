@@ -8,13 +8,14 @@ import java.util.Objects;
 
 
 public class Factura {
-   private String codigo;
+   private Integer codigo;
 //   private List<Linea> vec;
    private Cajero cajero;
    private Cliente cliente;
    private LocalDate fecha;
 
    public Factura() {
+      this.codigo = 0;
       this.cajero = null;
       this.cliente = null;
 //      vec = new ArrayList<>();
@@ -22,6 +23,7 @@ public class Factura {
    }
 
    public Factura(Cajero cajero, Cliente cliente) {
+      this.codigo = 0;
       this.cajero = cajero;
       this.cliente = cliente;
 //      vec = new ArrayList<>();
@@ -31,8 +33,8 @@ public class Factura {
 //   public void setVec(List<Linea> vec) {
 //      this.vec = vec;
 //   }
-   public String getCodigo() { return codigo; }
-   public void setCodigo(String codigo) { this.codigo += codigo; }
+   public Integer getCodigo() { return codigo; }
+   public void setCodigo(Integer codigo) { this.codigo = codigo; }
    public void setCajero(Cajero cajero) { this.cajero = cajero; }
    public void setCliente(Cliente cliente) {
       this.cliente = cliente;

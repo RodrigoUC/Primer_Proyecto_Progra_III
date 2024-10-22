@@ -1,6 +1,7 @@
 package pos.presentation.estadisticas;
 
 import pos.logic.Categoria;
+import pos.presentation.estadisticas.Rango;
 import pos.presentation.AbstractModel;
 import pos.presentation.AbstractTableModel;
 

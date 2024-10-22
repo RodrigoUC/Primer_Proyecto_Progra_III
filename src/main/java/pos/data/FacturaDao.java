@@ -25,10 +25,10 @@ public class FacturaDao {
         stm.setString(2,e.getCliente().getId());
         stm.setString(3, e.getFecha().format(DateTimeFormatter.ofPattern("yyyy/MM/dd)")));
         int numero = db.executeUpdateWithKeys(stm);
-        e.setCodigo(String.valueOf(numero));
+        e.setCodigo(numero);
     }
 
-    public Factura read(String codigo) throws Exception {
+    public Factura read(Integer codigo) throws Exception {
         String sql = "select " +
                 "* " +
                 "from  Factura t " +
@@ -36,7 +36,7 @@ public class FacturaDao {
                 "and inner join Cliente cl on " +
                 "t.cliente=cl.id where t.codigo=?";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, codigo);
+        stm.setInt(1, codigo);
         ResultSet rs = db.executeQuery(stm);
         CajeroDao cajeroDao = new CajeroDao();
         ClienteDao clienteDao =new ClienteDao();
@@ -87,7 +87,7 @@ public class FacturaDao {
                 "and inner join Cliente cl on " +
                 "where p.codigo like ?";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, "%" + e.getCodigo() + "%");
+        stm.setInt(1, e.getCodigo());
         ResultSet rs = db.executeQuery(stm);
         CajeroDao cajeroDao = new CajeroDao();
         ClienteDao clienteDao =new ClienteDao();

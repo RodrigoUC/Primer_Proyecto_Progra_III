@@ -202,13 +202,15 @@ public class Controller {
         try {
             Factura factura = view.take();
             //factura.setVec(getListLinea());
-            model.init(new ArrayList<>(), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
-            for(Linea linea : model.getLineas()){
+            Service.instance().create(factura);
+            System.out.println(factura.getCodigo());
+            for(Linea linea : getListLinea()){
                 linea.getProducto().setExistencia(linea.getProducto().getExistencia()-linea.getCantidad()); //Le quita la cantidad que se compraron a existencias
+                System.out.println(factura.getCodigo());
                 linea.setFactura(factura);
                 Service.instance().create(linea);
             }
-            Service.instance().create(factura);
+            model.init(new ArrayList<>(), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
         }
         catch(Exception e) {
             System.out.println(e.getMessage());

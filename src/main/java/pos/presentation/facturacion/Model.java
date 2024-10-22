@@ -72,14 +72,14 @@ public class Model extends AbstractModel {
     }
 
     public void init(List<Linea> listLinea,List<Cajero> listCajero, List<Cliente> listCliente) {
-//        setListLinea(listLinea);
-           setListCajeros(listCajero);
-           setListClientes(listCliente);
-           setCurrentFactura(new Factura(null,null));
-           current = null;
-           listProducto = new ArrayList<Producto>();
-           filter = new Producto();
-           lineas=new ArrayList<Linea>();
+        setListLinea(listLinea);
+        setListCajeros(listCajero);
+        setListClientes(listCliente);
+        setCurrentFactura(new Factura(null,null));
+        current = null;
+        listProducto = new ArrayList<Producto>();
+        filter = new Producto();
+        lineas=new ArrayList<Linea>();
     }
 
     public void setCliente(Cliente cliente) {
@@ -94,10 +94,10 @@ public class Model extends AbstractModel {
 //        return currentFactura.getLineas();
 //    }
 
-//    public void setListLinea(List<Linea> list) {
-//        currentFactura.setVec(list);
-//        firePropertyChange(LISTLINEA);
-//    }
+    public void setListLinea(List<Linea> list) {
+        lineas = list;
+        firePropertyChange(LISTLINEA);
+    }
 
     public void setListCajeros(List<Cajero> list) {
         this.listCajeros = list;
