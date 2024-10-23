@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 public class LineaDao {
     Database db;
@@ -85,7 +86,7 @@ public class LineaDao {
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, "%" + e.getCodigo() + "%");
         ResultSet rs = db.executeQuery(stm);
-        ProductoDao productoDao=new ProductoDao();
+        ProductoDao productoDao = new ProductoDao();
         while (rs.next()) {
             Linea r = from(rs, "l");
             r.setProducto(productoDao.from(rs, "p"));
@@ -123,41 +124,72 @@ public class LineaDao {
     }
 
     public Float[][] estadisticas(List<Categoria> rows, List<String> cols, Rango rango) throws Exception {
+        // Inicializa la matriz de resultados
         Float[][] resultado = new Float[rows.size()][cols.size()];
-        if(rows.size()==0) return resultado;
-        String sql = "select " +
-                "c.id as categoria, " +
-                "CONCAT(year(f.fecha), '-', LPAD(month(f.fecha),2,0)) as periodo, " +
-                "sum(l.cantidad*p.precio*(1.l.descuento/100)) as total " +
-                "from linea l " +
-                "inner join factura f on l.factura=f.numero " +
-                "inner join producto p on l.producto=p.codigo " +
-                "inner join categoria c on p.categoria=c.id " +
-                "where year(f.fecha)>=? " +
-                "and month(f.fecha)>=? " +
-                "and year(f.fecha)<=? " +
-                "and month(fecha)<=? " +
-                "and c.id in ("+",?".repeat(rows.size()).substring(1)+") " +
-                "group by categoria, periodo";
+
+        // Asegurarse de que la matriz esté llena de ceros inicialmente (opcional)
+        for (int i = 0; i < rows.size(); i++) {
+            Arrays.fill(resultado[i], 0.0f);  // Llena con 0 en caso de que no haya datos para una celda específica
+        }
+
+        if (rows.isEmpty() || cols.isEmpty()) return resultado;  // Asegúrate de que hay filas y columnas
+
+        // SQL con filtrado por año y mes
+        String sql = "SELECT " +
+                "c.id AS categoria, " +
+                "CONCAT(YEAR(f.fecha), '-', LPAD(MONTH(f.fecha), 2, '0')) AS periodo, " +
+                "SUM(l.cantidad * p.precio * (1 - l.descuento / 100)) AS total " +
+                "FROM linea l " +
+                "INNER JOIN factura f ON l.factura = f.codigo " +
+                "INNER JOIN producto p ON l.producto = p.codigo " +
+                "INNER JOIN categoria c ON p.categoria = c.id " +
+                "WHERE YEAR(f.fecha) BETWEEN ? AND ? " +
+                "AND MONTH(f.fecha) BETWEEN ? AND ? " +
+                "AND c.id IN (" + "?,".repeat(rows.size()).substring(0, "?,".repeat(rows.size()).length() - 1) + ") " +
+                "GROUP BY categoria, periodo " +
+                "ORDER BY categoria, periodo";  // Ordena por categoría y periodo
+
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setInt(1,rango.getAnioDesde());
-        stm.setInt(2,rango.getMesDesde());
-        stm.setInt(3, rango.getAnioHasta());
+        stm.setInt(1, rango.getAnioDesde());
+        stm.setInt(2, rango.getAnioHasta());
+        stm.setInt(3, rango.getMesDesde());
         stm.setInt(4, rango.getMesHasta());
 
-        for(int i = 0; i < rows.size(); i++) {
-            stm.setString(5+i, rows.get(i).getId());
+        // Setear los valores de las categorías
+        for (int i = 0; i < rows.size(); i++) {
+            stm.setString(5 + i, rows.get(i).getId());  // Asume que getId() devuelve el ID de la categoría
         }
-        ResultSet rs = db.executeQuery(stm);
-        ProductoDao productoDao = new ProductoDao();
-        int row = 0;
-        int col = 0;
-        while(rs.next()) {
-            row = rows.indexOf(new Categoria(rs.getString("c")));
-            col = cols.indexOf(rs.getString("periodo"));
-        }
-        return new Float[row][col];
 
+        try (ResultSet rs = db.executeQuery(stm)) {
+            // Recorrer el ResultSet
+            while (rs.next()) {
+                String categoria = rs.getString("categoria");
+                String periodo = rs.getString("periodo");
+                Float total = rs.getFloat("total");
+
+                // Buscar el índice de la categoría en 'rows'
+                int rowIndex = -1;
+                for (int i = 0; i < rows.size(); i++) {
+                    if (rows.get(i).getId().equals(categoria)) {
+                        rowIndex = i;
+                        break;
+                    }
+                }
+
+                // Buscar el índice del periodo en 'cols'
+                int colIndex = cols.indexOf(periodo);  // cols debe contener los periodos como '2024-10', '2024-11', etc.
+
+                if (rowIndex != -1 && colIndex != -1) {
+                    // Asignar el total en la matriz resultado
+                    resultado[rowIndex][colIndex] = total;
+                }
+            }
+
+            // Retornar el arreglo bidimensional lleno con los totales
+            return resultado;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }
 

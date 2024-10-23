@@ -183,7 +183,7 @@ public class View implements PropertyChangeListener {
                     TableColumn column = columnModel.getColumn(i);
                     column.setPreferredWidth(75); // Establece un ancho base
                 }
-                if (model.getCols().length > 3) {
+                if (model.getCols().size() > 3) {
                     list.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
                 }
 
@@ -213,12 +213,12 @@ public class View implements PropertyChangeListener {
     private DefaultCategoryDataset getDefaultCategoryDataset() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         Float[][] data = model.getData();
-        String[] rows = model.getRows();
-        String[] cols = model.getCols();
-        if (rows.length > 0 && cols.length > 0 && data.length > 0) {
-            for (int i = 0; i < rows.length; i++) {
-                for (int j = 1; j < cols.length; j++) {
-                    dataset.addValue(data[i][j-1].intValue(), rows[i], cols[j-1]);
+        List<String> rows = model.getRows();
+        List<String> cols = model.getCols();
+        if (rows.size() > 0 && cols.size() > 0 && data.length > 0) {
+            for (int i = 0; i < rows.size(); i++) {
+                for (int j = 1; j < cols.size(); j++) {
+                    dataset.addValue(data[i][j-1].intValue(), rows.get(i), cols.get(j-1));
                 }
             }
         }
@@ -227,21 +227,21 @@ public class View implements PropertyChangeListener {
 
     public List<Categoria> getCategoriasList() {
         List<Categoria> categorias = new ArrayList<>();
-        String[] categs = getCategorias();
-        for (int i = 0; i < categs.length; i++) {
-            Categoria cat = new Categoria(categs[i]);
+        List<String> categs = getCategorias();
+        for (int i = 0; i < categs.size(); i++) {
+            Categoria cat = new Categoria(categs.get(i));
             categorias.add(cat);
         }
         return categorias;
     }
 
-    public String[] getCategorias() {
+    public List<String> getCategorias() {
         try {
             int cantCat = categoriaCBX.getItemCount();
-            String[] categorias = new String[cantCat];
+            List<String> categorias = new ArrayList<>(cantCat);
 
             for (int i = 0; i < cantCat; i++) {
-                categorias[i] = (String) categoriaCBX.getItemAt(i);
+                categorias.add(i, (String) categoriaCBX.getItemAt(i));
             }
 
             return categorias;
@@ -256,12 +256,12 @@ public class View implements PropertyChangeListener {
         return categoria;
     }
 
-    public String[] getFechas() {
+    public List<String> getFechas() {
         Rango rango = model.getRango();
-        String[] fechas = new String[rango.cantidadDeMeses() + 1];
+        List<String> fechas = new ArrayList<>(rango.cantidadDeMeses() + 1);
 
         for (int i = 0; i <= rango.cantidadDeMeses(); i++) {
-            fechas[i] = rango.getAnioMes(i);
+            fechas.add(i, rango.getAnioMes(i));
         }
         return fechas;
     }

@@ -15,8 +15,8 @@ public class Model extends AbstractModel {
     List<Categoria> categoriasAll;
     List<Categoria> categorias;
     Rango rango;
-    String[] rowsCat;
-    String[] colsFech;
+    List<String> rowsCat;
+    List<String> colsFech;
     Float[][] data;
 
     @Override
@@ -33,8 +33,8 @@ public class Model extends AbstractModel {
     public void init (){
         this.categoriasAll = new ArrayList<>();
         this.categorias = new ArrayList<>();
-        this.rowsCat = new String[0];
-        this.colsFech = new String[1];
+        this.rowsCat = new ArrayList<>();
+        this.colsFech = new ArrayList<>();
         this.data = new Float[0][0];
     }
 
@@ -44,8 +44,8 @@ public class Model extends AbstractModel {
     public List<Categoria> getCategoriasAll() {  return this.categoriasAll;  }
     public List<Categoria> getCategorias() {  return this.categorias;  }
     public Rango getRango() {  return rango;  }
-    public String[] getRows() {  return this.rowsCat;  }
-    public String[] getCols() {  return this.colsFech;  }
+    public List<String> getRows() {  return this.rowsCat;  }
+    public List<String> getCols() {  return this.colsFech;  }
     public Float[][] getData() { return this.data; }
 
     public void setData(Float[][] data){
@@ -65,11 +65,11 @@ public class Model extends AbstractModel {
         this.rango = rango;
         firePropertyChange(RANGE);
     }
-    public void setRows(String[] rows) {
+    public void setRows(List<String> rows) {
         this.rowsCat = rows;
         firePropertyChange(ROWS);
     }
-    public void setCols(String[] cols) {
+    public void setCols(List<String> cols) {
         this.colsFech = cols;
         firePropertyChange(COLS);
     }
@@ -83,10 +83,10 @@ public class Model extends AbstractModel {
 
 
     public void init(List<Categoria> categorias) {
-        this.categoriasAll = categorias;
+        setCategoriasAll(categorias);
         this.categorias = new ArrayList<>();
-        this.rowsCat = new String[0];
-        this.colsFech = new String[1];
+        this.rowsCat = new ArrayList<>();
+        this.colsFech = new ArrayList<>();
         this.data = new Float[0][0];
     }
 
@@ -96,7 +96,7 @@ public class Model extends AbstractModel {
             @Override
             public int getRowCount() {
                 if(rowsCat != null)
-                    return rowsCat.length;
+                    return rowsCat.size();
                 else
                     return 0;
             }
@@ -104,7 +104,7 @@ public class Model extends AbstractModel {
             @Override
             public int getColumnCount() {
                 if(colsFech != null)
-                    return colsFech.length;
+                    return colsFech.size();
                 else
                     return 1;
             }
@@ -115,7 +115,7 @@ public class Model extends AbstractModel {
                     return 0.0;
                 }
                 if (col == 0) {
-                     return rowsCat[row];
+                     return rowsCat.get(row);
                 } else if (data != null && row < data.length && col - 1 < data[row].length) {
                      return data[row][col - 1];
                 }
@@ -136,7 +136,7 @@ public class Model extends AbstractModel {
                     return categoria.getNombre(); // Devuelve el nombre de la categoría
                 }
 
-                else if (col > 0 && col <= colsFech.length) {
+                else if (col > 0 && col <= colsFech.size()) {
                     // Obtener el índice de la categoría en la lista de categorías
                     int rowIndex = categorias.indexOf(categoria);
                     // Devolver el valor de la matriz 'data' para esa fila y columna
@@ -151,8 +151,8 @@ public class Model extends AbstractModel {
             protected void initColNames() {
                 colNames = new String[getColumnCount()];
                 colNames[0] = "Categoria"; // Primer nombre de columna
-                for (int i = 1; i < colsFech.length; i++) {
-                    colNames[i] = colsFech[i - 1]; // Coloca los nombres de las fechas en las demás columnas
+                for (int i = 1; i < colsFech.size(); i++) {
+                    colNames[i] = colsFech.get(i-1); // Coloca los nombres de las fechas en las demás columnas
                 }
             }
 
@@ -160,7 +160,7 @@ public class Model extends AbstractModel {
                 if(col == 0)
                     return "Categoria";
                 else
-                    return colsFech[col - 1];
+                    return colsFech.get(col-1);
             }
         };
     }

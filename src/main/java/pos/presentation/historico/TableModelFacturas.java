@@ -22,8 +22,8 @@ public class TableModelFacturas extends AbstractTableModel<Linea> implements jav
         switch (cols[col]){
             case NUMERO: return e.getCodigo();
             case CLIENTE: return e.getFactura().getNombreCliente();
-            case CAJERO: return e.getFactura().getCajero();
-            case FECHA: return e.getFactura().getFecha().toString();
+            case CAJERO: return e.getFactura().getCajero().getNombre();
+            case FECHA: return e.getFactura().getFechaString();
             //case IMPORTE: return e.getTotalLinea(); //No se si es total o totalLinea, revisar
             case IMPORTE: return 0;
             default: return "";

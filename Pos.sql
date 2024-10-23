@@ -84,7 +84,15 @@ insert into Producto (codigo, descripcion, unidad, precio, existencia, categoria
 insert into Factura (cajero, cliente, fecha) values ('001', '001', '2024-10-19');
 insert into Factura (cajero, cliente, fecha) values ('001', '002', '2024-10-19');
 insert into Factura (cajero, cliente, fecha) values ('001', '003', '2024-10-19');
+insert into Factura (cajero, cliente, fecha) values ('002', '002', '2024-11-22');
+insert into Factura (cajero, cliente, fecha) values ('002', '002', '2024-11-22');
 
 insert into Linea (producto, factura, cantidad, descuento) values ('34567', '1', 5, 0);
-insert into Linea (producto, factura, cantidad, descuento) values ('34567', '2', 2, 0);
+insert into Linea (producto, factura, cantidad, descuento) values ('23456', '2', 2, 0);
 insert into Linea (producto, factura, cantidad, descuento) values ('45678', '2', 7, 10);
+insert into Linea (producto, factura, cantidad, descuento) values ('12345', '3', 2, 0);
+insert into Linea (producto, factura, cantidad, descuento) values ('45678', '3', 4, 10);
+insert into Linea (producto, factura, cantidad, descuento) values ('12345', '4', 1, 0);
+insert into Linea (producto, factura, cantidad, descuento) values ('23456', '4', 2, 10);
+insert into Linea (producto, factura, cantidad, descuento) values ('34567', '5', 7, 0);
+insert into Linea (producto, factura, cantidad, descuento) values ('45678', '5', 6, 10);

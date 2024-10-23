@@ -47,7 +47,9 @@ public class Factura {
 //   public List<Linea> getVec() {
 //        return vec;
 //   }
-   public LocalDate getFecha() {return fecha;}
+   public LocalDate getFecha() { return fecha; }
+
+   public String getFechaString() { return fecha.getYear() + "-" + fecha.getMonth() + "-" + fecha.getDayOfMonth(); }
 
    public String getNombreCliente(){
       return cliente.getNombre();

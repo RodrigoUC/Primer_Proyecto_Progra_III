@@ -19,25 +19,16 @@ public class Controller {
         this.model = model;
         view.setController(this);
         view.setModel(model);
+
     }
 
     public Float[][] createData(){
-        String[] rows = model.getRows();
-        String[] cols = model.getCols();
-        Float[][] data = new Float[rows.length][cols.length];
-
-//        for (int i = 0; i < rows.length; i++) {
-//            for (int j = 0; j < cols.length; j++) {
-////                data[i][j] = Service.instance().totalDelMes(rows[i], Integer.parseInt(cols[j].substring(0,4)), Integer.parseInt(cols[j].substring(5)));
-//            }
-//        }
-        data = Service.instance().estadisticas(model.getCategorias(), Arrays.stream(model.getCols()).toList(), model.getRango());
-        return data;
+        return Service.instance().estadisticas(model.getCategorias(), model.getCols(), model.getRango());
     }
 
-    public Boolean existeString(String[] str, String string){
-        for (int i = 0; i < str.length; i++) {
-            if (str[i].equals(string)) {
+    public Boolean existeString(List<String> str, String string){
+        for (int i = 0; i < str.size(); i++) {
+            if (str.get(i).equals(string)) {
                 return true;
             }
         }
@@ -46,25 +37,25 @@ public class Controller {
 
     public void seleccionUnica(Categoria categoria){
         List<Categoria> categs;
-        String[] row;
+        List<String> row;
         // Si esta lleno
         if(model.getCategorias().size() == model.getCategoriasAll().size()) {
             categs = new ArrayList<>();
             categs.add(categoria);
-            row = new String[1];
-            row[0] = categoria.getNombre();
+            row = new ArrayList<>();
+            row.add(categoria.getNombre());
         }
         // Si se quieren agregar más categorias.
         else if(!existeString(model.getRows(), categoria.getNombre())){
             categs = model.getCategorias();
             categs.add(categoria);
-            row = new String[model.getRows().length+1];
-            for (int i = 0; i < model.getRows().length; i++) {
-                if(!Objects.equals(model.getRows()[i], categoria.getNombre())) {
-                    row[i] = model.getRows()[i];
+            row = new ArrayList<>(model.getRows().size()+1);
+            for (int i = 0; i < model.getRows().size(); i++) {
+                if(!Objects.equals(model.getRows().get(i), categoria.getNombre())) {
+                    row.add(model.getRows().get(i));
                 }
             }
-            row[row.length - 1] = categoria.getNombre();
+            row.add(row.size() - 1, categoria.getNombre());
         }else{ // Si ya esta agregada la categoria.
             categs = model.getCategorias();
             row = model.getRows();
@@ -83,7 +74,7 @@ public class Controller {
 
     public void seleccionTotal() {
         model.setRango(view.getRango());
-        model.setCategoriasAll(view.getCategoriasList());
+        model.setCategoriasAll(Service.instance().search(new Categoria()));
         model.setCategorias(view.getCategoriasList());
         model.setRows(view.getCategorias());
         model.setCols(view.getFechas());
@@ -97,13 +88,13 @@ public class Controller {
             categs.remove(posCateg);
             model.setCategorias(categs);
 
-            String[] rows = model.getRows();
-            String[] nuevaFila = new String[rows.length - 1];
+            List<String> rows = model.getRows();
+            List<String> nuevaFila = new ArrayList<>(rows.size()-1);
 
             int f = 0;
-            for (int i = 0; i < rows.length; i++) {
+            for (int i = 0; i < rows.size(); i++) {
                 if (i != posCateg) {
-                    nuevaFila[f] = rows[i];
+                    nuevaFila.add(f, rows.get(i));
                     f++;
                 }
             }
@@ -117,8 +108,8 @@ public class Controller {
         model.setCategoriasAll(new ArrayList<>());
         model.setCategorias(new ArrayList<>());
         model.setRango(new Rango());
-        model.setRows(new String[0]);
-        model.setCols(new String[1]);
+        model.setRows(new ArrayList<>());
+        model.setCols(new ArrayList<>());
         model.setData(new Float[0][0]);
     }
 
