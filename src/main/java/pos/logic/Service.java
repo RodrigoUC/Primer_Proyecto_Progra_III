@@ -347,7 +347,7 @@ public class Service implements IService {
 
     public List<Factura> search(Factura e) {
         try {
-            return facturaDao.searchByNombreCliente(e.getNombreCliente());
+            return facturaDao.searchByClienteID(e);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

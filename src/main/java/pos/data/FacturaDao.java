@@ -100,27 +100,33 @@ public class FacturaDao {
         return resultado;
     }
 
-    public List<Factura> searchByNombreCliente(String nombreCliente) throws Exception {
+    public List<Factura> searchByClienteID(Factura e) throws Exception {
         List<Factura> resultado = new ArrayList<>();
-        String sql = "select * " +
-                "from Factura p " +
-                "inner join Cliente cl on p.cliente_id = cl.id " +
-                "where cl.nombre like ?";
+        String sql = "select " +
+                "* " +
+                "from Factura t " +
+                "inner join Cliente cl on t.cliente = cl.id " +
+                "inner join Cajero c on t.cajero = c.id " +
+                "where cl.id = ?";
 
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, "%" + nombreCliente + "%");  // Buscar coincidencias parciales en el nombre del cliente
-
+        stm.setInt(1, Integer.parseInt(e.getCliente().getId()));  // Usamos el ID del cliente para la búsqueda
         ResultSet rs = db.executeQuery(stm);
+
+        CajeroDao cajeroDao = new CajeroDao();
         ClienteDao clienteDao = new ClienteDao();
 
         while (rs.next()) {
-            Factura factura = from(rs, "p");  // Obtener la factura desde el ResultSet
-            factura.setCliente(clienteDao.from(rs, "cl"));  // Asignar cliente
-            resultado.add(factura);  // Añadir factura al resultado
+            Factura r = from(rs, "t");
+            r.setCajero(cajeroDao.from(rs, "c"));
+            r.setCliente(clienteDao.from(rs, "cl"));
+            resultado.add(r);
         }
 
         return resultado;
     }
+
+
 
 
     public Factura from(ResultSet rs, String alias) throws Exception {

@@ -20,7 +20,7 @@ public class TableModelFacturas extends AbstractTableModel<Linea> implements jav
     @Override
     protected Object getPropertyAt(Linea e, int col){
         switch (cols[col]){
-            case NUMERO: return e.getCodigo();
+            case NUMERO: return e.getFactura().getCodigo();
             case CLIENTE: return e.getFactura().getNombreCliente();
             case CAJERO: return e.getFactura().getCajero().getNombre();
             case FECHA: return e.getFactura().getFechaString();

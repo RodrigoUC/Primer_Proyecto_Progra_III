@@ -29,13 +29,19 @@ public class ClienteDao {
     }
 
     public Cliente read(String id, String nombre) throws Exception {
-        String sql = "select " +
-                "* " +
-                "from  Cliente t " +
-                "where t.id=?  or t.nombre like ?";
+        String sql = "SELECT * FROM Cliente t WHERE t.id = ? OR t.nombre LIKE ?";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, id);
+
+        // Verificamos si se proporcionó un ID. Si no, establecemos un valor nulo.
+        if (id != null && !id.isEmpty()) {
+            stm.setString(1, id);
+        } else {
+            stm.setNull(1, java.sql.Types.VARCHAR); // Ajustar según el tipo de dato de ID
+        }
+
+        // Configuramos el nombre para la búsqueda con LIKE, incluso si el ID es nulo.
         stm.setString(2, "%" + nombre + "%");
+
         ResultSet rs = db.executeQuery(stm);
         if (rs.next()) {
             return from(rs, "t");
@@ -43,6 +49,7 @@ public class ClienteDao {
             throw new Exception("Cliente NO EXISTE");
         }
     }
+
 
     public void update(Cliente e) throws Exception {
         String sql = "update " +

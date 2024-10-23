@@ -33,9 +33,9 @@ public class Controller {
         view.setModel(model);
     }
 
-    public void search(String nombre) throws Exception {
+    public void search(String id) throws Exception {
         try{
-            model.setFilter(buscarCliente(nombre));
+            model.setFilter(buscarCliente(id));
             model.setListFacturasFilter(buscarFacturas());
             model.setListLineasListado(listadoHistorico());
         }
@@ -57,12 +57,13 @@ public class Controller {
         }
     }
 
-    Cliente buscarCliente(String nombre) throws Exception {
+    Cliente buscarCliente(String id) throws Exception {
         Cliente cliente = new Cliente();
-        cliente.setNombre(nombre);
+        cliente.setId(id);
+        cliente.setNombre(id);
         try {
             cliente = Service.instance().read(cliente);
-            listadoHistorico();
+            //listadoHistorico();
             return cliente;
         } catch (Exception e) {
             throw e;
@@ -74,7 +75,7 @@ public class Controller {
     List<Linea> listadoHistorico() throws Exception {
         try {
             List<Linea> listado = new ArrayList<Linea>();
-            model.setListFacturasFilter(buscarFacturas()); //facturas que coincidan con id
+            //model.setListFacturasFilter(buscarFacturas()); //facturas que coincidan con id, ya se setea en este search
             for (int i = 0; i < model.getListFacturasFilter().size(); i++) {
                 listado.add(new Linea(model.getListFacturasFilter().get(i)));   //lineas con las facturas que coinciden con id
             }
