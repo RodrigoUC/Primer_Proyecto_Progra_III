@@ -10,7 +10,7 @@ public class Categoria {
 
     public Categoria(String nombre){
         this.nombre = nombre;
-        this.id = "CAT-" + nombre;
+        this.id = getId();
     }
 
     public String getNombre() {
@@ -22,11 +22,17 @@ public class Categoria {
     }
 
     public String getId() {
-        return id;
+        return switch (nombre) {
+            case "Aguas" -> "001";
+            case "Dulces" -> "002";
+            case "Aceites" -> "003";
+            case "Vinos" -> "004";
+            default -> "000";
+        };
     }
 
     public void setId(String id) {
-        this.id = "CAT-" + id;
+        this.id = id;
     }
 
     public String toString() {

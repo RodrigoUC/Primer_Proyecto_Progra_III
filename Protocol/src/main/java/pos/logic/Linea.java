@@ -1,7 +1,7 @@
 package pos.logic;
 
 public class Linea {
-    private int codigo;  //Creo que seria int por el tema de la base de datos
+    private Integer codigo;  //Creo que seria int por el tema de la base de datos
     private Producto producto;
     private Factura factura;
     private int cantidad;
@@ -21,7 +21,7 @@ public class Linea {
         this.factura = factura;
         codigo=0;
     }
-    public Linea(Factura factura, Producto producto, int cantidad, float descuento,int cod) {
+    public Linea(Factura factura, Producto producto, int cantidad, float descuento,Integer cod) {
         this.producto = producto;
         this.cantidad = cantidad;
         this.descuento = descuento;
@@ -44,7 +44,7 @@ public class Linea {
         descuento=0;
         codigo=0;
     }
-    public void setId(int str){ this.codigo = str; }
+    public void setId(Integer str){ this.codigo = str; }
     public void setProducto(Producto producto) {this.producto = producto;}
     public void setFactura(Factura factura) {this.factura = factura;}
     public void setCantidad(int cantidad) {this.cantidad = cantidad;}
@@ -55,7 +55,7 @@ public class Linea {
     public Producto getProducto (){return producto;}
     public float getDescuento(){ return descuento; }
     public int getCantidad(){return cantidad; }
-    public int getCodigo(){return codigo;}
+    public Integer getCodigo(){return codigo;}
 
     public float getTotalLinea(){
         return (producto.getPrecio()*cantidad)-((descuento/100)*producto.getPrecio()*cantidad);

@@ -1,11 +1,13 @@
 package pos.logic;
 
+import java.time.LocalDate;
+
 public class LineaHistorico { //Listado
     private int numero;
     private Factura factura;
     private String clienteStr; //puse el string para no tener que jalar un obj
     private String cajeroStr;  //igual se filtra por el nombre del cliente en Busqueda
-    private Fecha fecha;
+    private LocalDate fecha;
     private float importe;
 
 
@@ -32,7 +34,7 @@ public class LineaHistorico { //Listado
 
     public String getNombreCliente() {return clienteStr;}
     public String getNombreCajero() {return cajeroStr;}
-    public Fecha getFecha() {return fecha;}
+    public LocalDate getFecha() {return fecha;}
     public float getImporte() {return importe;}
     public String getFechaString() {
         return fecha.toString();
