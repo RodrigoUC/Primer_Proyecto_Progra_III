@@ -32,6 +32,8 @@ public class View implements PropertyChangeListener {
             @Override
             public void componentShown(ComponentEvent e) {
                 controller.actualizarComboBox();
+                cajeros.setSelectedItem(model.getCurrentFactura().getCajero());
+                clientes.setSelectedItem(model.getCurrentFactura().getCliente());
             }
         });
 

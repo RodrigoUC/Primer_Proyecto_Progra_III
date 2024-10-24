@@ -22,6 +22,7 @@ public class Application {
         JTabbedPane tabbedPane = new JTabbedPane();
         window.setContentPane(tabbedPane);
 
+
         window.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -30,61 +31,71 @@ public class Application {
             }
         });
 
-        //Facturar
-        pos.presentation.facturacion.Model facturacionModel = new pos.presentation.facturacion.Model();
-        pos.presentation.facturacion.View facturacionView = new pos.presentation.facturacion.View();
-        facturacionController = new pos.presentation.facturacion.Controller(facturacionView, facturacionModel);
-        Icon facturarIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/facturar.png"));
 
-        tabbedPane.addTab("Facturar  ", facturarIcon, facturacionView.getPanel());
+            //Facturar
+            pos.presentation.facturacion.Model facturacionModel = new pos.presentation.facturacion.Model();
+            pos.presentation.facturacion.View facturacionView = new pos.presentation.facturacion.View();
+            facturacionController = new pos.presentation.facturacion.Controller(facturacionView, facturacionModel);
+            Icon facturarIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/facturar.png"));
 
-        // Clientes
-        pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
-        pos.presentation.clientes.View clientesView = new pos.presentation.clientes.View();
-        clientesController = new pos.presentation.clientes.Controller(clientesView,clientesModel);
-        Icon clientesIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/client.png"));
+            tabbedPane.addTab("Facturar  ", facturarIcon, facturacionView.getPanel());
 
-        tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
+            // Clientes
+            pos.presentation.clientes.Model clientesModel = new pos.presentation.clientes.Model();
+            pos.presentation.clientes.View clientesView = new pos.presentation.clientes.View();
+            clientesController = new pos.presentation.clientes.Controller(clientesView, clientesModel);
+            Icon clientesIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/client.png"));
 
-        // Cajeros
-        Model cajerosModel = new Model();
-        View cajerosView = new View();
-        cajerosController = new Controller(cajerosView, cajerosModel);
-        Icon cajerosIconc = new ImageIcon(Application.class.getResource("/pos/presentation/icons/cashier.png"));
+            tabbedPane.addTab("Clientes  ", clientesIcon, clientesView.getPanel());
 
-        tabbedPane.addTab("Cajeros  ",cajerosIconc, cajerosView.getPanel());
+            // Cajeros
+            Model cajerosModel = new Model();
+            View cajerosView = new View();
+            cajerosController = new Controller(cajerosView, cajerosModel);
+            Icon cajerosIconc = new ImageIcon(Application.class.getResource("/pos/presentation/icons/cashier.png"));
 
-        //Productos
-        pos.presentation.productos.Model productosModel = new pos.presentation.productos.Model();
-        pos.presentation.productos.View productosView = new pos.presentation.productos.View();
-        productosController = new pos.presentation.productos.Controller(productosView, productosModel);
-        Icon productosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/products.png"));
+            tabbedPane.addTab("Cajeros  ", cajerosIconc, cajerosView.getPanel());
 
-        tabbedPane.addTab("Productos  ", productosIcon, productosView.getPanel());
+            //Productos
+            pos.presentation.productos.Model productosModel = new pos.presentation.productos.Model();
+            pos.presentation.productos.View productosView = new pos.presentation.productos.View();
+            productosController = new pos.presentation.productos.Controller(productosView, productosModel);
+            Icon productosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/products.png"));
 
-        // Estadisticas
-        pos.presentation.estadisticas.Model estadisticasModel = new pos.presentation.estadisticas.Model();
-        pos.presentation.estadisticas.View estadisticasView = new pos.presentation.estadisticas.View();
-        estadisticasController = new pos.presentation.estadisticas.Controller(estadisticasView, estadisticasModel);
-        Icon estadisticasIcon = new ImageIcon(Application.class.getResource("presentation/icons/statisctics.png"));
-        tabbedPane.addTab("Estadisticas ", estadisticasIcon, estadisticasView.getPanel());
+            tabbedPane.addTab("Productos  ", productosIcon, productosView.getPanel());
 
-        // Historico
-        pos.presentation.historico.Model historicoModel = new pos.presentation.historico.Model();
-        pos.presentation.historico.View historicoView = new pos.presentation.historico.View();
-        historicoController = new pos.presentation.historico.Controller(historicoView, historicoModel);
-        Icon historicoIcon = new ImageIcon(Application.class.getResource("presentation/icons/history.png"));
+            // Estadisticas
+            pos.presentation.estadisticas.Model estadisticasModel = new pos.presentation.estadisticas.Model();
+            pos.presentation.estadisticas.View estadisticasView = new pos.presentation.estadisticas.View();
+            estadisticasController = new pos.presentation.estadisticas.Controller(estadisticasView, estadisticasModel);
+            Icon estadisticasIcon = new ImageIcon(Application.class.getResource("presentation/icons/statisctics.png"));
+            tabbedPane.addTab("Estadisticas ", estadisticasIcon, estadisticasView.getPanel());
 
-        tabbedPane.addTab("Historico ", historicoIcon, historicoView.getPanel());
+            // Historico
+            pos.presentation.historico.Model historicoModel = new pos.presentation.historico.Model();
+            pos.presentation.historico.View historicoView = new pos.presentation.historico.View();
+            historicoController = new pos.presentation.historico.Controller(historicoView, historicoModel);
+            Icon historicoIcon = new ImageIcon(Application.class.getResource("presentation/icons/history.png"));
 
-        // Ventana
-        window.setSize(1000,550);
-        window.setResizable(false);
-        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        window.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
-        window.setTitle("POS: Point Of Sale");
-        window.setVisible(true);
+            tabbedPane.addTab("Historico ", historicoIcon, historicoView.getPanel());
 
+        //Usuarios
+        pos.presentation.Usuario.ViewLogin viewLoginUsuario = new pos.presentation.Usuario.ViewLogin();
+        pos.presentation.Usuario.Model ModelUsuario = new pos.presentation.Usuario.Model();
+        usuarioController=new pos.presentation.Usuario.Controller(viewLoginUsuario,ModelUsuario);
+
+        if(usuarioController.usuarioLogeado()) {
+            // Ventana
+            window.setSize(1000, 550);
+            window.setResizable(false);
+            window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            window.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
+            window.setTitle("POS: Point Of Sale:"+usuarioController.getModel().getUsuario().getID());
+            window.setVisible(true);
+        }
+        else{
+            System.exit(0);
+        }
     }
     public static pos.presentation.clientes.Controller clientesController;
     public static Controller cajerosController;
@@ -92,6 +103,7 @@ public class Application {
     public static pos.presentation.facturacion.Controller facturacionController;
     public static pos.presentation.estadisticas.Controller estadisticasController;
     public static pos.presentation.historico.Controller historicoController;
+    public static pos.presentation.Usuario.Controller usuarioController;
 
     public static JFrame window;
 

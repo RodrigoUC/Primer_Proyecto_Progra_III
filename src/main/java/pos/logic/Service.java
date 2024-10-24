@@ -24,6 +24,7 @@ public class Service implements IService {
     private CajeroDao cajeroDao;
     private FacturaDao facturaDao;
     private LineaDao lineaDao;
+    private UsuarioDao usuarioDao;
 
     private Service(){
         try{
@@ -33,6 +34,7 @@ public class Service implements IService {
             cajeroDao = new CajeroDao();
             facturaDao = new FacturaDao();
             lineaDao = new LineaDao();
+            usuarioDao = new UsuarioDao();
 //            data = new Data();
         }
         catch(Exception e){
@@ -352,6 +354,12 @@ public class Service implements IService {
             throw new RuntimeException(ex);
         }
     }
+
+    //-------------------------------Usuario--------------------------------------
+    public Usuario read(Usuario e) throws Exception {
+        return usuarioDao.read(e.getID(),e.getContrasena());
+    }
+
 
     //-------------------------------Calculos--------------------------------------
 

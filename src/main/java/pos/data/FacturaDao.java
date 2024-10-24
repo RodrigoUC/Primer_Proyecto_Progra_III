@@ -4,9 +4,11 @@ import pos.logic.Factura;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 public class FacturaDao {
     Database db;
@@ -131,6 +133,11 @@ public class FacturaDao {
 
     public Factura from(ResultSet rs, String alias) throws Exception {
         Factura e = new Factura();
+        String f;
+        f = rs.getString(alias+".fecha");
+        String[] fec=f.split("-");
+        LocalDate fecha = LocalDate.of(Integer.parseInt(fec[0]), Integer.parseInt(fec[1]), Integer.parseInt(fec[2]));
+        e.setFecha(fecha);
         e.setCodigo(rs.getInt(alias + ".codigo"));
         return e;
     }
