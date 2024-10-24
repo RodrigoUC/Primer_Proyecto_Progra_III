@@ -49,6 +49,12 @@ create table Factura (
         fecha date,
 		Primary Key (codigo)
 	);
+
+create table Usuario (
+        id varchar(20) not null,
+        contrasena varchar(25) not null,
+        Primary Key (id)
+);
 	
 ALTER TABLE Producto ADD Foreign Key (categoria) REFERENCES Categoria(id);
 ALTER TABLE Factura ADD Foreign Key (cajero) REFERENCES Cajero(id);
@@ -96,3 +102,8 @@ insert into Linea (producto, factura, cantidad, descuento) values ('12345', '4',
 insert into Linea (producto, factura, cantidad, descuento) values ('23456', '4', 2, 10);
 insert into Linea (producto, factura, cantidad, descuento) values ('34567', '5', 7, 0);
 insert into Linea (producto, factura, cantidad, descuento) values ('45678', '5', 6, 10);
+
+insert into Usuario (id, contrasena)
+values('jperez', 'jperez');
+insert into Usuario (id, contrasena)
+values('mmata','mmata');
