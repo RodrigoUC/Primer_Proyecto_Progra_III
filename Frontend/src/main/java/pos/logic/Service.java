@@ -24,8 +24,8 @@ public class Service implements IService {
     private Service(){
         try{
             s=new Socket(Protocol.SERVER,1234);
-            is=new ObjectInputStream(s.getInputStream());
             os=new ObjectOutputStream(s.getOutputStream());
+            is=new ObjectInputStream(s.getInputStream());
         }
         catch(Exception e){
         }

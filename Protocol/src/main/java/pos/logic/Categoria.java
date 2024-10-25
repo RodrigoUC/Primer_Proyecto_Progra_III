@@ -1,8 +1,9 @@
 package pos.logic;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Categoria {
+public class Categoria implements Serializable {
     String id;
     String nombre;
 

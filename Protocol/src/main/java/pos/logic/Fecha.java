@@ -1,8 +1,9 @@
 package pos.logic;
 
+import java.io.Serializable;
 import java.time.format.DateTimeParseException;
 
-public class Fecha {
+public class Fecha implements Serializable {
     private String codigo;
 
     private int dia;

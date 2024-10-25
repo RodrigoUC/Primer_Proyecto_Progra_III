@@ -1,6 +1,8 @@
 package pos.logic;
 
-public class Linea {
+import java.io.Serializable;
+
+public class Linea implements Serializable {
     private Integer codigo;  //Creo que seria int por el tema de la base de datos
     private Producto producto;
     private Factura factura;

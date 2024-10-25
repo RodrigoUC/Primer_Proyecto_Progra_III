@@ -2,7 +2,7 @@ package pos.logic;
 
 public class Protocol {
     public static final String SERVER="localhost";
-    public static final int PORT=3306;
+    public static final int PORT=1234;
 
     public static final int PRODUCTO_CREATE=101;
     public static final int PRODUCTO_READ=102;

@@ -29,8 +29,8 @@ public class Server {
         boolean continuar = true;
         try {
             Socket s = srv.accept();
-            ObjectInputStream is = new ObjectInputStream(s.getInputStream());
             ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
+            ObjectInputStream is = new ObjectInputStream(s.getInputStream());
             int method;
             while (continuar) {
                 method=is.readInt();
@@ -127,7 +127,8 @@ public class Server {
                         break;
                     case Protocol.CAJERO_SEARCH:
                         try{
-                            List<Cajero> list = service.search((Cajero) is.readObject());
+                            Cajero c = (Cajero) is.readObject();
+                            List<Cajero> list = service.search(c);
                             os.writeInt(Protocol.ERROR_NO_ERROR);
                             os.writeObject(list);
                         }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}

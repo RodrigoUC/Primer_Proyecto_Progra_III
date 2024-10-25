@@ -1,8 +1,9 @@
 package pos.logic;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class LineaHistorico { //Listado
+public class LineaHistorico implements Serializable { //Listado
     private int numero;
     private Factura factura;
     private String clienteStr; //puse el string para no tener que jalar un obj

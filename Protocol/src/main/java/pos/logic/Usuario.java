@@ -1,6 +1,8 @@
 package pos.logic;
 
-public class Usuario {
+import java.io.Serializable;
+
+public class Usuario implements Serializable {
     private String ID;
     private String contrasena;
     public Usuario(String ID, String contrasena) {

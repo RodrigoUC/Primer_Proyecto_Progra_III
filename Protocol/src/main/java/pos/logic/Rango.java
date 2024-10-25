@@ -1,6 +1,8 @@
 package pos.logic;
 
-public class Rango {
+import java.io.Serializable;
+
+public class Rango implements Serializable {
     int anioDesde;
     int mesDesde;
     int anioHasta;
