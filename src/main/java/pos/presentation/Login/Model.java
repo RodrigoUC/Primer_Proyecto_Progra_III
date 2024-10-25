@@ -1,6 +1,5 @@
-package pos.presentation.Usuario;
+package pos.presentation.Login;
 
-import pos.logic.Cliente;
 import pos.logic.Factura;
 import pos.logic.Usuario;
 import pos.presentation.AbstractModel;

@@ -35,6 +35,9 @@ public class Protocol {
     public static final int LINEA_UPDATE=603;
     public static final int LINEA_DELETE=604;
     public static final int LINEA_SEARCH=605;
+    public static final int LINEA_ESTADISTICAS=606;
+
+    public static final int USUARIO_READ=702;
 
 
 

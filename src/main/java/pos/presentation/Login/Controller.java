@@ -1,4 +1,4 @@
-package pos.presentation.Usuario;
+package pos.presentation.Login;
 
 import pos.logic.Usuario;
 

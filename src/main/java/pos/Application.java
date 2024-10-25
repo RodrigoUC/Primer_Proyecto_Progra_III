@@ -1,6 +1,7 @@
 package pos;
 
 import pos.logic.Service;
+import pos.presentation.Login.ViewLogin;
 import pos.presentation.cajeros.Controller;
 import pos.presentation.cajeros.Model;
 import pos.presentation.cajeros.View;
@@ -79,10 +80,10 @@ public class Application {
 
             tabbedPane.addTab("Historico ", historicoIcon, historicoView.getPanel());
 
-        //Usuarios
-        pos.presentation.Usuario.ViewLogin viewLoginUsuario = new pos.presentation.Usuario.ViewLogin();
-        pos.presentation.Usuario.Model ModelUsuario = new pos.presentation.Usuario.Model();
-        usuarioController=new pos.presentation.Usuario.Controller(viewLoginUsuario,ModelUsuario);
+        //Login
+        ViewLogin viewLoginUsuario = new ViewLogin();
+        pos.presentation.Login.Model ModelUsuario = new pos.presentation.Login.Model();
+        usuarioController=new pos.presentation.Login.Controller(viewLoginUsuario,ModelUsuario);
 
         if(usuarioController.usuarioLogeado()) {
             // Ventana
@@ -103,7 +104,7 @@ public class Application {
     public static pos.presentation.facturacion.Controller facturacionController;
     public static pos.presentation.estadisticas.Controller estadisticasController;
     public static pos.presentation.historico.Controller historicoController;
-    public static pos.presentation.Usuario.Controller usuarioController;
+    public static pos.presentation.Login.Controller usuarioController;
 
     public static JFrame window;
 
