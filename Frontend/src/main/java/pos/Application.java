@@ -22,8 +22,20 @@ public class Application {
         window = new JFrame();
         JTabbedPane tabbedPane = new JTabbedPane();
         window.setContentPane(tabbedPane);
+        //Login
+        ViewLogin viewLogin = new ViewLogin();
+        pos.presentation.Login.Model modelLogin = new pos.presentation.Login.Model();
+        loginController=new pos.presentation.Login.Controller(viewLogin, modelLogin);
 
-
+        viewLogin.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                if(!modelLogin.isLoged()){
+                    Service.instance().stop();
+                    System.exit(0);
+                }
+            }
+        });
         window.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -31,6 +43,15 @@ public class Application {
                 Service.instance().stop();
             }
         });
+
+        viewLogin.setTitle("Iniciar Sesión");
+        viewLogin.setModal(true);
+        viewLogin.setContentPane(viewLogin.getPanel());
+        viewLogin.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
+        viewLogin.setMinimumSize(new Dimension(400, 200));
+        viewLogin.setResizable(false); // No permite redimensionar
+        viewLogin.setLocationRelativeTo(null); // Centrado
+        viewLogin.setVisible(true);
 
 
         //Facturar
@@ -80,23 +101,17 @@ public class Application {
 
         tabbedPane.addTab("Historico ", historicoIcon, historicoView.getPanel());
 
-        //Login
-        ViewLogin viewLoginUsuario = new ViewLogin();
-        pos.presentation.Login.Model ModelUsuario = new pos.presentation.Login.Model();
-        usuarioController=new pos.presentation.Login.Controller(viewLoginUsuario,ModelUsuario);
 
-        if(usuarioController.usuarioLogeado()) {
+
             // Ventana
             window.setSize(1000, 550);
             window.setResizable(false);
             window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             window.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
-            window.setTitle("POS: Point Of Sale:"+usuarioController.getModel().getUsuario().getID());
+            window.setTitle("POS: Point Of Sale:"+modelLogin.getUsuario().getID());
             window.setVisible(true);
-        }
-        else{
-            System.exit(0);
-        }
+
+
     }
     public static pos.presentation.clientes.Controller clientesController;
     public static Controller cajerosController;
@@ -104,7 +119,7 @@ public class Application {
     public static pos.presentation.facturacion.Controller facturacionController;
     public static pos.presentation.estadisticas.Controller estadisticasController;
     public static pos.presentation.historico.Controller historicoController;
-    public static pos.presentation.Login.Controller usuarioController;
+    public static pos.presentation.Login.Controller loginController;
 
     public static JFrame window;
 

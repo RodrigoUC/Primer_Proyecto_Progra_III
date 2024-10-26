@@ -5,30 +5,20 @@ import pos.logic.Usuario;
 import pos.presentation.AbstractModel;
 
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Model extends AbstractModel {
-    private List<Factura> listaFacturas;
+public class Model {
     private Usuario usuario;
     private boolean log;
-
-
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        super.addPropertyChangeListener(listener);
-
-    }
 
     public Model() {
     }
     public void init(){
         log = false;
-        listaFacturas = new ArrayList<Factura>();
         usuario = null;
     }
 
-    public boolean isLog() {
+    public boolean isLoged() {
         return log;
     }
 
@@ -41,11 +31,5 @@ public class Model extends AbstractModel {
     }
     public Usuario getUsuario() {
         return usuario;
-    }
-    public List<Factura> getListaFacturas() {
-        return listaFacturas;
-    }
-    public void setListaFacturas(List<Factura> listaFacturas) {
-        this.listaFacturas = listaFacturas;
     }
 }

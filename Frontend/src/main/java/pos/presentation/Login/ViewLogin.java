@@ -11,14 +11,11 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class ViewLogin implements PropertyChangeListener {
+public class ViewLogin extends JDialog{
     private JPanel panel;
     private JTextField usuario;
     private JPasswordField contrasena;
     private JButton iniciarSesionButton;
-
-    private JDialog dialog;
-
     private Controller controller;
     private Model model;
 
@@ -29,14 +26,13 @@ public class ViewLogin implements PropertyChangeListener {
                 if(verificarEspacios()){
                     try {
                         Usuario u = new Usuario(usuario.getText(), contrasena.getText());
-                        u = Service.instance().read(u);
-                        controller.usuarioExiste(u,true);
-                        cerrar();
+                        controller.verficarUsuario(u);
+                        dispose();
                     }
                     catch(Exception ex){
                         JOptionPane.showMessageDialog(panel, ex.getMessage()+"Se cerrara el programa","Informacion" , JOptionPane.ERROR_MESSAGE);
-                        controller.usuarioExiste(null,false);
-                        cerrar();
+                        dispose();
+                        controller.cerrar();
                     }
                 }
             }
@@ -60,7 +56,6 @@ public class ViewLogin implements PropertyChangeListener {
 
     public void setModel(Model m){
         model = m;
-        model.addPropertyChangeListener(this);
     }
     public void setController(Controller controller) {
         this.controller = controller;
@@ -69,27 +64,24 @@ public class ViewLogin implements PropertyChangeListener {
         return panel;
     }
 
-    public void log(){
-        panel.setPreferredSize(new Dimension(400, 200));
+//    public void login(){
+//        panel.setPreferredSize(new Dimension(400, 200));
+//
+//        dialog = new JDialog((JFrame) null, "Iniciar Sesión", true); // false para no modal
+//        dialog.setContentPane(panel);
+//        dialog.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
+//        dialog.setMinimumSize(new Dimension(400, 200));
+//        dialog.setResizable(false); // No permite redimensionar
+//        dialog.setLocationRelativeTo(null); // Centrado
+//        dialog.setVisible(true);
+//    }
+//
+//    public void cerrar(){
+//        if(dialog != null) {
+//            dialog.dispose();
+//        }
+//    }
 
-        dialog = new JDialog((JFrame) null, "Iniciar Sesión", true); // false para no modal
-        dialog.setContentPane(panel);
-        dialog.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
-        dialog.setMinimumSize(new Dimension(400, 200));
-        dialog.setResizable(false); // No permite redimensionar
-        dialog.setLocationRelativeTo(null); // Centrado
-        dialog.setVisible(true);
-    }
-
-    public void cerrar(){
-        if(dialog != null) {
-            dialog.dispose();
-        }
-    }
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-
-    }
 
 
 }

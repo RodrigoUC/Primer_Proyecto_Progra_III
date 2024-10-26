@@ -1,5 +1,6 @@
 package pos.presentation.Login;
 
+import pos.logic.Service;
 import pos.logic.Usuario;
 
 public class Controller {
@@ -12,15 +13,28 @@ public Controller(ViewLogin viewLogin, Model model) {
     model.init();
     viewLogin.setModel(model);
     viewLogin.setController(this);
-    viewLogin.log();
 }
-public void usuarioExiste(Usuario u,boolean log) {
-    model.setLog(log);
-    model.setUsuario(u);
-}
-public boolean usuarioLogeado() {return model.isLog();}
+public boolean usuarioLogeado() {return model.isLoged();}
 
     public Model getModel() {
     return model;
+    }
+
+    public void verficarUsuario(Usuario u) throws Exception {
+    try {
+        Usuario usu = Service.instance().read(u);
+        model.setUsuario(usu);
+        model.setLog(true);
+    }
+    catch(Exception e) {
+        model.setLog(false);
+        model.setUsuario(null);
+        throw e;
+    }
+    }
+
+    public void cerrar() {
+        Service.instance().stop();
+        System.exit(0);
     }
 }

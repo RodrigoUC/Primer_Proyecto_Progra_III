@@ -280,7 +280,7 @@ public Usuario read(Usuario e) throws Exception {
     if(is.readInt() == Protocol.ERROR_NO_ERROR){
         return (Usuario) is.readObject();
     }
-    else throw new Exception("USUARIO NO EXISTE");
+    else throw new Exception("USUARIO NO EXISTE...");
 }
 
 
