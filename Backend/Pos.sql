@@ -104,6 +104,8 @@ insert into Linea (producto, factura, cantidad, descuento) values ('34567', '5',
 insert into Linea (producto, factura, cantidad, descuento) values ('45678', '5', 6, 10);
 
 insert into Usuario (id, contrasena)
-values('jperez', 'jperez');
+values('jperez', '123');
 insert into Usuario (id, contrasena)
-values('mmata','mmata');
+values('mmata','123');
+insert into Usuario (id, contrasena)
+values('emorado','123');

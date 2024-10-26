@@ -23,11 +23,12 @@ public class Service implements IService {
 
     private Service(){
         try{
-            s=new Socket(Protocol.SERVER,1234);
+            s=new Socket(Protocol.SERVER,Protocol.PORT);
             os=new ObjectOutputStream(s.getOutputStream());
             is=new ObjectInputStream(s.getInputStream());
         }
         catch(Exception e){
+            System.exit(1);
         }
     }
 

@@ -1,36 +1,220 @@
 package pos.Logic;
 
-import pos.logic.IService;
+import pos.logic.*;
+import pos.logic.Service;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 
 public class Worker {
     Server srv;
     Socket s;
     ObjectInputStream is;
     ObjectOutputStream os;
-    IService service;
+    Service service;
 
-    String sid;
-    Socket as;
-    ObjectOutputStream aos;
-    ObjectInputStream ais;
+//    String sid;
+//    Socket as;
+//    ObjectOutputStream aos;
+//    ObjectInputStream ais;
 
-    public Worker(Server server, Socket s,ObjectOutputStream os,ObjectInputStream is,String sid,IService service) {
-        this.srv = server;
-        this.s = s;
-        this.os = os;
-        this.is = is;
-        this.sid = sid;
-        this.service = service;
+
+
+    public Worker(Server srv, Socket s, Service service) {
+        try {
+            this.srv = srv;
+            this.s = s;
+            this.service = service;
+            os = new ObjectOutputStream(s.getOutputStream());
+            is = new ObjectInputStream(s.getInputStream());
+        }catch(Exception e) {System.out.println(e);}
     }
-    public void setAs(Socket as,ObjectOutputStream os,ObjectInputStream is) {
-        this.as = as;
-        this.os = aos;
-        this.is = ais;
+    boolean continuar;
+    public void start(){
+        try{
+            System.out.println("Worker atentiendo peticiones...");
+            Thread t  = new Thread(new Runnable() {
+                public void run() {listen();}
+            });
+            continuar = true;
+            t.start();
+        }catch(Exception e){}
     }
+    public void stop(){
+        continuar = false;
+        srv.removeWorker(this);
+    }
+
+    private void listen() {
+        int method;
+        while (continuar) {
+        try {
+            method=is.readInt();
+            System.out.println("Operacion:"+method);
+            switch (method) {
+                    case Protocol.PRODUCTO_CREATE:
+                        try{
+                            service.create((Producto) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.PRODUCTO_READ:
+                        try{
+                            Producto p = service.read((Producto) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(p);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.PRODUCTO_UPDATE:
+                        try{
+                            service.update((Producto) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.PRODUCTO_DELETE:
+                        try{
+                            service.delete((Producto) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.PRODUCTO_SEARCH:
+                        try{
+                            List<Producto> list = service.search((Producto) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(list);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.CLIENTE_CREATE:
+                        try{
+                            service.create((Cliente) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.CLIENTE_READ:
+                        try{
+                            Cliente p = service.read((Cliente) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(p);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.CLIENTE_UPDATE:
+                        try{
+                            service.update((Cliente) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.CLIENTE_DELETE:
+                        try{
+                            service.delete((Cliente) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.CLIENTE_SEARCH:
+                        try{
+                            List<Cliente> list = service.search((Cliente) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(list);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.CAJERO_CREATE:
+                        try{
+                            service.create((Cajero) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.CAJERO_READ:
+                        try{
+                            Cajero p = service.read((Cajero) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(p);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.CAJERO_UPDATE:
+                        try{
+                            service.update((Cajero) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.CAJERO_DELETE:
+                        try{
+                            service.delete((Cajero) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.CAJERO_SEARCH:
+                        try{
+                            Cajero c = (Cajero) is.readObject();
+                            List<Cajero> list = service.search(c);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(list);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.CATEGORIA_SEARCH:
+                        try {
+                            List<Categoria> list = service.search((Categoria) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(list);
+                        }catch (Exception e) {os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.FACTURA_CREATE:
+                        try{
+                            service.create((Factura) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.FACTURA_SEARCH:
+                        try{
+                            List<Factura> list = service.search((Factura) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(list);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.LINEA_CREATE:
+                        try{
+                            service.create((Linea) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.LINEA_SEARCH:
+                        try{
+                            List<Linea> list = service.searchbyFactura((is.readInt()));
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(list);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.USUARIO_READ:
+                        try{
+                            Usuario p = service.read((Usuario) is.readObject());
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(p);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                    case Protocol.LINEA_ESTADISTICAS:
+                        try{
+                            List<Categoria> rows = (List<Categoria>) is.readObject();
+                            List<String> cols = (List<String>) is.readObject();
+                            Rango rango = (Rango) is.readObject();
+                            Float[][] f = service.estadisticas(rows, cols, rango);
+                            os.writeInt(Protocol.ERROR_NO_ERROR);
+                            os.writeObject(f);
+                        }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
+                        break;
+                }
+                os.flush();
+            }
+        catch(Exception e){
+            stop();
+        }
+        }
+
+    }
+//    public void setAs(Socket as,ObjectOutputStream os,ObjectInputStream is) {
+//        this.as = as;
+//        this.os = aos;
+//        this.is = ais;
+//    }
 
 
 }
