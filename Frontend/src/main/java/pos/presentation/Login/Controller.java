@@ -33,8 +33,4 @@ public boolean usuarioLogeado() {return model.isLoged();}
     }
     }
 
-    public void cerrar() {
-        Service.instance().stop();
-        System.exit(0);
-    }
 }

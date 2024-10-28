@@ -27,15 +27,6 @@ public class Application {
         pos.presentation.Login.Model modelLogin = new pos.presentation.Login.Model();
         loginController=new pos.presentation.Login.Controller(viewLogin, modelLogin);
 
-        viewLogin.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-                if(!modelLogin.isLoged()){
-                    Service.instance().stop();
-                    System.exit(0);
-                }
-            }
-        });
         window.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -52,6 +43,10 @@ public class Application {
         viewLogin.setResizable(false); // No permite redimensionar
         viewLogin.setLocationRelativeTo(null); // Centrado
         viewLogin.setVisible(true);
+        if(!modelLogin.isLoged()){
+            Service.instance().stop();
+            System.exit(0);
+        }
 
 
         //Facturar

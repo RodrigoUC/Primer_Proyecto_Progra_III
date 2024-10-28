@@ -32,7 +32,7 @@ public class ViewLogin extends JDialog{
                     catch(Exception ex){
                         JOptionPane.showMessageDialog(panel, ex.getMessage()+"Se cerrara el programa","Informacion" , JOptionPane.ERROR_MESSAGE);
                         dispose();
-                        controller.cerrar();
+//                        controller.cerrar();
                     }
                 }
             }
