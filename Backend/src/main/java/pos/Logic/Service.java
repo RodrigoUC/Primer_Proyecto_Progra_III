@@ -11,12 +11,12 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Service implements IService {
-//    private static Service theInstance;
+    private static Service theInstance;
 
-//    public static Service instance(){
-//        if (theInstance == null) theInstance = new Service();
-//        return theInstance;
-//    }
+    public static Service instance(){
+        if (theInstance == null) theInstance = new Service();
+        return theInstance;
+    }
     private ProductoDao productoDao;
     private CategoriaDao categoriaDao;
     private ClienteDao clienteDao;

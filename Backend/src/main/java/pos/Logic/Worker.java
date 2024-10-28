@@ -15,22 +15,28 @@ public class Worker {
     ObjectOutputStream os;
     Service service;
 
-//    String sid;
-//    Socket as;
-//    ObjectOutputStream aos;
-//    ObjectInputStream ais;
+    String sid;
+    Socket as;
+    ObjectOutputStream aos;
+    ObjectInputStream ais;
+    Usuario usuario;
 
 
 
-    public Worker(Server srv, Socket s, Service service) {
-        try {
+    public Worker(Server srv, Socket s,ObjectOutputStream os,ObjectInputStream is,String sid,Service service) {
             this.srv = srv;
             this.s = s;
+            this.os =os;
+            this.is = is;
             this.service = service;
-            os = new ObjectOutputStream(s.getOutputStream());
-            is = new ObjectInputStream(s.getInputStream());
-        }catch(Exception e) {System.out.println(e);}
+            this.sid = sid;
     }
+    public void setAs(Socket as,ObjectOutputStream aos,ObjectInputStream ais) {
+        this.as = as;
+        this.aos = aos;
+        this.ais = ais;
+    }
+
     boolean continuar;
     public void start(){
         try{
@@ -46,6 +52,15 @@ public class Worker {
         continuar = false;
         srv.removeWorker(this);
     }
+    public void deliver_message(String message){
+        if(as !=null){
+            try{
+                aos.writeInt(Protocol.DELIVER_MESSAGE);
+                aos.writeObject(message);
+                aos.flush();
+            }catch(Exception e){}
+        }
+    }
 
     private void listen() {
         int method;
@@ -58,6 +73,7 @@ public class Worker {
                         try{
                             service.create((Producto) is.readObject());
                             os.writeInt(Protocol.ERROR_NO_ERROR);
+                            srv.deliver_message(this,"Producto Creado");
                         }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
                         break;
                     case Protocol.PRODUCTO_READ:
@@ -210,11 +226,7 @@ public class Worker {
         }
 
     }
-//    public void setAs(Socket as,ObjectOutputStream os,ObjectInputStream is) {
-//        this.as = as;
-//        this.os = aos;
-//        this.is = ais;
-//    }
+
 
 
 }

@@ -20,18 +20,27 @@ public class Service implements IService {
     ObjectInputStream is;
     ObjectOutputStream os;
 
+    String sid;
+
 
     private Service(){
         try{
             s=new Socket(Protocol.SERVER,Protocol.PORT);
             os=new ObjectOutputStream(s.getOutputStream());
             is=new ObjectInputStream(s.getInputStream());
+
+            os.writeInt(Protocol.SYNC);
+            os.flush();
+            sid = (String) is.readObject();
         }
         catch(Exception e){
             System.exit(1);
         }
     }
 
+    public String getSid(){
+        return sid;
+    }
     public void stop(){
     }
 
