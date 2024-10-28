@@ -54,17 +54,15 @@ public class LineaDao {
 
     public List<Linea> searchByFactura(int codigoFactura) throws Exception {
         List<Linea> resultado = new ArrayList<>();
-        String sql = "select * from Linea l " +
-                "inner join Factura f on l.factura = f.codigo " +
-                "where f.codigo = ?";
+        String sql = "SELECT l.codigo AS codigo_linea, l.cantidad, l.descuento, p.codigo AS codigo_producto, p.descripcion, p.unidad, p.precio,p.existencia FROM Linea l INNER JOIN Producto p ON l.producto = p.codigo WHERE l.factura = ?;";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, "%" + codigoFactura + "%");
+        stm.setInt(1, codigoFactura);
         ResultSet rs = db.executeQuery(stm);
 
         ProductoDao productoDao = new ProductoDao();  // Para obtener el producto de cada linea.
         while (rs.next()) {
-            Linea r = from(rs, "l");  // Map los datos de la tabla Linea.
-            r.setProducto(productoDao.from(rs, "p"));  // Map el producto relacionado.
+            Linea r = historico(rs, "l");  // Map los datos de la tabla Linea.
+            r.setProducto(productoDao.historico(rs, "p"));
             resultado.add(r);
         }
         return resultado;
@@ -73,12 +71,22 @@ public class LineaDao {
 
     public Linea from(ResultSet rs, String alias) throws Exception {
         Linea e = new Linea();
-        e.setId(rs.getInt(alias + ".id"));
+        e.setId(rs.getInt(alias + ".codigo"));
         e.setCantidad(Integer.parseInt(rs.getString(alias + ".cantidad")));
         e.setDescuento(Float.parseFloat(rs.getString(alias + ".descuento")));
 
         return e;
     }
+
+    public Linea historico(ResultSet rs, String alias)throws Exception{
+        Linea e = new Linea();
+        e.setId(rs.getInt(alias + ".codigo_linea"));
+        e.setCantidad(Integer.parseInt(rs.getString(alias + ".cantidad")));
+        e.setDescuento(Float.parseFloat(rs.getString(alias + ".descuento")));
+
+        return e;
+    }
+
 
     public Float[][] estadisticas(List<Categoria> rows, List<String> cols, Rango rango) throws Exception {
         // Inicializa la matriz de resultados

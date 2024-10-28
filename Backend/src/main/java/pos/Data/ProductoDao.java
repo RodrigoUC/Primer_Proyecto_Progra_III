@@ -108,4 +108,13 @@ public class ProductoDao {
         return e;
     }
 
+    public Producto historico(ResultSet rs, String alias) throws Exception {
+        Producto e = new Producto();
+        e.setCodigo(rs.getString(alias + ".codigo_producto"));
+        e.setDescripcion(rs.getString(alias + ".descripcion"));
+        e.setUnidad(rs.getString(alias + ".unidad"));
+        e.setPrecio(rs.getFloat(alias + ".precio"));
+        e.setExistencia(rs.getInt(alias + ".existencia"));
+        return e;
+    }
 }

@@ -70,7 +70,8 @@ public class Linea implements Serializable {
     }
 
     public String toString(){
-        return codigo+" "+producto.getPrecio()+" "+cantidad+" "+descuento;
+        if(producto != null){return codigo+" "+producto.getPrecio()+" "+cantidad+" "+descuento;}
+        else return ""+codigo;
     }
 
 }

@@ -38,8 +38,11 @@ public class Protocol {
     public static final int LINEA_ESTADISTICAS=606;
 
     public static final int USUARIO_READ=702;
+    public static final int USUARIO_UPDATE=703;
 
-
+    public static final int ASYNC=2;
+    public static final int SYNC=3;
+    public static final int DELIVER_MESSAGE=4;
 
     public static final int ERROR_NO_ERROR=0;
     public static final int ERROR_ERROR=1;

@@ -230,7 +230,6 @@ public List<Linea> search(Linea e) {
             if (is.readInt() == Protocol.ERROR_NO_ERROR) {
                 return (List<Linea>) is.readObject();
             }
-            return new ArrayList<Linea>();
         }
         catch(Exception ex){
         }
