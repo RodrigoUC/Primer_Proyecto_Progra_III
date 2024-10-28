@@ -36,8 +36,8 @@ public class Controller {
     public void search(String id) throws Exception {
         try{
             model.setFilter(buscarCliente(id));
-            model.setListFacturasFilter(buscarFacturas());
-            model.setListLineasListado(listadoHistorico());
+            model.setListFacturasFilter(buscarFacturas());  //busca facturas con nombre/id
+            model.setListLineasListado(listadoHistorico()); //setea la primera tabla
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -71,7 +71,7 @@ public class Controller {
     }
 
 
-    //-----------------LISTADO DE LINEAS DE FACTURAS DEL CLIENTE----------
+    //-----------------LISTADO DE LINEAS DE FACTURAS DEL CLIENTE (primera tabla)----------
     List<Linea> listadoHistorico() throws Exception {
         try {
             List<Linea> listado = new ArrayList<Linea>();
@@ -87,14 +87,15 @@ public class Controller {
     }
 
 
-    //--------------LISTA DE LINEAS DE ABAJO SEGUN EL CODIGO DE FACTURA--------
-    List<Linea> listaLineasNormales(int row) throws Exception {       //
+    //--------------LISTA DE LINEAS DE ABAJO SEGUN EL CODIGO DE FACTURA (segunda tabla)--------
+    void listaLineasNormales(int row) throws Exception {       //
         try{
-            return Service.instance().searchbyFactura(model.getListLineasListado().get(row).getFactura().getCodigo());
+            List<Linea> sbf = Service.instance().searchbyFactura(model.getListFacturasFilter().get(row).getCodigo());
+            model.setListLineasNormales(sbf);
         }catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error listado historico", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        return null;
+        //return null;
     }
 
 

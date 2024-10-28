@@ -155,12 +155,8 @@ public class Service implements IService {
 
     @Override
     public List<Linea> searchbyFactura(int i) {
-        return List.of();
-    }
-
-    public List<Linea> searchbyFactura(String codigoFactura) {
         try {
-            return lineaDao.searchByFactura(codigoFactura);
+            return lineaDao.searchByFactura(i);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

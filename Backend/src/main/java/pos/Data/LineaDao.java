@@ -52,13 +52,13 @@ public class LineaDao {
         return resultado;
     }
 
-    public List<Linea> searchByFactura(String codigoFactura) throws Exception {
+    public List<Linea> searchByFactura(int codigoFactura) throws Exception {
         List<Linea> resultado = new ArrayList<>();
         String sql = "select * from Linea l " +
                 "inner join Factura f on l.factura = f.codigo " +
                 "where f.codigo = ?";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, codigoFactura);
+        stm.setString(1, "%" + codigoFactura + "%");
         ResultSet rs = db.executeQuery(stm);
 
         ProductoDao productoDao = new ProductoDao();  // Para obtener el producto de cada linea.
