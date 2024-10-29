@@ -39,30 +39,30 @@ public class SocketListener {
     }
 
     private void listen() {
-//        int method;
-//        while(condition) {
-//            try{
-//               method = ais.readInt();
-//            switch (method) {
-//                case Protocol.USUARIO_INICIO:
-//                    try{
-//
-//
-//                    }catch(Exception e){}
-//                case Protocol.USUARIO_SALIO:
-//
-//
-//                case RECIBIR_FACTURA:
-//
-//
-//            }
-//            }
-//            catch (IOException ex){condition = false;}
-//        }
-//        try{
-//            as.shutdownOutput();
-//            as.close();
-//        }catch(IOException ex){}
+        int method;
+        while(condition) {
+            try{
+               method = ais.readInt();
+            switch (method) {
+                case Protocol.USUARIO_INICIO:
+                    try{
+
+
+                    }catch(Exception e){}
+                case Protocol.USUARIO_SALIO:
+
+
+                case Protocol.RECIBIR_FACTURA:
+
+
+            }
+            }
+            catch (IOException ex){condition = false;}
+        }
+        try{
+            as.shutdownOutput();
+            as.close();
+        }catch(IOException ex){}
     }
 
     private void actualizarListaUsuario(List<Usuario> usuarios) {

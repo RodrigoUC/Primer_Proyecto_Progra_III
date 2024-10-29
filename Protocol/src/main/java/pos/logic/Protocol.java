@@ -43,6 +43,9 @@ public class Protocol {
     public static final int ASYNC=2;
     public static final int SYNC=3;
     public static final int DELIVER_MESSAGE=4;
+    public static final int RECIBIR_FACTURA=5;
+    public static final int USUARIO_SALIO=6;
+    public static final int USUARIO_INICIO=7;
 
     public static final int ERROR_NO_ERROR=0;
     public static final int ERROR_ERROR=1;
