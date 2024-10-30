@@ -21,7 +21,7 @@ public class Application {
 
         window = new JFrame();
         JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.setBounds(10,10,650,400);
+        tabbedPane.setBounds(10,10,700,550);
 
         //Login
         ViewLogin viewLogin = new ViewLogin();
@@ -108,15 +108,15 @@ public class Application {
 
             // Ventana
         JPanel usuarios = viewUsuarios.getPanel();
-        usuarios.setBorder(BorderFactory.createTitledBorder("Usuarios"));
-        usuarios.setBounds(670,10,200,400);
+//        usuarios.setBorder(BorderFactory.createTitledBorder("Usuarios"));
+        usuarios.setBounds(730,10,250,550);
 
 
         window.add(tabbedPane);
         window.add(usuarios);
 
         window.setLayout(null);
-            window.setSize(900, 450);
+            window.setSize(1000, 625);
             window.setResizable(false);
             window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             window.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
