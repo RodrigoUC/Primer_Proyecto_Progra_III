@@ -104,11 +104,8 @@ public class Application {
 
         //Usuarios
 
-
-
             // Ventana
         JPanel usuarios = viewUsuarios.getPanel();
-//        usuarios.setBorder(BorderFactory.createTitledBorder("Usuarios"));
         usuarios.setBounds(730,10,250,550);
 
 
