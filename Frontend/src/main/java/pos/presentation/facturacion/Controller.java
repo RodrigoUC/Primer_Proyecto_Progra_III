@@ -84,8 +84,11 @@ public class Controller {
     }
     public Factura transferirFactura() {
         Factura factura = model.factura;
-        model.setFactura(null);
+        model.setFactura(new Factura());
         return factura;
+    }
+    public void recibirFactura(Factura factura) {
+        model.setFactura(factura);
     }
 
     public void editProd(int row) {

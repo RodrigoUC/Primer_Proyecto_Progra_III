@@ -27,7 +27,8 @@ public class TableModel extends AbstractTableModel<Usuario> implements javax.swi
     protected Object getPropertyAt(Usuario e, int col) {
         switch (cols[col]) {
             case ID:
-                return e.getID();
+                if(!(e.getFacturas().isEmpty())) {return e.getID() + " (" + e.getFacturas().size() + ")";}
+                else{return e.getID();}
             case FACTURA:
                 return !(e.getFacturas().isEmpty());
             default:

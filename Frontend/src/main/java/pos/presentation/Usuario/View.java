@@ -1,5 +1,7 @@
 package pos.presentation.Usuario;
 
+import pos.logic.Factura;
+
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 import java.awt.event.ActionEvent;
@@ -33,6 +35,16 @@ public class View implements PropertyChangeListener {
                 if(model.getCurrent() != null){
                     try {
                         controller.enviarFactura();
+                    }catch (Exception ex){JOptionPane.showMessageDialog(null, ex.getMessage());}
+                }
+            }
+        });
+        recibirButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(model.getCurrent() != null && !(model.getCurrent().getFacturas().isEmpty())){
+                    try {
+                        controller.recibirFactura();
                     }catch (Exception ex){JOptionPane.showMessageDialog(null, ex.getMessage());}
                 }
             }

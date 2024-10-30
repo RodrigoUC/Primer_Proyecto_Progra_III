@@ -99,7 +99,7 @@ public class Server {
     }
    public void asignarFactura(Factura f, Usuario destino,Usuario origen)throws Exception{
         for (Worker w: workers){
-            if (w.getUsuario() != null && w.getUsuario().getID() == destino.getID()) {
+            if (w.getUsuario() != null && w.getUsuario().getID().equals(destino.getID())) {
                 w.enviarFactura(f,origen);
             }
         }

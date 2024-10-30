@@ -53,12 +53,16 @@ public class Controller implements ThreadListener {
             }
         }
     }
-
     public void edit(int row) {
         model.setCurrent(model.getUsuarios().get(row));
     }
-
     public void enviarFactura()throws Exception {
         Service.instance().enviarFactura(facturacionController.transferirFactura(),model.getCurrent());
+        model.setUsuarios(model.getUsuarios());
+    }
+    public void recibirFactura() {
+        Factura f = model.getCurrent().getFacturas().remove(0);
+        model.setUsuarios(model.getUsuarios());
+        facturacionController.recibirFactura(f);
     }
 }
