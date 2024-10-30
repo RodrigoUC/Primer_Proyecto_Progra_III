@@ -15,7 +15,6 @@ public class TableModel extends AbstractTableModel<Usuario> implements javax.swi
     public TableModel(int[] cols, List<Usuario> rows) {
         super(cols, rows);
     }
-
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
@@ -25,18 +24,21 @@ public class TableModel extends AbstractTableModel<Usuario> implements javax.swi
     }
 
     @Override
-    protected Object getPropertyAt(Usuario usuario, int col) {
-        return switch (cols[col]) {
-            case ID -> usuario.getID();
-            case FACTURA -> false;
-            default -> throw new IllegalStateException("Unexpected value: " + cols[col]);
-        };
+    protected Object getPropertyAt(Usuario e, int col) {
+        switch (cols[col]) {
+            case ID:
+                return e.getID();
+            case FACTURA:
+                return !(e.getFacturas().isEmpty());
+            default:
+                return "";
+        }
     }
-
     @Override
-    protected void initColNames() {
+    protected void initColNames(){
         colNames = new String[2];
-        colNames[0] = "ID";
-        colNames[1] = "Facturas?";
+        colNames[ID]= "ID";
+        colNames[FACTURA]= "Facturas?";
+
     }
 }

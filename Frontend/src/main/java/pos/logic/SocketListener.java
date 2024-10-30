@@ -16,10 +16,11 @@ public class SocketListener {
     public SocketListener(ThreadListener listener, String sid)throws Exception {
         this.listener = listener;
         as = new Socket(Protocol.SERVER, Protocol.PORT);
-        this.sid=sid;
         aos = new ObjectOutputStream(as.getOutputStream());
         ais = new ObjectInputStream(as.getInputStream());
-        aos.writeObject(Protocol.ASYNC);
+        this.sid=sid;
+
+        aos.writeInt(Protocol.ASYNC);
         aos.writeObject(sid);
         aos.flush();
     }
@@ -46,15 +47,23 @@ public class SocketListener {
             switch (method) {
                 case Protocol.USUARIO_INICIO:
                     try{
-
-
+                    Usuario u = (Usuario) ais.readObject();
+                    listener.ingresoUsuario(u);
+                    break;
                     }catch(Exception e){}
                 case Protocol.USUARIO_SALIO:
-
-
+                    try{
+                        Usuario u = (Usuario) ais.readObject();
+                        listener.salioUsuario(u);
+                        break;
+                    }catch(Exception e){}
                 case Protocol.RECIBIR_FACTURA:
-
-
+                    try{
+                    Factura f = (Factura) ais.readObject();
+                    Usuario u = (Usuario) ais.readObject();
+                    listener.recibirFactura(f,u);
+                    break;
+                    }catch(Exception e){}
             }
             }
             catch (IOException ex){condition = false;}
@@ -63,10 +72,6 @@ public class SocketListener {
             as.shutdownOutput();
             as.close();
         }catch(IOException ex){}
-    }
-
-    private void actualizarListaUsuario(List<Usuario> usuarios) {
-
     }
 
 }

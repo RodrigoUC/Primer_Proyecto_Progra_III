@@ -1,6 +1,7 @@
 package pos.logic;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Usuario implements Serializable {
@@ -11,10 +12,12 @@ public class Usuario implements Serializable {
     public Usuario(String ID, String contrasena) {
         this.ID = ID;
         this.contrasena = contrasena;
+        this.facturas = new ArrayList<Factura>();
     }
     public Usuario(){
         this.ID = "";
         this.contrasena = "";
+        this.facturas= new ArrayList<Factura>();
     }
     public String getID() {
         return ID;

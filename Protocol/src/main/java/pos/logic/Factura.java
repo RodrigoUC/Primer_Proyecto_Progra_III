@@ -13,12 +13,14 @@ public class Factura implements Serializable {
     private Cajero cajero;
     private Cliente cliente;
     private LocalDate fecha;
+    private List<Linea> lineas;
 
     public Factura() {
         this.codigo = 0;
         this.cajero = null;
         this.cliente = null;
         this.fecha = LocalDate.now();
+        this.lineas = new ArrayList<Linea>();
     }
 
     public Factura(Cajero cajero, Cliente cliente) {
@@ -26,6 +28,7 @@ public class Factura implements Serializable {
         this.cajero = cajero;
         this.cliente = cliente;
         this.fecha = LocalDate.now();
+        this.lineas = new ArrayList<Linea>();
     }
 
 
@@ -44,6 +47,12 @@ public class Factura implements Serializable {
     public String getFechaString() { return fecha.getYear() + "-" + fecha.getMonth() + "-" + fecha.getDayOfMonth(); }
     public String getNombreCliente(){
         return cliente.getNombre();
+    }
+    public List<Linea> getLineas() {
+        return lineas;
+    }
+    public void setLineas(List<Linea> lineas) {
+        this.lineas = lineas;
     }
 
     @Override

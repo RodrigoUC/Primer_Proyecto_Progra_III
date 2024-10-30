@@ -27,8 +27,13 @@ public class Server {
             System.out.println(e.getMessage());
         }
     }
-    public void removeWorker(Worker w){
+    public synchronized void removeWorker(Worker w){
         workers.remove(w);
+        for(Worker w2: workers){
+            if(w2 != w && w2.getUsuario() != null && w.getUsuario() != null){
+                w2.usuarioSalio(w.getUsuario());
+            }
+        }
         System.out.println("Cliente desconectado");
         System.out.println("Quedan:"+workers.size());
     }
@@ -55,19 +60,21 @@ public class Server {
                     System.out.println("Quedan:"+workers.size());
                     worker.start();
                     os.writeObject(sid);
+                    os.flush();
+                    break;
                 case Protocol.ASYNC:
                     sid=(String) is.readObject();
                     System.out.println("ASYNC:"+sid);
                     join(s,os,is,sid);
+                    break;
             }
-            os.flush();
             }
         catch(Exception e){System.out.println(e.getMessage());}
         }
 
     }
 
-    private void join(Socket as, ObjectOutputStream aos, ObjectInputStream ais, String sid) {
+    private synchronized void join (Socket as, ObjectOutputStream aos, ObjectInputStream ais, String sid) {
         for(Worker w: workers){
             if(w.sid.equals(sid)){
                 w.setAs(as,aos,ais);
@@ -76,9 +83,25 @@ public class Server {
         }
     }
 
-    public void deliver_message(Worker from, String message) {
-        for (Worker w : workers) {
-            if (w != from) w.deliver_message(message);
+    public synchronized void updateWorkers(Worker w){   //Notifica a los otros workers que se conecto otro worker
+        for(Worker w2: workers){
+            if(w2.getUsuario()!= null && w.getUsuario().getID() != w2.getUsuario().getID()) {
+                w2.usuarioInicio(w.getUsuario());
+            }
         }
     }
+    public synchronized void updateNewWorker(Worker w){     //Manda a agregar todos los usuarios de los workers que ya existen
+        for(Worker w2: workers){
+            if(w2.getUsuario() != null && w.getUsuario().getID() != w2.getUsuario().getID()) {
+                w.usuarioInicio(w2.getUsuario());
+            }
+        }
+    }
+   public void asignarFactura(Factura f, Usuario destino,Usuario origen)throws Exception{
+        for (Worker w: workers){
+            if (w.getUsuario() != null && w.getUsuario().getID() == destino.getID()) {
+                w.enviarFactura(f,origen);
+            }
+        }
+   }
 }

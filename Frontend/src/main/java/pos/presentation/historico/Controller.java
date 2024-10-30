@@ -105,7 +105,7 @@ public class Controller {
 //    void listaLineasNormales(int row) throws Exception {
 //        try{
 //            model.setCurrentLineaFactura(model.getListLineasListado().get(row));
-//            model.setListLineasNormales(model.getCurrentFactura().getFactura().getLineas());
+//            model.setListLineasNormales(model.getFactura().getFactura().getLineas());
 //        }catch (Exception e) {
 //            JOptionPane.showMessageDialog(null, "Error listado normales", "Error", JOptionPane.ERROR_MESSAGE);
 //        }

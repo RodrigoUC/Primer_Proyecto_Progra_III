@@ -310,4 +310,18 @@ public Float[][] estadisticas(List<Categoria> rows, List<String> cols, Rango ran
     }
 }
 
+//Manejo de factura(enviar,recibir, depende de donde se vea)
+    public void enviarFactura(Factura factura,Usuario destino) throws Exception {
+        try{
+            os.writeInt(Protocol.RECIBIR_FACTURA);
+            os.writeObject(factura);
+            os.writeObject(destino);
+            os.flush();
+            if (is.readInt() == Protocol.ERROR_NO_ERROR) {System.out.println("Todo salio bien");}
+            else System.out.println("SALIO MAL");
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
 }

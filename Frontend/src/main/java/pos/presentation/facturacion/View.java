@@ -20,7 +20,7 @@ public class View implements PropertyChangeListener {
         cobrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(model.getCurrentFactura().getCliente() == null || model.getCurrentFactura().getCajero() == null){
+                if(model.getFactura().getCliente() == null || model.getFactura().getCajero() == null){
                     JOptionPane.showMessageDialog(panel, "Debe Ingresar un cajero y un cliente para Cobrar","Informacion" , JOptionPane.INFORMATION_MESSAGE);
                 }
                 else {
@@ -32,8 +32,8 @@ public class View implements PropertyChangeListener {
             @Override
             public void componentShown(ComponentEvent e) {
                 controller.actualizarComboBox();
-                cajeros.setSelectedItem(model.getCurrentFactura().getCajero());
-                clientes.setSelectedItem(model.getCurrentFactura().getCliente());
+                cajeros.setSelectedItem(model.getFactura().getCajero());
+                clientes.setSelectedItem(model.getFactura().getCliente());
             }
         });
 
@@ -42,7 +42,7 @@ public class View implements PropertyChangeListener {
             public void actionPerformed(ActionEvent e) {
                 //Boton de buscar
                 try {
-                    if (model.getCurrentFactura().getCliente() == null || model.getCurrentFactura().getCajero() == null) {
+                    if (model.getFactura().getCliente() == null || model.getFactura().getCajero() == null) {
                         JOptionPane.showMessageDialog(panel, "Debe Ingresar un cajero y un cliente para empezar a agregar Productos", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         int option = JOptionPane.showOptionDialog(null, controller.getViewBuscar().getPanel(), "Buscar",
@@ -125,7 +125,7 @@ public class View implements PropertyChangeListener {
                     try {
                         Producto prod = controller.buscarProducto(codProducto.getText());
                         Linea lin = new Linea(prod, 1, ((Cliente) clientes.getSelectedItem()).getDescuento());
-                        lin.setFactura(model.getCurrentFactura());
+                        lin.setFactura(model.getFactura());
                         controller.save(lin);
                         codProducto.setText("");
                         JOptionPane.showMessageDialog(panel, "LINEA AGREGADA", "", JOptionPane.INFORMATION_MESSAGE);
@@ -211,10 +211,10 @@ public class View implements PropertyChangeListener {
                 TableColumnModel columnModel = lista.getColumnModel();
                 columnModel.getColumn(1).setPreferredWidth(150);
                 columnModel.getColumn(3).setPreferredWidth(150);
-//                cantidadArt.setText(Integer.toString(model.getCurrentFactura().cantidadArticulos()));
-//                subTotal.setText(Double.toString(model.getCurrentFactura().getSubTotal()));
-//                descuentos.setText(Double.toString(model.getCurrentFactura().getTotalDescuento()));
-//                total.setText(Double.toString(model.getCurrentFactura().getSubTotal()));
+//                cantidadArt.setText(Integer.toString(model.getFactura().cantidadArticulos()));
+//                subTotal.setText(Double.toString(model.getFactura().getSubTotal()));
+//                descuentos.setText(Double.toString(model.getFactura().getTotalDescuento()));
+//                total.setText(Double.toString(model.getFactura().getSubTotal()));
 
                 break;
             case Model.LISTCAJERO:
@@ -228,9 +228,9 @@ public class View implements PropertyChangeListener {
                 clientes.setModel(cliente);
                 break;
             case CAJERO:
-                cajeros.setSelectedItem(model.getCurrentFactura().getCajero());
+                cajeros.setSelectedItem(model.getFactura().getCajero());
             case CLIENTE:
-                clientes.setSelectedItem(model.getCurrentFactura().getCliente());
+                clientes.setSelectedItem(model.getFactura().getCliente());
         }
     }
     public Factura take(){

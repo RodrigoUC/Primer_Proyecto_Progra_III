@@ -50,16 +50,11 @@ public class Worker {
     }
     public void stop(){
         continuar = false;
-        srv.removeWorker(this);
+            srv.removeWorker(this);
     }
-    public void deliver_message(String message){
-        if(as !=null){
-            try{
-                aos.writeInt(Protocol.DELIVER_MESSAGE);
-                aos.writeObject(message);
-                aos.flush();
-            }catch(Exception e){}
-        }
+
+    public Usuario getUsuario(){
+        return usuario;
     }
 
     private void listen() {
@@ -73,7 +68,6 @@ public class Worker {
                         try{
                             service.create((Producto) is.readObject());
                             os.writeInt(Protocol.ERROR_NO_ERROR);
-                            srv.deliver_message(this,"Producto Creado");
                         }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
                         break;
                     case Protocol.PRODUCTO_READ:
@@ -203,6 +197,11 @@ public class Worker {
                     case Protocol.USUARIO_READ:
                         try{
                             Usuario p = service.read((Usuario) is.readObject());
+                            usuario = p;
+                            if(srv.workers.size() > 1) {
+                                srv.updateWorkers(this);
+                                srv.updateNewWorker(this);
+                            }
                             os.writeInt(Protocol.ERROR_NO_ERROR);
                             os.writeObject(p);
                         }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
@@ -217,6 +216,13 @@ public class Worker {
                             os.writeObject(f);
                         }catch(Exception e){os.writeInt(Protocol.ERROR_ERROR);}
                         break;
+                case Protocol.RECIBIR_FACTURA:  //Enviar factura, pero en si el proceso es para que alguien reciba la factura
+                    try {
+                        Factura f = (Factura) is.readObject();
+                        Usuario destino = (Usuario) is.readObject();
+                        srv.asignarFactura(f,destino,usuario);
+                        os.writeInt(Protocol.ERROR_NO_ERROR);
+                    }catch (Exception e){os.writeInt(Protocol.ERROR_ERROR);}
                 }
                 os.flush();
             }
@@ -227,6 +233,29 @@ public class Worker {
 
     }
 
+    public void usuarioSalio(Usuario u) {
+        try {
+            aos.writeInt(Protocol.USUARIO_SALIO);
+            aos.writeObject(u);
+            aos.flush();
+        }
+        catch (Exception e) {}
+    }
+    public void usuarioInicio(Usuario u) {
+        try {
+            aos.writeInt(Protocol.USUARIO_INICIO);
+            aos.writeObject(u);
+            aos.flush();
+        }catch (Exception e) {}
+    }
 
 
+    public void enviarFactura(Factura f, Usuario origen) {
+        try{
+            aos.writeInt(Protocol.RECIBIR_FACTURA);
+            aos.writeObject(f);
+            aos.writeObject(origen);
+            aos.flush();
+        }catch (Exception e){}
+    }
 }

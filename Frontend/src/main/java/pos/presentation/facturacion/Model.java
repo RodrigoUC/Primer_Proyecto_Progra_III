@@ -3,7 +3,6 @@ package pos.presentation.facturacion;
 import pos.logic.*;
 import pos.presentation.AbstractModel;
 
-import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +11,8 @@ public class Model extends AbstractModel {
     private List<Cajero> listCajeros;
     private List<Cliente> listClientes;
     Linea current;
-    Factura currentFactura;
-    private List<Linea> lineas;
+    Factura factura;
+//    private List<Linea> lineas;
 
     public Producto getFilter() {
         return filter;
@@ -23,7 +22,6 @@ public class Model extends AbstractModel {
         this.filter = filter;
     }
 
-    //View Buscar
     Producto filter;
     Producto actual;
     List<Producto> listProducto;
@@ -36,14 +34,15 @@ public class Model extends AbstractModel {
         this.actual = actual;
     }
 
-    public Factura getCurrentFactura() {
-        return currentFactura;
+    public Factura getFactura() {
+        return factura;
     }
 
-    public void setCurrentFactura(Factura currentFactura) {
-        this.currentFactura = currentFactura;
+    public void setFactura(Factura factura) {
+        this.factura = factura;
         firePropertyChange(CLIENTE);
         firePropertyChange(CAJERO);
+        firePropertyChange(LISTLINEA);
     }
 
     public List<Producto> getListProducto() {
@@ -68,35 +67,27 @@ public class Model extends AbstractModel {
     }
 
     public Model() {
-        currentFactura = new Factura();
     }
 
     public void init(List<Linea> listLinea,List<Cajero> listCajero, List<Cliente> listCliente) {
-        setListLinea(listLinea);
+        setFactura(new Factura());
         setListCajeros(listCajero);
         setListClientes(listCliente);
-        setCurrentFactura(new Factura(null,null));
         current = null;
         listProducto = new ArrayList<Producto>();
         filter = new Producto();
-        lineas=new ArrayList<Linea>();
     }
 
     public void setCliente(Cliente cliente) {
-        currentFactura.setCliente(cliente);
+        factura.setCliente(cliente);
         firePropertyChange(CLIENTE);
     }
     public void setCajero(Cajero cajero) {
-        currentFactura.setCajero(cajero);
+        factura.setCajero(cajero);
         firePropertyChange(CAJERO);
     }
-//    public List<Linea> getListLinea() {
-//        return currentFactura.getLineas();
-//    }
-
-    public void setListLinea(List<Linea> list) {
-        lineas = list;
-        firePropertyChange(LISTLINEA);
+    public List<Linea> getListLinea() {
+        return factura.getLineas();
     }
 
     public void setListCajeros(List<Cajero> list) {
@@ -126,12 +117,13 @@ public class Model extends AbstractModel {
     }
 
     public void setLineas(List<Linea> list) {
-        this.lineas = list;
+        this.factura.setLineas(list);
         firePropertyChange(LISTLINEA);
     }
 
+
     public List<Linea> getLineas() {
-        return lineas;
+        return factura.getLineas();
     }
 
     public static final String LISTLINEA = "listLinea";

@@ -21,11 +21,16 @@ public class Application {
 
         window = new JFrame();
         JTabbedPane tabbedPane = new JTabbedPane();
-        window.setContentPane(tabbedPane);
+        tabbedPane.setBounds(10,10,650,400);
+
         //Login
         ViewLogin viewLogin = new ViewLogin();
         pos.presentation.Login.Model modelLogin = new pos.presentation.Login.Model();
         loginController=new pos.presentation.Login.Controller(viewLogin, modelLogin);
+
+        pos.presentation.Usuario.Model modelUsuarios = new pos.presentation.Usuario.Model();
+        pos.presentation.Usuario.View viewUsuarios = new pos.presentation.Usuario.View();
+        usuariosController = new pos.presentation.Usuario.Controller(modelUsuarios, viewUsuarios);
 
         window.addWindowListener(new WindowAdapter() {
             @Override
@@ -97,9 +102,21 @@ public class Application {
         tabbedPane.addTab("Historico ", historicoIcon, historicoView.getPanel());
 
 
+        //Usuarios
+
+
 
             // Ventana
-            window.setSize(1000, 550);
+        JPanel usuarios = viewUsuarios.getPanel();
+        usuarios.setBorder(BorderFactory.createTitledBorder("Usuarios"));
+        usuarios.setBounds(670,10,200,400);
+
+
+        window.add(tabbedPane);
+        window.add(usuarios);
+
+        window.setLayout(null);
+            window.setSize(900, 450);
             window.setResizable(false);
             window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             window.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
@@ -115,6 +132,7 @@ public class Application {
     public static pos.presentation.estadisticas.Controller estadisticasController;
     public static pos.presentation.historico.Controller historicoController;
     public static pos.presentation.Login.Controller loginController;
+    public static pos.presentation.Usuario.Controller usuariosController;
 
     public static JFrame window;
 

@@ -82,6 +82,11 @@ public class Controller {
         } catch (Exception ex) {
         }
     }
+    public Factura transferirFactura() {
+        Factura factura = model.factura;
+        model.setFactura(null);
+        return factura;
+    }
 
     public void editProd(int row) {
         Producto producto = model.getListProducto().get(row);
@@ -153,7 +158,7 @@ public class Controller {
                 throw new Exception("No hay suficientes existencias de ese producto");
             }
             Linea linea = new Linea(model.getActual(), 1, desc);
-            linea.setFactura(model.getCurrentFactura());
+            linea.setFactura(model.getFactura());
             model.getLineas().add(linea);
             model.setLineas(model.getLineas());
             model.setActual(null);
@@ -236,9 +241,9 @@ public class Controller {
     }
 
     public void actualizarCliente(Cliente selectedItem) {
-        this.model.getCurrentFactura().setCliente(selectedItem);
+        this.model.getFactura().setCliente(selectedItem);
     }
     public void actualizarCajero(Cajero selectedItem) {
-        this.model.getCurrentFactura().setCajero(selectedItem);
+        this.model.getFactura().setCajero(selectedItem);
     }
 }
