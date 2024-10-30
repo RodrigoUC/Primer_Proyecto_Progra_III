@@ -116,7 +116,7 @@ public class Application {
         window.add(usuarios);
 
         window.setLayout(null);
-            window.setSize(1000, 625);
+            window.setSize(1000, 610);
             window.setResizable(false);
             window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             window.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
