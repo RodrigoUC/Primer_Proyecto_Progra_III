@@ -1,5 +1,6 @@
 package pos.logic;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -48,20 +49,35 @@ public class SocketListener {
                 case Protocol.USUARIO_INICIO:
                     try{
                     Usuario u = (Usuario) ais.readObject();
-                    listener.ingresoUsuario(u);
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.ingresoUsuario(u);
+                            }
+                        });
                     break;
                     }catch(Exception e){}
                 case Protocol.USUARIO_SALIO:
                     try{
                         Usuario u = (Usuario) ais.readObject();
-                        listener.salioUsuario(u);
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.salioUsuario(u);
+                            }
+                        });
                         break;
                     }catch(Exception e){}
                 case Protocol.RECIBIR_FACTURA:
                     try{
                     Factura f = (Factura) ais.readObject();
                     Usuario u = (Usuario) ais.readObject();
-                    listener.recibirFactura(f,u);
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.recibirFactura(f,u);
+                            }
+                        });
                     break;
                     }catch(Exception e){}
             }
