@@ -24,6 +24,7 @@ public class Controller {
             viewBuscar.setController(this);
             viewBuscar.setModel(model);
             viewCobrar.setController(this);
+            viewCobrar.setModel(model);
         }
         catch(Exception e) {
         }
@@ -60,7 +61,7 @@ public class Controller {
             return false;
         }
         for(Linea lin : model.getLineas()){
-            if(producto == lin.getProducto()){
+            if(producto.getCodigo().equals(lin.getProducto().getCodigo())){
                return true;
             }
         }

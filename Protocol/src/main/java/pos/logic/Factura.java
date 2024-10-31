@@ -63,4 +63,33 @@ public class Factura implements Serializable {
         return Objects.equals(codigo, factura.codigo);
     }
 
+    public Float getTotal(){
+        Float total = 0.0f;
+        for (Linea l : lineas) {
+            total += (float) l.getTotalLinea();
+        }
+        return total;
+    }
+   public Float getSubTotal() {
+      Float total = 0.0f;
+      for (Linea l : lineas) {
+         total += (float) l.getTotalSinDescuento();
+      }
+      return total;
+   }
+   public Integer cantidadArticulos(){
+      Integer cantidad = 0;
+         for (Linea linea : lineas) {
+            cantidad += linea.getCantidad();
+         }
+      return cantidad;
+   }
+   public Float getTotalDescuento(){
+      Float descuento = 0.0f;
+         for (Linea linea : lineas) {
+            descuento += (linea.getDescuento()/100)*linea.getCantidad()*linea.getProducto().getPrecio();
+         }
+      return descuento;
+   }
+
 }

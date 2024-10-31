@@ -3,6 +3,8 @@ package pos.presentation.facturacion;
 import pos.logic.Producto;
 
 import javax.swing.*;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.table.TableColumnModel;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
@@ -25,7 +27,6 @@ public class ViewBuscar implements PropertyChangeListener {
                 controller.editProd(row);
             }
         });
-
         Buscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -61,6 +62,7 @@ public class ViewBuscar implements PropertyChangeListener {
     private Controller controller;
 
     JPanel getPanel() {
+        descripcion.setText("");
         return panel;
     }
     public void setModel(Model model) {

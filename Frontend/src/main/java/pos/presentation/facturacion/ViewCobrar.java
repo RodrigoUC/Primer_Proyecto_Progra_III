@@ -76,8 +76,11 @@ public class ViewCobrar implements PropertyChangeListener {
     public void setController(Controller controller) {
         this.controller = controller;
     }
+    public void setModel(Model model) {
+        this.model = model;
+    }
     public void Cobrar(){
-        precio.setText(String.valueOf(controller.total()));
+        precio.setText(String.valueOf(model.getFactura().getTotal()));
         panel.setPreferredSize(new Dimension(400, 300));
         dialog = new JDialog((JFrame)null, "Cobrar",true);
         dialog.setMinimumSize(new Dimension(400, 300));
