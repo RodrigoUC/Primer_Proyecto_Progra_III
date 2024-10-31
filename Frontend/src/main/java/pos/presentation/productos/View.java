@@ -212,6 +212,7 @@ public class View implements PropertyChangeListener {
                 unidad.setText(model.getCurrent().getUnidad());
                 precio.setText(String.format("%.0f", model.getCurrent().getPrecio()));
                 categorias.setSelectedItem(model.getCurrent().getCategoria());
+                existencias.setText(model.getCurrent().getExistencia().toString());
 
                 codigoLbl.setBorder(null);
                 codigoLbl.setToolTipText(null);
@@ -223,6 +224,8 @@ public class View implements PropertyChangeListener {
                 unidadLbl.setToolTipText(null);
                 categoriaLbl.setBorder(null);
                 categoriaLbl.setToolTipText(null);
+                existenciaLbl.setBorder(null);
+                existenciaLbl.setToolTipText(null);
                 break;
             case Model.CATEGORIAS:
                 categorias.setModel(new DefaultComboBoxModel(model.getCategorias().toArray()));
