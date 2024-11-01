@@ -1,5 +1,6 @@
 package pos.Data;
 
+import pos.logic.Categoria;
 import pos.logic.Producto;
 
 import java.sql.PreparedStatement;
@@ -115,6 +116,13 @@ public class ProductoDao {
         e.setUnidad(rs.getString(alias + ".unidad"));
         e.setPrecio(rs.getFloat(alias + ".precio"));
         e.setExistencia(rs.getInt(alias + ".existencia"));
+
+        CategoriaDao categoriaDao = new CategoriaDao();
+        Categoria cat = new Categoria();
+        String categoriaId = rs.getString(alias + ".categoria");
+        cat.setId(categoriaId);
+        e.setCategoria(categoriaDao.read(categoriaId));
+
         return e;
     }
 }

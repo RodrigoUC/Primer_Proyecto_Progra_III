@@ -54,7 +54,12 @@ public class LineaDao {
 
     public List<Linea> searchByFactura(int codigoFactura) throws Exception {
         List<Linea> resultado = new ArrayList<>();
-        String sql = "SELECT l.codigo AS codigo_linea, l.cantidad, l.descuento, p.codigo AS codigo_producto, p.descripcion, p.unidad, p.precio,p.existencia FROM Linea l INNER JOIN Producto p ON l.producto = p.codigo WHERE l.factura = ?;";
+        String sql = "SELECT l.codigo AS codigo_linea, l.cantidad, l.descuento, " +
+                "p.codigo AS codigo_producto, p.descripcion, p.unidad, p.precio, p.existencia, " +
+                "p.categoria " +
+                "FROM Linea l " +
+                "INNER JOIN Producto p ON l.producto = p.codigo " +
+                "WHERE l.factura = ?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setInt(1, codigoFactura);
         ResultSet rs = db.executeQuery(stm);
