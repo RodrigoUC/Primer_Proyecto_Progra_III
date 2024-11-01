@@ -66,7 +66,6 @@ public class Model extends AbstractModel {
         firePropertyChange(FILTER);
     }
 
-
     public Linea getCurrentFactura() {return currentLineaFactura;}
 
     public static final String LISTFACTURASFILTER = "listFacturasFilter";
