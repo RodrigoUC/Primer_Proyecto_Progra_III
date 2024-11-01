@@ -35,7 +35,17 @@ public class Categoria implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
-
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Categoria categoria = (Categoria) obj;
+        return nombre.equals(categoria.nombre);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre);
+    }
     public String toString() {
         return nombre;
     }
