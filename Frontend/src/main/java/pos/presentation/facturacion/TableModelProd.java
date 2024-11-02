@@ -16,7 +16,6 @@ public class TableModelProd extends AbstractTableModel<Producto> implements java
     public static final int CATEGORIA = 3;
     public static final int UNIDAD = 4;
 
-
     @Override
     protected Object getPropertyAt(Producto e, int col) {
         switch (cols[col]) {

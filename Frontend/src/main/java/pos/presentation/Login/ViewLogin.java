@@ -32,7 +32,6 @@ public class ViewLogin extends JDialog{
                     catch(Exception ex){
                         JOptionPane.showMessageDialog(panel, ex.getMessage()+"Se cerrara el programa","Informacion" , JOptionPane.ERROR_MESSAGE);
                         dispose();
-//                        controller.cerrar();
                     }
                 }
             }
@@ -63,25 +62,5 @@ public class ViewLogin extends JDialog{
     public JPanel getPanel() {
         return panel;
     }
-
-//    public void login(){
-//        panel.setPreferredSize(new Dimension(400, 200));
-//
-//        dialog = new JDialog((JFrame) null, "Iniciar Sesión", true); // false para no modal
-//        dialog.setContentPane(panel);
-//        dialog.setIconImage((new ImageIcon(Application.class.getResource("presentation/icons/icon.png"))).getImage());
-//        dialog.setMinimumSize(new Dimension(400, 200));
-//        dialog.setResizable(false); // No permite redimensionar
-//        dialog.setLocationRelativeTo(null); // Centrado
-//        dialog.setVisible(true);
-//    }
-//
-//    public void cerrar(){
-//        if(dialog != null) {
-//            dialog.dispose();
-//        }
-//    }
-
-
 
 }

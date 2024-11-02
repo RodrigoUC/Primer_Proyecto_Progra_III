@@ -3,7 +3,6 @@ package pos.presentation.facturacion;
 import pos.logic.*;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
@@ -16,7 +15,7 @@ public class Controller {
         try {
             this.view = view;
             this.model = model;
-            model.init(new ArrayList<>(), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
+            model.init(Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
             this.viewBuscar = new ViewBuscar();
             this.viewCobrar = new ViewCobrar();
             view.setController(this);
@@ -211,7 +210,7 @@ public class Controller {
                 linea.setFactura(factura);
                 Service.instance().create(linea);
             }
-            model.init(new ArrayList<>(), Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
+            model.init(Service.instance().search(new Cajero()), Service.instance().search(new Cliente()));
         }
         catch(Exception e) {
             System.out.println(e.getMessage());

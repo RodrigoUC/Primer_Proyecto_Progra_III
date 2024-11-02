@@ -15,11 +15,6 @@ public class Model extends AbstractModel {
     List<Linea> listLineasNormales; //que coinciden con id del nombre de la factura
     Linea currentLineaFactura;      //linea Listado
 
-    public void setCurrentLineaFactura(Linea currentLineaFactura) {
-        this.currentLineaFactura = currentLineaFactura;
-    firePropertyChange(CURRENTLINEAFACTURA);
-    }
-
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         super.addPropertyChangeListener(listener);
@@ -65,8 +60,6 @@ public class Model extends AbstractModel {
         this.filter = filter;
         firePropertyChange(FILTER);
     }
-
-    public Linea getCurrentFactura() {return currentLineaFactura;}
 
     public static final String LISTFACTURASFILTER = "listFacturasFilter";
     public static final String LISTLINEASLISTADO = "listLineasListado";

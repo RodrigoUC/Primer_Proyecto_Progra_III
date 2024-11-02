@@ -2,7 +2,6 @@ package pos.presentation.historico;
 
 import pos.logic.Linea;
 import pos.presentation.AbstractTableModel;
-import pos.presentation.historico.Controller;
 
 import java.util.List;
 

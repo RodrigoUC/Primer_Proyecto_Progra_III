@@ -12,7 +12,6 @@ public class Model extends AbstractModel {
     private List<Cliente> listClientes;
     Linea current;
     Factura factura;
-//    private List<Linea> lineas;
 
     public Producto getFilter() {
         return filter;
@@ -69,7 +68,7 @@ public class Model extends AbstractModel {
     public Model() {
     }
 
-    public void init(List<Linea> listLinea,List<Cajero> listCajero, List<Cliente> listCliente) {
+    public void init(List<Cajero> listCajero, List<Cliente> listCliente) {
         setFactura(new Factura());
         setListCajeros(listCajero);
         setListClientes(listCliente);
@@ -85,9 +84,6 @@ public class Model extends AbstractModel {
     public void setCajero(Cajero cajero) {
         factura.setCajero(cajero);
         firePropertyChange(CAJERO);
-    }
-    public List<Linea> getListLinea() {
-        return factura.getLineas();
     }
 
     public void setListCajeros(List<Cajero> list) {
@@ -120,7 +116,6 @@ public class Model extends AbstractModel {
         this.factura.setLineas(list);
         firePropertyChange(LISTLINEA);
     }
-
 
     public List<Linea> getLineas() {
         return factura.getLineas();

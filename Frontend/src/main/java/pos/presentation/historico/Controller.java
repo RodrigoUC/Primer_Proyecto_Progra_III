@@ -95,20 +95,7 @@ public class Controller {
         }catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error listado historico", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        //return null;
     }
-
-    //--------------LISTA DE LINEAS NORMALES SEGUN LA CURRENT FACTURA--------
-
-//    void listaLineasNormales(int row) throws Exception {
-//        try{
-//            model.setCurrentLineaFactura(model.getListLineasListado().get(row));
-//            model.setListLineasNormales(model.getFactura().getFactura().getLineas());
-//        }catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Error listado normales", "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//
-//    }
 
     public void print()throws Exception{
         try {
