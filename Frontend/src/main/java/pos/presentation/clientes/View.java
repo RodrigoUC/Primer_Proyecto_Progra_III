@@ -1,15 +1,13 @@
 package pos.presentation.clientes;
 
 import pos.Application;
+import pos.logic.Cajero;
 import pos.logic.Cliente;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -40,6 +38,16 @@ public class View implements PropertyChangeListener {
     }
 
     public View() {
+        panel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                try {
+                    controller.search(new Cliente());
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -89,6 +89,9 @@ public class Controller {
         return factura;
     }
     public void recibirFactura(Factura factura) {
+        // Actualiza por si se han agregado nuevos
+        model.setListCajeros(Service.instance().search(new Cajero()));
+        model.setListClientes(Service.instance().search(new Cliente()));
         model.setFactura(factura);
     }
 
@@ -171,14 +174,6 @@ public class Controller {
             model.setActual(null);
         }
     }
-
-    public Double total() {
-        Double aux = 0.0;
-        for (Linea linea : model.getLineas()) {
-            aux += (linea.getProducto().getPrecio() * linea.getCantidad())-(linea.getProducto().getPrecio() * linea.getCantidad()*(linea.getDescuento()/100));
-        }
-        return aux;
-    }
     public List<Linea> getListLinea() {
         return model.getLineas();
     }
@@ -210,12 +205,9 @@ public class Controller {
     public void guardarFactura(){
         try {
             Factura factura = view.take();
-            //factura.setVec(getListLinea());
             Service.instance().create(factura);
-            System.out.println(factura.getCodigo());
             for(Linea linea : getListLinea()){
                 linea.getProducto().setExistencia(linea.getProducto().getExistencia()-linea.getCantidad()); //Le quita la cantidad que se compraron a existencias
-                System.out.println(factura.getCodigo());
                 linea.setFactura(factura);
                 Service.instance().create(linea);
             }
@@ -224,24 +216,6 @@ public class Controller {
         catch(Exception e) {
             System.out.println(e.getMessage());
         }
-    }
-    public Integer getCantidadProductos(){
-        int cantidad = 0;
-        if(!listaLineasEstaVacia()) {
-            for (Linea linea : model.getLineas()) {
-            cantidad += linea.getCantidad();
-            }
-        }
-        return cantidad;
-    }
-    public Double getDescuentoTotal(){
-        Double descuento = 0.0;
-        if(!listaLineasEstaVacia()) {
-            for (Linea linea : model.getLineas()) {
-             descuento += (linea.getDescuento()/100)*linea.getCantidad()*linea.getProducto().getPrecio();
-            }
-        }
-        return descuento;
     }
 
     public void actualizarCliente(Cliente selectedItem) {
