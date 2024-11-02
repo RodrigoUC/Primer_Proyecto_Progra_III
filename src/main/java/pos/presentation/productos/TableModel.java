@@ -45,7 +45,7 @@ public class TableModel extends AbstractTableModel<Producto> implements javax.sw
 
     private Icon getImagen(String nombre){
         try{
-            return new ImageIcon(Application.class.getResource("/pos/presentation/icons/" + nombre + ".png"));
+            return new ImageIcon(Application.class.getResource("/pos/presentation/icons/pagar.png"));
         }
         catch(Exception e){ return null; }
     }

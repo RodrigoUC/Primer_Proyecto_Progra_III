@@ -2,7 +2,6 @@ package pos.presentation.productos;
 
 import pos.Application;
 import pos.logic.Producto;
-import pos.presentation.facturacion.TableModel;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
@@ -202,11 +201,12 @@ public class View implements PropertyChangeListener {
         switch (evt.getPropertyName()) {
             case Model.LIST:
                 int[] cols = {pos.presentation.productos.TableModel.CODIGO, pos.presentation.productos.TableModel.DESCRIPCION
-                        , pos.presentation.productos.TableModel.UNIDAD, pos.presentation.productos.TableModel.PRECIO, pos.presentation.productos.TableModel.CATEGORIA, pos.presentation.productos.TableModel.IMAGEN};
+                        , pos.presentation.productos.TableModel.UNIDAD, pos.presentation.productos.TableModel.PRECIO,
+                        pos.presentation.productos.TableModel.CATEGORIA, TableModel.EXISTENCIA, pos.presentation.productos.TableModel.IMAGEN};
                 list.setModel(new pos.presentation.productos.TableModel(cols, model.getList()));
                 list.setRowHeight(30);
                 TableColumnModel columnModel = list.getColumnModel();
-                columnModel.getColumn(1).setPreferredWidth(150);
+                columnModel.getColumn(1).setPreferredWidth(75);
                 break;
             case Model.CURRENT:
                 codigo.setText(model.getCurrent().getCodigo());
