@@ -2,6 +2,7 @@ package pos.presentation.historico;
 
 import pos.logic.Linea;
 import pos.presentation.AbstractTableModel;
+import pos.presentation.historico.Controller;
 
 import java.util.List;
 
@@ -15,7 +16,6 @@ public class TableModelFacturas extends AbstractTableModel<Linea> implements jav
     public static final int CLIENTE = 1;
     public static final int CAJERO = 2;
     public static final int FECHA = 3;
-    public static final int IMPORTE = 4;
 
     @Override
     protected Object getPropertyAt(Linea e, int col){
@@ -23,20 +23,18 @@ public class TableModelFacturas extends AbstractTableModel<Linea> implements jav
             case NUMERO: return e.getFactura().getCodigo();
             case CLIENTE: return e.getFactura().getNombreCliente();
             case CAJERO: return e.getFactura().getCajero().getNombre();
-            case FECHA: return e.getFactura().getFechaString();
-            //case IMPORTE: return e.getTotalLinea(); //No se si es total o totalLinea, revisar
-            case IMPORTE: return 0;
+            case FECHA: return e.getFactura().getFecha().toString();
             default: return "";
         }
     }
 
     @Override
     protected void initColNames(){
-        colNames = new String[5];
+        colNames = new String[4];
         colNames[NUMERO] = "Numero";
         colNames[CLIENTE] = "Cliente";
         colNames[CAJERO] = "Cajero";
         colNames[FECHA] = "Fecha";
-        colNames[IMPORTE] = "Importe";
     }
+
 }

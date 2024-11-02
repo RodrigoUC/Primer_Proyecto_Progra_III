@@ -77,6 +77,15 @@ public class Model extends AbstractModel {
         firePropertyChange(CATEGORIAS);
     }
 
+    public int getIndexCategorias(){
+        for (int i = 0; i < categorias.size(); i++){
+            if(categorias.get(i).getNombre() == current.getCategoria().getNombre()){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public void setMode(int mode) {
         this.mode = mode;
     }

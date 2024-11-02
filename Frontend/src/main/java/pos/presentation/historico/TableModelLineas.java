@@ -25,13 +25,12 @@ public class TableModelLineas extends AbstractTableModel<Linea> implements javax
         switch (cols[col]){
             case CODIGO: return e.getCodigo();
             case ARTICULO: return e.getProducto().getDescripcion();
-            case CATEGORIA: return e.getCategoria().getNombre();
+            case CATEGORIA: return e.getProducto().getCategoria().getNombre();
             case CANTIDAD: return e.getCantidad();
             case PRECIO: return e.getProducto().getPrecio();
             case DESCUENTO: return e.getDescuento();
             case NETO: return e.getTotalLinea(); //cambiar
-            //case IMPORTE: return e.getTotalLinea(); //ver como funciona
-            case IMPORTE: return 0;
+            case IMPORTE: return e.getTotalLinea();
             default: return "";
         }
     }
