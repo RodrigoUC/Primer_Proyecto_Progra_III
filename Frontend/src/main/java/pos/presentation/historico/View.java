@@ -27,7 +27,13 @@ public class View implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    controller.search(Cliente.getText());
+                    String cliente = Cliente.getText();
+                    if(cliente.equals("")){
+                        JOptionPane.showMessageDialog(null, "Dato invalido");
+                    }
+                    else {
+                        controller.search(cliente);
+                    }
                 } catch (Exception ex){
                     JOptionPane.showMessageDialog(panel, ex.getMessage(), "Información", JOptionPane.INFORMATION_MESSAGE);
                 }
