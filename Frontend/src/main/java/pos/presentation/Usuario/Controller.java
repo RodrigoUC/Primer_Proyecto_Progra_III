@@ -3,6 +3,7 @@ import pos.Application.*;
 
 import pos.logic.*;
 
+import javax.swing.*;
 import java.util.List;
 
 import static pos.Application.facturacionController;
@@ -57,8 +58,13 @@ public class Controller implements ThreadListener {
         model.setCurrent(model.getUsuarios().get(row));
     }
     public void enviarFactura()throws Exception {
-        Service.instance().enviarFactura(facturacionController.transferirFactura(),model.getCurrent());
-        model.setUsuarios(model.getUsuarios());
+        if(!(facturacionController.getLineasModel().isEmpty())) {
+            Service.instance().enviarFactura(facturacionController.transferirFactura(), model.getCurrent());
+            model.setUsuarios(model.getUsuarios());
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Debe tener lineas ingresadas para enviar una factura","Informacion" , JOptionPane.INFORMATION_MESSAGE);
+        }
     }
     public void recibirFactura() {
         Factura f = model.getCurrent().getFacturas().remove(0);

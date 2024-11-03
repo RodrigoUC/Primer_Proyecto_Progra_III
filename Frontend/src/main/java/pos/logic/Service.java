@@ -1,5 +1,6 @@
 package pos.logic;
 
+import javax.swing.*;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -317,8 +318,8 @@ public Float[][] estadisticas(List<Categoria> rows, List<String> cols, Rango ran
             os.writeObject(factura);
             os.writeObject(destino);
             os.flush();
-            if (is.readInt() == Protocol.ERROR_NO_ERROR) {System.out.println("Todo salio bien");}
-            else System.out.println("SALIO MAL");
+            if (is.readInt() == Protocol.ERROR_NO_ERROR) {}
+            else JOptionPane.showMessageDialog(null, "Ocurrio un error desconocido","Informacion" , JOptionPane.INFORMATION_MESSAGE);
         }
         catch(Exception e){
             System.out.println(e);

@@ -223,4 +223,8 @@ public class Controller {
     public void actualizarCajero(Cajero selectedItem) {
         this.model.getFactura().setCajero(selectedItem);
     }
+    public List<Linea> getLineasModel(){
+        return model.getLineas();
+    }
+
 }
