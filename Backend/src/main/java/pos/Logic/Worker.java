@@ -233,7 +233,7 @@ public class Worker {
 
     }
 
-    public void usuarioSalio(Usuario u) {
+    public synchronized void usuarioSalio(Usuario u) {
         try {
             aos.writeInt(Protocol.USUARIO_SALIO);
             aos.writeObject(u);
@@ -241,7 +241,7 @@ public class Worker {
         }
         catch (Exception e) {}
     }
-    public void usuarioInicio(Usuario u) {
+    public synchronized void usuarioInicio(Usuario u) {
         try {
             aos.writeInt(Protocol.USUARIO_INICIO);
             aos.writeObject(u);
@@ -250,7 +250,7 @@ public class Worker {
     }
 
 
-    public void enviarFactura(Factura f, Usuario origen) {
+    public synchronized void enviarFactura(Factura f, Usuario origen) {
         try{
             aos.writeInt(Protocol.RECIBIR_FACTURA);
             aos.writeObject(f);
